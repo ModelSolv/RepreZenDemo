@@ -10,20 +10,19 @@
     and embeds all of the tax filing data.
   - User defined data types.
 */
+
+// By default, reference links will use the reference property name
+// as the link relation.  Here, we are overriding the reference
+// links to use the IANA-registered 'subsection' link relation.
+// http://www.iana.org/assignments/link-relations/link-relations.xhtml
 zenModel TaxBlaster
+
 	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
 		/** The Index Resource is the entry point to the TaxBlaster API. To minimize
 		    coupling, consuming applications should start here, and follow the links to
 		    related resources. */
 		objectResource IndexObject type Index
 			URI index
-			/**
-			   By default, reference links will use the reference property name
-			   as the link relation.  Here, we are overriding the reference
-			   links to use the IANA-registered 'subsection' link relation.
-
-			   http://www.iana.org/assignments/link-relations/link-relations.xhtml
-			*/
 			referenceLink > people
 				targetResource PersonCollection
 				linkRelation subsection
@@ -232,7 +231,6 @@ zenModel TaxBlaster
 			postalCode : string
 			country : string
 
-	dataModel UserDefinedDataTypesDataModel
 		structure UserDefinedDataTypes
 			id : string
 			ssn: SocialSecurityNumber
