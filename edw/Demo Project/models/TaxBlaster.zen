@@ -44,8 +44,8 @@ zenModel TaxBlaster
 				request
 				response TaxFilingCollection statusCode 200
 			method POST updateTaxFilingCollection
-				request TaxFilingCollection
-				response statusCode 200
+				request TaxFilingObject
+				response TaxFilingObject statusCode 200
 				response statusCode 400
 		/** The list of TaxBlaster users.  The results will vary in membership and level
 		    of detail, depending on your access privileges. */
@@ -68,8 +68,8 @@ zenModel TaxBlaster
 				request
 				response PersonCollection statusCode 200
 			method POST updatePersonCollection
-				request PersonCollection
-				response statusCode 200
+				request PersonObject
+				response PersonObject statusCode 200
 				response statusCode 400
 		/** An individual Tax Filing record, accessed by its ID */
 		objectResource TaxFilingObject type TaxFiling
@@ -110,7 +110,7 @@ zenModel TaxBlaster
 				response PersonObject statusCode 200
 			method PUT putPersonObject
 				request PersonObject
-				response statusCode 200
+				response PersonObject statusCode 200
 				response statusCode 400
 		objectResource PersonTaxFilingCollection type Person
 			URI /people/{id}/taxFilings
@@ -145,14 +145,14 @@ zenModel TaxBlaster
 		    specified tax year. */
 		structure TaxFiling
 			/** A unique, system-assigned identifier for the tax filing. */
-			filingID : string
+			filingID : long
 			/** Reference to the person who owns this filing. */
 			taxpayer : reference to Person inverse taxFilings
 			/** Country, province, state or local tax authority
 				where this is being filed. */
 			jurisdiction : string
 			/** Tax year */
-			year : gYear
+			year : int
 			/** Period within the year, if any */
 			period : int
 			/** Currency code */
@@ -166,7 +166,7 @@ zenModel TaxBlaster
 		/** A TaxBlaster user. */
 		structure Person
 			/** A unique, system-assigned identifier for the user. */
-			taxpayerID : string
+			taxpayerID : long
 			/** Legal family name. */
 			lastName : string
 			/** Legal first name. */
@@ -180,7 +180,7 @@ zenModel TaxBlaster
 			/** Preferred language for communications with this person */
 			preferredLanguage : string
 			/** Date of birth */
-			DOB : date
+			DOB : string
 			/* Inverse reference to TaxFilings.  PersonObject will have
 			   a list of hyperlinks to TaxFilingObject, the inverse of the
 			   TaxFilingObject.taxpayer hyperlink. Note that the inverse
@@ -230,30 +230,30 @@ zenModel TaxBlaster
 			stateOrProvince : string
 			postalCode : string
 			country : string
-
-		structure UserDefinedDataTypes
-			id : string
-			ssn: SocialSecurityNumber
-			day1: DayOfYear
-			da12: DayOfYear1
-			quantity: WholesaleQuantity
-			fValue: FractionalValue
-			age: ChildTravelerAge
-
-		simpleType SocialSecurityNumber defined as string
-			matching regex '999-99-9999'
-		simpleType DayOfYear1 as integer
-			valueRange from '1' to '365'
-
-		simpleType DayOfYear defined as integer
-			with valueRange from minimum '1' up to maximum '365' inclusive
-
-		/** documentation*/
-		simpleType WholesaleQuantity as integer
-			with valueRange from minimum '1000'
-
-		simpleType FractionalValue as decimal
-			with valueRange from '0' exclusive up to '1' exclusive
-
-		simpleType ChildTravelerAge defined as integer
-			valueRange up to '12'
+//
+//		structure UserDefinedDataTypes
+//			id : string
+//			ssn: SocialSecurityNumber
+//			day1: DayOfYear
+//			da12: DayOfYear1
+//			quantity: WholesaleQuantity
+//			fValue: FractionalValue
+//			age: ChildTravelerAge
+//
+//		simpleType SocialSecurityNumber defined as string
+//			matching regex '999-99-9999'
+//		simpleType DayOfYear1 as integer
+//			valueRange from '1' to '365'
+//
+//		simpleType DayOfYear defined as integer
+//			with valueRange from minimum '1' up to maximum '365' inclusive
+//
+//		/** documentation*/
+//		simpleType WholesaleQuantity as integer
+//			with valueRange from minimum '1000'
+//
+//		simpleType FractionalValue as decimal
+//			with valueRange from '0' exclusive up to '1' exclusive
+//
+//		simpleType ChildTravelerAge defined as integer
+//			valueRange up to '12'
