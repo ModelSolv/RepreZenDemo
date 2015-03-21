@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="1" author="tanya">
+		<createTable tableName="people">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="firstName" type="varchar(255)" />
+			<column name="lastName" type="varchar(255)" />
+		</createTable>
+		<createTable tableName="people_othernames">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints nullable="false" foreignKeyName="fk_otherNames_person"
+					references="people(id)" />
+			</column>
+			<column name="othernames" type="varchar(255)" />
+		</createTable>
+		<createTable tableName="taxfilings">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="jurisdiction" type="varchar(255)" />
+			<column name="taxpayer" type="bigint">
+				<constraints nullable="false" foreignKeyName="fk_taxfilings_taxpayer"
+					references="people(id)" />
+			</column>
+			<!-- <column name="year" type="integer" /> -->
+			<column name="period" type="integer" />
+			<column name="currency" type="varchar(255)" />
+			<column name="grossIncome" type="decimal" />
+			<column name="taxLiability" type="decimal" />
+		</createTable>
+	</changeSet>
+</databaseChangeLog>
