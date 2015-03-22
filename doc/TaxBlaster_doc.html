@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="docs-assets/ico/favicon.png">
+
+    <title>TaxBlaster Documentation</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-reprezen.css" rel="stylesheet">
+    
+
+    <!-- Custom styles for this template -->
+    <link href="bootstrap/css/navbar-fixed-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target="#nav-left">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">RepreZen</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#resourceAPIs">Resource APIs</a></li>
+            <li><a href="#data-models">Data Models</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="reprezen-logo" src="images/modelsolv-logo.gif" atl="ModelSolv" /> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://www.modelsolv.com/" target="_blank">Website</a></li>
+                <li><a href="http://www.modelsolv.com/reprezen/" target="_blank">RepreZen</a></li>
+                <li><a href="mailto:info@modelsolv.com">Contact</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Manual</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <!-- Dynamic Sidebar -->
+        <div class="col-md-3">
+          <div id="nav-left" class="reprezen-sidebar hidden-print affix">
+            <ul class="nav bs-sidenav">
+              <li>
+                <a href="#resourceAPI-TaxBlasterInterface">TaxBlasterInterface</a>
+                <ul class="nav">
+                  <li>
+                    <a href="#resourceType-IndexObject">IndexObject</a>
+                  </li>
+                  <li>
+                    <a href="#resourceType-TaxFilingCollection">TaxFilingCollection</a>
+                  </li>
+                  <li>
+                    <a href="#resourceType-PersonCollection">PersonCollection</a>
+                  </li>
+                  <li>
+                    <a href="#resourceType-TaxFilingObject">TaxFilingObject</a>
+                  </li>
+                  <li>
+                    <a href="#resourceType-PersonObject">PersonObject</a>
+                  </li>
+                  <li>
+                    <a href="#resourceType-PersonTaxFilingCollection">PersonTaxFilingCollection</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#dataModel-TaxBlasterDataModel">TaxBlasterDataModel</a>
+                <ul class="nav">
+                  <li>
+                    <a href="#refProp-TaxFiling">TaxFiling</a>
+                  </li>
+                  <li>
+                    <a href="#refProp-Person">Person</a>
+                  </li>
+                  <li>
+                    <a href="#refProp-Index">Index</a>
+                  </li>
+                  <li>
+                    <a href="#refProp-TaxFilingStatusEnum">TaxFilingStatusEnum</a>
+                  </li>
+                  <li>
+                    <a href="#refProp-SpecialValueEnum">SpecialValueEnum</a>
+                  </li>
+                  <li>
+                    <a href="#refProp-CurrencyCodeEnum">CurrencyCodeEnum</a>
+                  </li>
+                  <li>
+                    <a href="#refProp-Address">Address</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <a id="resourceAPIs"></a>
+          <div class="page-header">
+            <h1>Resource APIs</h1>
+          </div>
+          <a class="anchor" id="resourceAPI-TaxBlasterInterface"></a>
+          <div class="panel panel-primary" >
+            <div class="panel-heading">
+              <h3 class="panel-title">TaxBlasterInterface <small>(http://taxblaster.com/api)</small></h3>
+            </div>
+            <div class="panel-body restful-interface">
+              <a class="anchor" id="resourceType-IndexObject"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-folder-close"></span>
+                    IndexObject <code>index</code> 
+                    <span class="glyphicon glyphicon-arrow-right"></span> <code>Index</code>
+                  </h3>
+                </div>
+                <div class="panel-body object-resource">
+                <p>The Index Resource is the entry point to the TaxBlaster API. To minimize coupling, consuming applications should start here, and follow the links to related resources. </p>
+                <h4>Properties</h4>
+                <table class="table table-condensed">
+                <tr>
+                  <th>Media Types</th>
+                  <td>
+                  <a target="_blank" href="http://www.rfc-editor.org/rfc/rfc3023.txt">application/xml</a>
+                  </td>
+                </tr>
+                </table>
+              
+              
+                <h4>Fields</h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Documentation</th>
+                    </tr>
+                
+                <tr>
+                <td style="text-indent: 0em;">
+                   people
+                    </td>
+                 <td>
+                <a href="#resourceType-PersonCollection">PersonCollection</a>*
+                </td>
+                <td></td>
+                </tr>
+                <tr>
+                <td style="text-indent: 0em;">
+                   taxFilings
+                    </td>
+                 <td>
+                <a href="#resourceType-TaxFilingCollection">TaxFilingCollection</a>*
+                </td>
+                <td></td>
+                </tr>
+                </table>
+              
+                <a class="anchor" id="method-IndexObject-GET-getIndex-0"></a>
+                <span class="label label-primary resource-method">GET</span>
+                <code>getIndex</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-IndexObject">IndexObject</a>
+                <span class="label label-success">200</span>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-danger">404</span>
+                </li>
+                </ul>
+                </div>
+              </div>
+              <a class="anchor" id="resourceType-TaxFilingCollection"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    TaxFilingCollection <code>taxFilings</code> 
+                    <span class="glyphicon glyphicon-arrow-right"></span> <code>TaxFiling</code>
+                    <span class="label label-default">Default</span>
+                  </h3>
+                </div>
+                <div class="panel-body object-resource">
+                <p>The list of Tax Filings visible to the authorized user. </p>
+                <h4>Properties</h4>
+                <table class="table table-condensed">
+                <tr>
+                  <th>Media Types</th>
+                  <td>
+                  <a target="_blank" href="http://www.rfc-editor.org/rfc/rfc3023.txt">application/xml</a>
+                  </td>
+                </tr>
+                </table>
+              
+              
+                <h4>Collection Parameters</h4>
+                <table class="table table-condensed">
+                    <tr>
+                      <th>Name</th>
+                      <th>Documentation</th>
+                      <th>Default</th>
+                      <th>Property</th>
+                      <th>Type</th>
+                    </tr>
+                </table>
+                <h4>Fields</h4>
+                <table class="table table-condensed">
+                   <tr>
+                     <td>TaxFiling</td>
+                     <td>
+                       <a href="#resourceType-TaxFilingObject">TaxFilingObject*</a>
+                     </td>
+                   </tr>
+                </table>
+              
+                <a class="anchor" id="method-TaxFilingCollection-GET-getTaxFilingCollection-0"></a>
+                <span class="label label-primary resource-method">GET</span>
+                <code>getTaxFilingCollection</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-TaxFilingCollection">TaxFilingCollection</a>
+                <span class="label label-success">200</span>
+                </li>
+                </ul>
+                <a class="anchor" id="method-TaxFilingCollection-POST-updateTaxFilingCollection-1"></a>
+                <span class="label label-primary resource-method">POST</span>
+                <code>updateTaxFilingCollection</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <a href="#resourceType-TaxFilingObject">TaxFilingObject</a>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-TaxFilingObject">TaxFilingObject</a>
+                <span class="label label-success">200</span>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-danger">400</span>
+                </li>
+                </ul>
+                </div>
+              </div>
+              <a class="anchor" id="resourceType-PersonCollection"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    PersonCollection <code>people</code> 
+                    <span class="glyphicon glyphicon-arrow-right"></span> <code>Person</code>
+                    <span class="label label-default">Default</span>
+                  </h3>
+                </div>
+                <div class="panel-body object-resource">
+                <p>The list of TaxBlaster users. The results will vary in membership and level of detail, depending on your access privileges. </p>
+                <h4>Properties</h4>
+                <table class="table table-condensed">
+                <tr>
+                  <th>Media Types</th>
+                  <td>
+                  <a target="_blank" href="http://www.rfc-editor.org/rfc/rfc3023.txt">application/xml</a>
+                  </td>
+                </tr>
+                </table>
+              
+              
+                <h4>Collection Parameters</h4>
+                <table class="table table-condensed">
+                    <tr>
+                      <th>Name</th>
+                      <th>Documentation</th>
+                      <th>Default</th>
+                      <th>Property</th>
+                      <th>Type</th>
+                    </tr>
+                </table>
+                <h4>Fields</h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Documentation</th>
+                    </tr>
+                
+                <tr>
+                    <td>taxpayerID</td>
+                    <td>
+                    long
+                    </td>
+                    <td>A unique, system-assigned identifier for the user. </td>
+                </tr>
+                <tr>
+                    <td>lastName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal family name. </td>
+                </tr>
+                <tr>
+                    <td>firstName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal first name. </td>
+                </tr>
+                <tr>
+                    <td>otherNames</td>
+                    <td>
+                    string*
+                    </td>
+                    <td>Names previously used *</td>
+                </tr>
+                <tr>
+                    <td>netWorth</td>
+                    <td>
+                    decimal
+                    </td>
+                    <td>Net worth, if known </td>
+                </tr>
+                <tr>
+                    <td>netWorthSpecialValue</td>
+                    <td>
+                    <a href="#refProp-SpecialValueEnum">SpecialValueEnum
+                    </a>
+                    </td>
+                    <td>Net worth special value </td>
+                </tr>
+                <tr>
+                    <td>preferredLanguage</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Preferred language for communications with this person </td>
+                </tr>
+                <tr>
+                    <td>DOB</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Date of birth </td>
+                </tr>
+                <tr>
+                <td style="text-indent: 0em;">
+                   taxFilings
+                    </td>
+                 <td>
+                <a href="#resourceType-TaxFilingCollection">TaxFilingCollection</a>*
+                </td>
+                <td>Tax filings on record for this individual </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 0em;">
+                	               addresses
+                    </td>
+                    <td>
+                    <a href="#refProp-Address">Address</a>+
+                    </td>
+                <td>Postal addresses, zero or more </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">street1</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">street2</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">city</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">stateOrProvince</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">postalCode</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">country</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                </table>
+              
+                <a class="anchor" id="method-PersonCollection-GET-getPersonCollection-0"></a>
+                <span class="label label-primary resource-method">GET</span>
+                <code>getPersonCollection</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-PersonCollection">PersonCollection</a>
+                <span class="label label-success">200</span>
+                </li>
+                </ul>
+                <a class="anchor" id="method-PersonCollection-POST-updatePersonCollection-1"></a>
+                <span class="label label-primary resource-method">POST</span>
+                <code>updatePersonCollection</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <a href="#resourceType-PersonObject">PersonObject</a>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-PersonObject">PersonObject</a>
+                <span class="label label-success">200</span>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-danger">400</span>
+                </li>
+                </ul>
+                </div>
+              </div>
+              <a class="anchor" id="resourceType-TaxFilingObject"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-folder-close"></span>
+                    TaxFilingObject <code>taxFilings/{id}</code> 
+                    <span class="glyphicon glyphicon-arrow-right"></span> <code>TaxFiling</code>
+                  </h3>
+                </div>
+                <div class="panel-body object-resource">
+                <p>An individual Tax Filing record, accessed by its ID </p>
+                <h4>Properties</h4>
+                <table class="table table-condensed">
+                <tr>
+                  <th>Media Types</th>
+                  <td>
+                  <a target="_blank" href="http://www.rfc-editor.org/rfc/rfc3023.txt">application/xml</a>
+                  </td>
+                </tr>
+                </table>
+              
+                <h4>Parameters</h4>
+                <table class="table table-condensed">
+                    <tr>
+                      <th>Name</th>
+                      <th>Documentation</th>
+                      <th>Default</th>
+                      <th>Property</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        id
+                      </td>
+                      <td>filingID of the requested TaxFiling </td>
+                      <td></td>
+                      <td>filingID</td>
+                      <td>long</td>
+                    </tr>
+                </table>
+              
+                <h4>Fields</h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Documentation</th>
+                    </tr>
+                
+                <tr>
+                    <td>filingID</td>
+                    <td>
+                    long
+                    </td>
+                    <td>A unique, system-assigned identifier for the tax filing. </td>
+                </tr>
+                <tr>
+                    <td>jurisdiction</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Country, province, state or local tax authority
+                    where this is being filed. </td>
+                </tr>
+                <tr>
+                    <td>year</td>
+                    <td>
+                    int
+                    </td>
+                    <td>Tax year </td>
+                </tr>
+                <tr>
+                    <td>period</td>
+                    <td>
+                    int
+                    </td>
+                    <td>Period within the year, if any </td>
+                </tr>
+                <tr>
+                    <td>currency</td>
+                    <td>
+                    <a href="#refProp-CurrencyCodeEnum">CurrencyCodeEnum
+                    </a>
+                    </td>
+                    <td>Currency code </td>
+                </tr>
+                <tr>
+                    <td>grossIncome</td>
+                    <td>
+                    decimal
+                    </td>
+                    <td>Total income reported on tax filing. </td>
+                </tr>
+                <tr>
+                    <td>taxLiability</td>
+                    <td>
+                    decimal
+                    </td>
+                    <td>Net tax liability </td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>
+                    <a href="#refProp-TaxFilingStatusEnum">TaxFilingStatusEnum
+                    </a>
+                    </td>
+                    <td>Tax filing status </td>
+                </tr>
+                <tr>
+                <td style="text-indent: 0em;">
+                   taxpayer
+                    </td>
+                 <td>
+                <a href="#resourceType-PersonObject">PersonObject</a>
+                </td>
+                <td>Reference to the person who owns this filing. </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">taxpayerID</td>
+                    <td>
+                    long
+                    </td>
+                    <td>A unique, system-assigned identifier for the user. </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">firstName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal first name. </td>
+                </tr>
+                </table>
+              
+                <a class="anchor" id="method-TaxFilingObject-GET-getTaxFiling-0"></a>
+                <span class="label label-primary resource-method">GET</span>
+                <code>getTaxFiling</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-TaxFilingObject">TaxFilingObject</a>
+                <span class="label label-success">200</span>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-danger">404</span>
+                </li>
+                </ul>
+                </div>
+              </div>
+              <a class="anchor" id="resourceType-PersonObject"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-folder-close"></span>
+                    PersonObject <code>people/{id}</code> 
+                    <span class="glyphicon glyphicon-arrow-right"></span> <code>Person</code>
+                  </h3>
+                </div>
+                <div class="panel-body object-resource">
+                <p>An individual user by ID. </p>
+                <h4>Properties</h4>
+                <table class="table table-condensed">
+                <tr>
+                  <th>Media Types</th>
+                  <td>
+                  <a target="_blank" href="http://www.rfc-editor.org/rfc/rfc3023.txt">application/xml</a>
+                  </td>
+                </tr>
+                </table>
+              
+                <h4>Parameters</h4>
+                <table class="table table-condensed">
+                    <tr>
+                      <th>Name</th>
+                      <th>Documentation</th>
+                      <th>Default</th>
+                      <th>Property</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        id
+                      </td>
+                      <td>taxpayerID of the requested Person </td>
+                      <td></td>
+                      <td>taxpayerID</td>
+                      <td>long</td>
+                    </tr>
+                </table>
+              
+                <h4>Fields</h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Documentation</th>
+                    </tr>
+                
+                <tr>
+                    <td>taxpayerID</td>
+                    <td>
+                    long
+                    </td>
+                    <td>A unique, system-assigned identifier for the user. </td>
+                </tr>
+                <tr>
+                    <td>lastName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal family name. </td>
+                </tr>
+                <tr>
+                    <td>firstName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal first name. </td>
+                </tr>
+                <tr>
+                    <td>otherNames</td>
+                    <td>
+                    string*
+                    </td>
+                    <td>Names previously used *</td>
+                </tr>
+                <tr>
+                    <td>netWorth</td>
+                    <td>
+                    decimal
+                    </td>
+                    <td>Net worth, if known </td>
+                </tr>
+                <tr>
+                    <td>netWorthSpecialValue</td>
+                    <td>
+                    <a href="#refProp-SpecialValueEnum">SpecialValueEnum
+                    </a>
+                    </td>
+                    <td>Net worth special value </td>
+                </tr>
+                <tr>
+                    <td>preferredLanguage</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Preferred language for communications with this person </td>
+                </tr>
+                <tr>
+                    <td>DOB</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Date of birth </td>
+                </tr>
+                <tr>
+                <td style="text-indent: 0em;">
+                   taxFilings
+                    </td>
+                 <td>
+                <a href="#resourceType-TaxFilingCollection">TaxFilingCollection</a>*
+                </td>
+                <td>Tax filings on record for this individual </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 0em;">
+                	               addresses
+                    </td>
+                    <td>
+                    <a href="#refProp-Address">Address</a>+
+                    </td>
+                <td>Postal addresses, zero or more </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">street1</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">street2</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">city</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">stateOrProvince</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">postalCode</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">country</td>
+                    <td>
+                    string
+                    </td>
+                    <td></td>
+                </tr>
+                </table>
+              
+                <a class="anchor" id="method-PersonObject-GET-getPersonObject-0"></a>
+                <span class="label label-primary resource-method">GET</span>
+                <code>getPersonObject</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-PersonObject">PersonObject</a>
+                <span class="label label-success">200</span>
+                </li>
+                </ul>
+                <a class="anchor" id="method-PersonObject-PUT-putPersonObject-1"></a>
+                <span class="label label-primary resource-method">PUT</span>
+                <code>putPersonObject</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <a href="#resourceType-PersonObject">PersonObject</a>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-PersonObject">PersonObject</a>
+                <span class="label label-success">200</span>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-danger">400</span>
+                </li>
+                </ul>
+                </div>
+              </div>
+              <a class="anchor" id="resourceType-PersonTaxFilingCollection"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-folder-close"></span>
+                    PersonTaxFilingCollection <code>people/{id}/taxFilings</code> 
+                    <span class="glyphicon glyphicon-arrow-right"></span> <code>Person</code>
+                  </h3>
+                </div>
+                <div class="panel-body object-resource">
+                <h4>Properties</h4>
+                <table class="table table-condensed">
+                <tr>
+                  <th>Media Types</th>
+                  <td>
+                  <a target="_blank" href="http://www.rfc-editor.org/rfc/rfc3023.txt">application/xml</a>
+                  </td>
+                </tr>
+                </table>
+              
+              
+                <h4>Fields</h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Documentation</th>
+                    </tr>
+                
+                <tr>
+                    <td>taxpayerID</td>
+                    <td>
+                    long
+                    </td>
+                    <td>A unique, system-assigned identifier for the user. </td>
+                </tr>
+                <tr>
+                    <td>lastName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal family name. </td>
+                </tr>
+                <tr>
+                    <td>firstName</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Legal first name. </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 0em;">
+                	               taxFilings
+                    </td>
+                    <td>
+                    <a href="#refProp-TaxFiling">TaxFiling</a>*
+                    </td>
+                <td>Tax filings on record for this individual </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">currency</td>
+                    <td>
+                    CurrencyCodeEnum
+                    </td>
+                    <td>Currency code </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">filingID</td>
+                    <td>
+                    long
+                    </td>
+                    <td>A unique, system-assigned identifier for the tax filing. </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">grossIncome</td>
+                    <td>
+                    decimal
+                    </td>
+                    <td>Total income reported on tax filing. </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">jurisdiction</td>
+                    <td>
+                    string
+                    </td>
+                    <td>Country, province, state or local tax authority
+                    where this is being filed. </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">period</td>
+                    <td>
+                    int
+                    </td>
+                    <td>Period within the year, if any </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">status</td>
+                    <td>
+                    TaxFilingStatusEnum
+                    </td>
+                    <td>Tax filing status </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">taxLiability</td>
+                    <td>
+                    decimal
+                    </td>
+                    <td>Net tax liability </td>
+                </tr>
+                <tr>
+                    <td style="text-indent: 1em;">year</td>
+                    <td>
+                    int
+                    </td>
+                    <td>Tax year </td>
+                </tr>
+                </table>
+              
+                <a class="anchor" id="method-PersonTaxFilingCollection-GET-getPersonTaxFilingCollection-0"></a>
+                <span class="label label-primary resource-method">GET</span>
+                <code>getPersonTaxFilingCollection</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <a href="#resourceType-PersonTaxFilingCollection">PersonTaxFilingCollection</a>
+                <span class="label label-success">200</span>
+                </li>
+                </ul>
+                <a class="anchor" id="method-PersonTaxFilingCollection-PUT-putPersonTaxFilingCollection-1"></a>
+                <span class="label label-primary resource-method">PUT</span>
+                <code>putPersonTaxFilingCollection</code>
+                <ul class="list-group">
+                <li class="list-group-item">
+                Request
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <a href="#resourceType-PersonTaxFilingCollection">PersonTaxFilingCollection</a>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-success">200</span>
+                </li>
+                <li class="list-group-item">
+                Response
+                <span class="label label-danger">400</span>
+                </li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <a id="data-models"></a>
+          <div class="page-header">
+            <h1>Data Models</h1>
+          </div>
+          <a class="anchor" id="dataModel-TaxBlasterDataModel"></a>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">TaxBlasterDataModel</h3>
+            </div>
+            <div class="panel-body">
+              <p>Supporting data types for the TaxBlaster API </p>
+              <a class="anchor" id="refProp-TaxFiling"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span>
+                    <code>TaxFiling</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>A tax filing record for a given user, in a given tax jurisdiction, in a specified tax year. </p>
+                  <h4>Fields</h4>
+                  <table class="table table-condensed">
+                      <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Documentation</th>
+                      </tr>
+                  <tr>
+                      <td>filingID</td>
+                      <td>long
+                      </td>
+                      <td>A unique, system-assigned identifier for the tax filing. </td>
+                  </tr>
+                  <tr>
+                      <td>taxpayer</td>
+                      <td><a href="#refProp-Person">Person
+                      </a>
+                      <br> inverse of <a href="#refProp-Person">taxFilings</a>
+                      </td>
+                      <td>Reference to the person who owns this filing. </td>
+                  </tr>
+                  <tr>
+                      <td>jurisdiction</td>
+                      <td>string
+                      </td>
+                      <td>Country, province, state or local tax authority
+                      where this is being filed. </td>
+                  </tr>
+                  <tr>
+                      <td>year</td>
+                      <td>int
+                      </td>
+                      <td>Tax year </td>
+                  </tr>
+                  <tr>
+                      <td>period</td>
+                      <td>int
+                      </td>
+                      <td>Period within the year, if any </td>
+                  </tr>
+                  <tr>
+                      <td>currency</td>
+                      <td><a href="#refProp-CurrencyCodeEnum">CurrencyCodeEnum
+                      </a>
+                      </td>
+                      <td>Currency code </td>
+                  </tr>
+                  <tr>
+                      <td>grossIncome</td>
+                      <td>decimal
+                      </td>
+                      <td>Total income reported on tax filing. </td>
+                  </tr>
+                  <tr>
+                      <td>taxLiability</td>
+                      <td>decimal
+                      </td>
+                      <td>Net tax liability </td>
+                  </tr>
+                  <tr>
+                      <td>status</td>
+                      <td><a href="#refProp-TaxFilingStatusEnum">TaxFilingStatusEnum
+                      </a>
+                      </td>
+                      <td>Tax filing status </td>
+                  </tr>
+                  </table>
+                </div>
+              </div>
+              <a class="anchor" id="refProp-Person"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span>
+                    <code>Person</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>A TaxBlaster user. </p>
+                  <h4>Fields</h4>
+                  <table class="table table-condensed">
+                      <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Documentation</th>
+                      </tr>
+                  <tr>
+                      <td>taxpayerID</td>
+                      <td>long
+                      </td>
+                      <td>A unique, system-assigned identifier for the user. </td>
+                  </tr>
+                  <tr>
+                      <td>lastName</td>
+                      <td>string
+                      </td>
+                      <td>Legal family name. </td>
+                  </tr>
+                  <tr>
+                      <td>firstName</td>
+                      <td>string
+                      </td>
+                      <td>Legal first name. </td>
+                  </tr>
+                  <tr>
+                      <td>otherNames</td>
+                      <td>string
+                      *
+                      </td>
+                      <td>Names previously used *</td>
+                  </tr>
+                  <tr>
+                      <td>netWorth</td>
+                      <td>decimal
+                      </td>
+                      <td>Net worth, if known </td>
+                  </tr>
+                  <tr>
+                      <td>netWorthSpecialValue</td>
+                      <td><a href="#refProp-SpecialValueEnum">SpecialValueEnum
+                      </a>
+                      </td>
+                      <td>Net worth special value </td>
+                  </tr>
+                  <tr>
+                      <td>preferredLanguage</td>
+                      <td>string
+                      </td>
+                      <td>Preferred language for communications with this person </td>
+                  </tr>
+                  <tr>
+                      <td>DOB</td>
+                      <td>string
+                      </td>
+                      <td>Date of birth </td>
+                  </tr>
+                  <tr>
+                      <td>taxFilings</td>
+                      <td><a href="#refProp-TaxFiling">TaxFiling
+                      *
+                      </a>
+                      <br> inverse of <a href="#refProp-TaxFiling">taxpayer</a>
+                      </td>
+                      <td>Tax filings on record for this individual </td>
+                  </tr>
+                  <tr>
+                      <td>addresses</td>
+                      <td>containing
+                      <a href="#refProp-Address">Address
+                      *
+                      </a>
+                      </td>
+                      <td>Postal addresses, zero or more </td>
+                  </tr>
+                  </table>
+                </div>
+              </div>
+              <a class="anchor" id="refProp-Index"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span>
+                    <code>Index</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>The supporting data type for the Index resource. Not meaningful as a business entity, but required to support a single point of entry. </p>
+                  <h4>Fields</h4>
+                  <table class="table table-condensed">
+                      <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Documentation</th>
+                      </tr>
+                  <tr>
+                      <td>people</td>
+                      <td><a href="#refProp-Person">Person
+                      *
+                      </a>
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>taxFilings</td>
+                      <td><a href="#refProp-TaxFiling">TaxFiling
+                      *
+                      </a>
+                      </td>
+                      <td></td>
+                  </tr>
+                  </table>
+                </div>
+              </div>
+              <a class="anchor" id="refProp-TaxFilingStatusEnum"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span> int Enumeration<code>TaxFilingStatusEnum</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>Tax filing status enumeration, using default values </p>
+                  <h4>Enumeration Constants</h4>
+                      <table class="table table-condensed">
+                          <tr>
+                              <th>Name</th>
+                              <th>Value</th>
+                              <th>Documentation</th>
+                          </tr>
+                            <tr>
+                              <td>DRAFT</td>
+                              <td>0</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>PENDING_CPA_REVIEW</td>
+                              <td>1</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>PENDING_CLIENT_REVIEW</td>
+                              <td>2</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>FILED</td>
+                              <td>3</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>AMENDED</td>
+                              <td>4</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>CLOSED</td>
+                              <td>5</td>
+                              <td></td>
+                            </tr>
+                      </table>
+                </div>
+              </div>
+              <a class="anchor" id="refProp-SpecialValueEnum"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span> int Enumeration<code>SpecialValueEnum</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>Special Value Enum, using explicit integer values </p>
+                  <h4>Enumeration Constants</h4>
+                      <table class="table table-condensed">
+                          <tr>
+                              <th>Name</th>
+                              <th>Value</th>
+                              <th>Documentation</th>
+                          </tr>
+                            <tr>
+                              <td>NORMAL_VALUE</td>
+                              <td>0</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>NOT_AVAILABLE</td>
+                              <td>-65534</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>NOT_APPLICABLE</td>
+                              <td>-65533</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>RESTRICTED</td>
+                              <td>-65532</td>
+                              <td></td>
+                            </tr>
+                      </table>
+                </div>
+              </div>
+              <a class="anchor" id="refProp-CurrencyCodeEnum"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span> string Enumeration<code>CurrencyCodeEnum</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>Currency code enum, using explicit string values </p>
+                  <h4>Enumeration Constants</h4>
+                      <table class="table table-condensed">
+                          <tr>
+                              <th>Name</th>
+                              <th>Value</th>
+                              <th>Documentation</th>
+                          </tr>
+                            <tr>
+                              <td>EUR</td>
+                              <td>Euro</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>CAD</td>
+                              <td>Canadian Dollar</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>USD</td>
+                              <td>US Dollar</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>CHF</td>
+                              <td>Swiss Franc</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>JPY</td>
+                              <td>Japanese Yen</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>INR</td>
+                              <td>Indian Rupee</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>BRL</td>
+                              <td>Brazilian Real</td>
+                              <td></td>
+                            </tr>
+                      </table>
+                </div>
+              </div>
+              <a class="anchor" id="refProp-Address"></a>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-tasks"></span>
+                    <code>Address</code> 
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <p>Postal address </p>
+                  <h4>Fields</h4>
+                  <table class="table table-condensed">
+                      <tr>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Documentation</th>
+                      </tr>
+                  <tr>
+                      <td>street1</td>
+                      <td>string
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>street2</td>
+                      <td>string
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>city</td>
+                      <td>string
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>stateOrProvince</td>
+                      <td>string
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>postalCode</td>
+                      <td>string
+                      </td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>country</td>
+                      <td>string
+                      </td>
+                      <td></td>
+                  </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /container -->
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery/jquery-1.10.2.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
