@@ -11,7 +11,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"firstName":"Jack","lastNa
 echo "
 "
 echo "Created TaxFiling for Person 2:"
-curl -H "Content-Type: application/json" -X POST -d '{"jurisdiction":"HAW","grossIncome":100.10, "taxpayer":{"id":2, "firstName":"Jack"}}' http://localhost:8080/taxFilings
+curl -H "Content-Type: application/json" -X POST -d '{"jurisdiction":"HAW","grossIncome":100.10, "taxpayer":{"taxpayerID":2, "firstName":"Jack"}}' http://localhost:8080/taxFilings
 echo "
 "
 echo "Requested Person 1:"
