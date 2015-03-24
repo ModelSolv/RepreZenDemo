@@ -159,6 +159,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UserDefinedDataTypes }
+     * 
+     */
+    public UserDefinedDataTypes createUserDefinedDataTypes() {
+        return new UserDefinedDataTypes();
+    }
+
+    /**
      * Create an instance of {@link PersonObjectAddresses }
      * 
      */

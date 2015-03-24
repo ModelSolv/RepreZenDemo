@@ -230,30 +230,30 @@ zenModel TaxBlaster
 			stateOrProvince : string
 			postalCode : string
 			country : string
-//
-//		structure UserDefinedDataTypes
-//			id : string
-//			ssn: SocialSecurityNumber
-//			day1: DayOfYear
-//			da12: DayOfYear1
-//			quantity: WholesaleQuantity
-//			fValue: FractionalValue
-//			age: ChildTravelerAge
-//
-//		simpleType SocialSecurityNumber defined as string
-//			matching regex '999-99-9999'
-//		simpleType DayOfYear1 as integer
-//			valueRange from '1' to '365'
-//
-//		simpleType DayOfYear defined as integer
-//			with valueRange from minimum '1' up to maximum '365' inclusive
-//
-//		/** documentation*/
-//		simpleType WholesaleQuantity as integer
-//			with valueRange from minimum '1000'
-//
-//		simpleType FractionalValue as decimal
-//			with valueRange from '0' exclusive up to '1' exclusive
-//
-//		simpleType ChildTravelerAge defined as integer
-//			valueRange up to '12'
+
+		structure UserDefinedDataTypes
+			id : string
+			ssn: SocialSecurityNumber
+			day1: DayOfYear
+			da12: DayOfYear1
+			quantity: WholesaleQuantity
+			fValue: FractionalValue
+			age: ChildTravelerAge
+
+		simpleType SocialSecurityNumber defined as string
+			matching regex '999-99-9999'
+		simpleType DayOfYear1 as integer
+			valueRange from '1' to '365'
+
+		simpleType DayOfYear defined as integer
+			with valueRange from minimum '1' up to maximum '365' inclusive
+
+		/** documentation*/
+		simpleType WholesaleQuantity as integer
+			with valueRange from minimum '1000'
+
+		simpleType FractionalValue as decimal
+			with valueRange from '0' exclusive up to '1' exclusive
+
+		simpleType ChildTravelerAge defined as integer
+			valueRange up to '12'
