@@ -21,7 +21,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Index"
+              "$ref" : "#/definitions/IndexObject"
             }
           }
         }
@@ -36,7 +36,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Person"
+              "$ref" : "#/definitions/PersonCollection"
             }
           }
         }
@@ -49,13 +49,16 @@
           "in" : "body",
           "name" : "body",
           "description" : "Request body",
-          "required" : true
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/PersonObject"
+          }
         } ],
         "responses" : {
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Person"
+              "$ref" : "#/definitions/PersonObject"
             }
           },
           "400" : {
@@ -73,7 +76,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Person"
+              "$ref" : "#/definitions/PersonObject"
             }
           }
         }
@@ -86,13 +89,16 @@
           "in" : "body",
           "name" : "body",
           "description" : "Request body",
-          "required" : true
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/PersonObject"
+          }
         } ],
         "responses" : {
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Person"
+              "$ref" : "#/definitions/PersonObject"
             }
           },
           "400" : {
@@ -110,7 +116,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/Person"
+              "$ref" : "#/definitions/PersonTaxFilingCollection"
             }
           }
         }
@@ -123,7 +129,10 @@
           "in" : "body",
           "name" : "body",
           "description" : "Request body",
-          "required" : true
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/PersonTaxFilingCollection"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -144,7 +153,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/TaxFiling"
+              "$ref" : "#/definitions/TaxFilingCollection"
             }
           }
         }
@@ -157,13 +166,16 @@
           "in" : "body",
           "name" : "body",
           "description" : "Request body",
-          "required" : true
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/TaxFilingObject"
+          }
         } ],
         "responses" : {
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/TaxFiling"
+              "$ref" : "#/definitions/TaxFilingObject"
             }
           },
           "400" : {
@@ -184,7 +196,7 @@
           "200" : {
             "description" : "",
             "schema" : {
-              "$ref" : "#/definitions/TaxFiling"
+              "$ref" : "#/definitions/TaxFilingObject"
             }
           }
         }
