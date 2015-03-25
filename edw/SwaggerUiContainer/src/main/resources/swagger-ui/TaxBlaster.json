@@ -1,0 +1,579 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "",
+    "version" : "1.0.0",
+    "title" : "TaxBlaster"
+  },
+  "host" : "taxblaster.com",
+  "basePath" : "/api",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "index" : {
+      "get" : {
+        "description" : "",
+        "operationId" : "getIndex",
+        "consumes" : [ "application/xml" ],
+        "responses" : {
+          "404" : {
+            "description" : ""
+          },
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Index"
+            }
+          }
+        }
+      }
+    },
+    "people" : {
+      "get" : {
+        "description" : "",
+        "operationId" : "getPersonCollection",
+        "consumes" : [ "application/xml" ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Person"
+            }
+          }
+        }
+      },
+      "post" : {
+        "description" : "",
+        "operationId" : "updatePersonCollection",
+        "consumes" : [ "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Request body",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Person"
+            }
+          },
+          "400" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "people/{id}" : {
+      "get" : {
+        "description" : "",
+        "operationId" : "getPersonObject",
+        "consumes" : [ "application/xml" ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Person"
+            }
+          }
+        }
+      },
+      "put" : {
+        "description" : "",
+        "operationId" : "putPersonObject",
+        "consumes" : [ "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Request body",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Person"
+            }
+          },
+          "400" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "people/{id}/taxFilings" : {
+      "get" : {
+        "description" : "",
+        "operationId" : "getPersonTaxFilingCollection",
+        "consumes" : [ "application/xml" ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/Person"
+            }
+          }
+        }
+      },
+      "put" : {
+        "description" : "",
+        "operationId" : "putPersonTaxFilingCollection",
+        "consumes" : [ "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Request body",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : ""
+          },
+          "400" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "taxFilings" : {
+      "get" : {
+        "description" : "",
+        "operationId" : "getTaxFilingCollection",
+        "consumes" : [ "application/xml" ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/TaxFiling"
+            }
+          }
+        }
+      },
+      "post" : {
+        "description" : "",
+        "operationId" : "updateTaxFilingCollection",
+        "consumes" : [ "application/xml" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Request body",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/TaxFiling"
+            }
+          },
+          "400" : {
+            "description" : ""
+          }
+        }
+      }
+    },
+    "taxFilings/{id}" : {
+      "get" : {
+        "description" : "",
+        "operationId" : "getTaxFiling",
+        "consumes" : [ "application/xml" ],
+        "responses" : {
+          "404" : {
+            "description" : ""
+          },
+          "200" : {
+            "description" : "",
+            "schema" : {
+              "$ref" : "#/definitions/TaxFiling"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CurrencyCodeEnum" : {
+      "type" : "string",
+      "description" : "Currency code enum, using explicit string values",
+      "enum" : [ "Euro", "Canadian Dollar", "US Dollar", "Swiss Franc", "Japanese Yen", "Indian Rupee", "Brazilian Real" ]
+    },
+    "TaxFilingStatusEnum" : {
+      "type" : "integer",
+      "description" : "Tax filing status enumeration, using default values",
+      "enum" : [ 0, 1, 2, 3, 4, 5 ]
+    },
+    "SpecialValueEnum" : {
+      "type" : "integer",
+      "description" : "Special Value Enum, using explicit integer values",
+      "enum" : [ 0, -65534, -65533, -65532 ]
+    },
+    "IndexObject" : {
+      "type" : "object",
+      "description" : "The Index Resource is the entry point to the TaxBlaster API. To minimize coupling, consuming applications should start here, and follow the links to related resources.",
+      "properties" : { }
+    },
+    "TaxFilingCollection" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "description" : "The list of Tax Filings visible to the authorized user.",
+        "properties" : {
+          "filingID" : {
+            "description" : "",
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "jurisdiction" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "year" : {
+            "description" : "",
+            "type" : "integer"
+          },
+          "period" : {
+            "description" : "",
+            "type" : "integer"
+          },
+          "currency" : {
+            "description" : "",
+            "$ref" : "#/definitions/CurrencyCodeEnum"
+          },
+          "grossIncome" : {
+            "description" : "",
+            "type" : "number"
+          },
+          "taxLiability" : {
+            "description" : "",
+            "type" : "number"
+          },
+          "status" : {
+            "description" : "",
+            "$ref" : "#/definitions/TaxFilingStatusEnum"
+          },
+          "taxpayer" : {
+            "description" : "",
+            "type" : "object",
+            "properties" : {
+              "taxpayerID" : {
+                "description" : "A unique, system-assigned identifier for the user.",
+                "type" : "integer",
+                "format" : "int64"
+              },
+              "lastName" : {
+                "description" : "Legal family name.",
+                "type" : "string"
+              },
+              "firstName" : {
+                "description" : "Legal first name.",
+                "type" : "string"
+              },
+              "otherNames" : {
+                "description" : "Names previously used *",
+                "type" : "string"
+              },
+              "netWorth" : {
+                "description" : "Net worth, if known",
+                "type" : "number"
+              },
+              "netWorthSpecialValue" : {
+                "description" : "Net worth special value",
+                "$ref" : "#/definitions/SpecialValueEnum"
+              },
+              "preferredLanguage" : {
+                "description" : "Preferred language for communications with this person",
+                "type" : "string"
+              },
+              "DOB" : {
+                "description" : "Date of birth",
+                "type" : "string"
+              },
+              "addresses" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "street1" : {
+                      "description" : "",
+                      "type" : "string"
+                    },
+                    "street2" : {
+                      "description" : "",
+                      "type" : "string"
+                    },
+                    "city" : {
+                      "description" : "",
+                      "type" : "string"
+                    },
+                    "stateOrProvince" : {
+                      "description" : "",
+                      "type" : "string"
+                    },
+                    "postalCode" : {
+                      "description" : "",
+                      "type" : "string"
+                    },
+                    "country" : {
+                      "description" : "",
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "PersonCollection" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "description" : "The list of TaxBlaster users.  The results will vary in membership and level of detail, depending on your access privileges.",
+        "properties" : {
+          "taxpayerID" : {
+            "description" : "",
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "lastName" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "firstName" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "otherNames" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "netWorth" : {
+            "description" : "",
+            "type" : "number"
+          },
+          "netWorthSpecialValue" : {
+            "description" : "",
+            "$ref" : "#/definitions/SpecialValueEnum"
+          },
+          "preferredLanguage" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "DOB" : {
+            "description" : "",
+            "type" : "string"
+          },
+          "addresses" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "street1" : {
+                  "description" : "",
+                  "type" : "string"
+                },
+                "street2" : {
+                  "description" : "",
+                  "type" : "string"
+                },
+                "city" : {
+                  "description" : "",
+                  "type" : "string"
+                },
+                "stateOrProvince" : {
+                  "description" : "",
+                  "type" : "string"
+                },
+                "postalCode" : {
+                  "description" : "",
+                  "type" : "string"
+                },
+                "country" : {
+                  "description" : "",
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "required" : [ "addresses" ]
+      }
+    },
+    "TaxFilingObject" : {
+      "type" : "object",
+      "description" : "An individual Tax Filing record, accessed by its ID",
+      "properties" : {
+        "filingID" : {
+          "description" : "",
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "jurisdiction" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "year" : {
+          "description" : "",
+          "type" : "integer"
+        },
+        "period" : {
+          "description" : "",
+          "type" : "integer"
+        },
+        "currency" : {
+          "description" : "",
+          "$ref" : "#/definitions/CurrencyCodeEnum"
+        },
+        "grossIncome" : {
+          "description" : "",
+          "type" : "number"
+        },
+        "taxLiability" : {
+          "description" : "",
+          "type" : "number"
+        },
+        "status" : {
+          "description" : "",
+          "$ref" : "#/definitions/TaxFilingStatusEnum"
+        }
+      }
+    },
+    "PersonObject" : {
+      "type" : "object",
+      "description" : "An individual user by ID.",
+      "properties" : {
+        "taxpayerID" : {
+          "description" : "",
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastName" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "firstName" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "otherNames" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "netWorth" : {
+          "description" : "",
+          "type" : "number"
+        },
+        "netWorthSpecialValue" : {
+          "description" : "",
+          "$ref" : "#/definitions/SpecialValueEnum"
+        },
+        "preferredLanguage" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "DOB" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "addresses" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "street1" : {
+                "description" : "",
+                "type" : "string"
+              },
+              "street2" : {
+                "description" : "",
+                "type" : "string"
+              },
+              "city" : {
+                "description" : "",
+                "type" : "string"
+              },
+              "stateOrProvince" : {
+                "description" : "",
+                "type" : "string"
+              },
+              "postalCode" : {
+                "description" : "",
+                "type" : "string"
+              },
+              "country" : {
+                "description" : "",
+                "type" : "string"
+              }
+            }
+          }
+        }
+      },
+      "required" : [ "addresses" ]
+    },
+    "PersonTaxFilingCollection" : {
+      "type" : "object",
+      "description" : "",
+      "properties" : {
+        "taxpayerID" : {
+          "description" : "",
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastName" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "firstName" : {
+          "description" : "",
+          "type" : "string"
+        },
+        "taxFilings" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "currency" : {
+                "description" : "Currency code",
+                "$ref" : "#/definitions/CurrencyCodeEnum"
+              },
+              "filingID" : {
+                "description" : "A unique, system-assigned identifier for the tax filing.",
+                "type" : "integer",
+                "format" : "int64"
+              },
+              "grossIncome" : {
+                "description" : "Total income reported on tax filing.",
+                "type" : "number"
+              },
+              "jurisdiction" : {
+                "description" : "Country, province, state or local tax authority where this is being filed.",
+                "type" : "string"
+              },
+              "period" : {
+                "description" : "Period within the year, if any",
+                "type" : "integer"
+              },
+              "status" : {
+                "description" : "Tax filing status",
+                "$ref" : "#/definitions/TaxFilingStatusEnum"
+              },
+              "taxLiability" : {
+                "description" : "Net tax liability",
+                "type" : "number"
+              },
+              "year" : {
+                "description" : "Tax year",
+                "type" : "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
