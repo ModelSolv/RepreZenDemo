@@ -10,19 +10,19 @@
     and embeds all of the tax filing data.
   - User defined data types.
 */
-
-// By default, reference links will use the reference property name
-// as the link relation.  Here, we are overriding the reference
-// links to use the IANA-registered 'subsection' link relation.
-// http://www.iana.org/assignments/link-relations/link-relations.xhtml
 zenModel TaxBlaster
 
 	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
-		/** The Index Resource is the entry point to the TaxBlaster API. To minimize
-		    coupling, consuming applications should start here, and follow the links to
+
+		/** The Index Resource is the entry point to the TaxBlaster API. To minimize 
+		    coupling, consuming applications should start here, and follow the links to 
 		    related resources. */
 		objectResource IndexObject type Index
 			URI index
+			// By default, reference links will use the reference property name
+			// as the link relation.  Here, we are overriding the reference
+			// links to use the IANA-registered 'subsection' link relation.
+			// http://www.iana.org/assignments/link-relations/link-relations.xhtml
 			referenceLink > people
 				targetResource PersonCollection
 				linkRelation subsection
@@ -37,7 +37,7 @@ zenModel TaxBlaster
 
 		/** The list of Tax Filings visible to the authorized user. */
 		default collectionResource TaxFilingCollection type TaxFiling
-			URI /taxFilings
+			URI /taxfilings
 			mediaTypes
 				application/xml
 			method GET getTaxFilingCollection
@@ -47,21 +47,19 @@ zenModel TaxBlaster
 				request TaxFilingObject
 				response TaxFilingObject statusCode 200
 				response statusCode 400
-		/** The list of TaxBlaster users.  The results will vary in membership and level
+
+		/** The list of TaxBlaster users.  The results will vary in membership and level 
 		    of detail, depending on your access privileges. */
 		default collectionResource PersonCollection type Person
 			URI /people
-			only properties
-				taxpayerID
-				lastName
+			with all properties including
 				firstName
+					of length from 2 // Demo: contextual constraint
+				addresses+ //Demo: cardinality override. 
+			excluding
 				otherNames
-				netWorth
 				netWorthSpecialValue
-				preferredLanguage
-				DOB
-				taxFilings
-				addresses+ // must have at least one address
+				preferredLanguage				
 			mediaTypes
 				application/xml
 			method GET getPersonCollection
@@ -71,37 +69,40 @@ zenModel TaxBlaster
 				request PersonObject
 				response PersonObject statusCode 200
 				response statusCode 400
+
 		/** An individual Tax Filing record, accessed by its ID */
 		objectResource TaxFilingObject type TaxFiling
 			URI taxFilings/{id}
 				/** filingID of the requested TaxFiling */
 				required templateParam id property filingID
-			referenceLink > taxpayer
-				targetResource PersonObject 
+			// Demo recursive property subsets
+			with all properties excluding
+				jurisdiction
+				status
+			referenceEmbed > taxpayer
 				targetProperties
 					taxpayerID
+					lastName
 					firstName
+				referenceEmbed > addresses
+					targetProperties
+						city
+						postalCode
+						country
 			mediaTypes
 				application/xml
 			method GET getTaxFiling
 				request
 				response TaxFilingObject statusCode 200
 				response statusCode 404
+
 		/** An individual user by ID. */
 		objectResource PersonObject type Person
 			URI people/{id}
 				/** taxpayerID of the requested Person */
 				required templateParam id property taxpayerID
-			only properties
-				taxpayerID
-				lastName
-				firstName
-				otherNames
-				netWorth
-				netWorthSpecialValue
-				preferredLanguage
-				DOB
-				taxFilings
+			// Demo: cardinality override via property subset.
+			with all properties including
 				addresses+ // must have at least one address
 			mediaTypes
 				application/xml
@@ -112,44 +113,18 @@ zenModel TaxBlaster
 				request PersonObject
 				response PersonObject statusCode 200
 				response statusCode 400
-		objectResource PersonTaxFilingCollection type Person
-			URI /people/{id}/taxFilings
-			/* Subset of person properties included here. */
-			only properties
-				taxpayerID
-				lastName
-				firstName
-			/* Tax filings data will be embedded within the Person representation. */
-			referenceEmbed > taxFilings
-				targetProperties
-					currency
-					filingID
-					grossIncome
-					jurisdiction
-					period
-					status
-					taxLiability
-					year
-			mediaTypes
-				application/xml
-			method GET getPersonTaxFilingCollection
-				request
-				response PersonTaxFilingCollection statusCode 200
-			method PUT putPersonTaxFilingCollection
-				request PersonTaxFilingCollection
-				response statusCode 200
-				response statusCode 400
+
 	/** Supporting data types for the TaxBlaster API */
 	dataModel TaxBlasterDataModel
-		/** A tax filing record for a given user, in a given tax jurisdiction, in a
+		/** A tax filing record for a given user, in a given tax jurisdiction, in a 
 		    specified tax year. */
 		structure TaxFiling
 			/** A unique, system-assigned identifier for the tax filing. */
 			filingID : long
 			/** Reference to the person who owns this filing. */
 			taxpayer : reference to Person inverse taxFilings
-			/** Country, province, state or local tax authority
-				where this is being filed. */
+			/** Country, province, state or local tax authority where this is being filed. 
+			    */
 			jurisdiction : string
 			/** Tax year */
 			year : int
@@ -163,10 +138,13 @@ zenModel TaxBlaster
 			taxLiability : decimal
 			/** Tax filing status */
 			status : TaxFilingStatusEnum
+
 		/** A TaxBlaster user. */
 		structure Person
 			/** A unique, system-assigned identifier for the user. */
 			taxpayerID : long
+			/** SSN */
+			ssn : SocialSecurityNumber
 			/** Legal family name. */
 			lastName : string
 			/** Legal first name. */
@@ -190,9 +168,9 @@ zenModel TaxBlaster
 			taxFilings : reference to TaxFiling* inverse taxpayer
 			/** Postal addresses, zero or more */
 			addresses : containing Address*
-		/** The supporting data type for the Index resource.  Not meaningful
- 			as a business entity, but required to support a single point of
- 			entry. */
+
+		/** The supporting data type for the Index resource.  Not meaningful as a 
+		    business entity, but required to support a single point of entry. */
 		structure Index
 			people : reference to Person*
 			taxFilings : reference to TaxFiling*
@@ -222,26 +200,20 @@ zenModel TaxBlaster
 			JPY : "Japanese Yen"
 			INR : "Indian Rupee"
 			BRL : "Brazilian Real"
+
 		/** Postal address */
 		structure Address
 			street1 : string
-			street2 : string?
+			street2 : string
 			city : string
 			stateOrProvince : string
 			postalCode : string
 			country : string
 
-		structure UserDefinedDataTypes
-			id : string
-			ssn: SocialSecurityNumber
-			day1: DayOfYear
-			da12: DayOfYear1
-			quantity: WholesaleQuantity
-			fValue: FractionalValue
-			age: ChildTravelerAge
 
 		simpleType SocialSecurityNumber defined as string
 			matching regex '999-99-9999'
+			
 		simpleType DayOfYear1 as integer
 			valueRange from '1' to '365'
 
