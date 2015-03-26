@@ -30,7 +30,7 @@ zenModel TaxBlaster
 				targetResource TaxFilingCollection
 				linkRelation subsection
 			mediaTypes
-				application/xml
+				application/json
 			method GET getIndex
 				response IndexObject statusCode 200
 				response statusCode 404
@@ -39,7 +39,7 @@ zenModel TaxBlaster
 		default collectionResource TaxFilingCollection type TaxFiling
 			URI /taxfilings
 			mediaTypes
-				application/xml
+				application/json
 			method GET getTaxFilingCollection
 				request
 				response TaxFilingCollection statusCode 200
@@ -61,7 +61,7 @@ zenModel TaxBlaster
 				netWorthSpecialValue
 				preferredLanguage				
 			mediaTypes
-				application/xml
+				application/json
 			method GET getPersonCollection
 				request
 				response PersonCollection statusCode 200
@@ -90,7 +90,7 @@ zenModel TaxBlaster
 						postalCode
 						country
 			mediaTypes
-				application/xml
+				application/json
 			method GET getTaxFiling
 				request
 				response TaxFilingObject statusCode 200
@@ -105,7 +105,7 @@ zenModel TaxBlaster
 			with all properties including
 				addresses+ // must have at least one address
 			mediaTypes
-				application/xml
+				application/json
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
