@@ -1,0 +1,44 @@
+zenModel TaxBlasterDataModel
+
+	dataModel TaxBlasterDataModel
+	
+		structure TaxFiling
+			filingID : long
+			// What do we do with references in this generated file?
+			taxpayer : reference to Person //inverse taxFilings
+			jurisdiction : string
+			year : int
+			period : int
+			currency : CurrencyCodeEnum
+			grossIncome : decimal
+			taxLiability : decimal
+			status : TaxFilingStatusEnum
+
+		structure Person
+			taxpayerID : long
+// Add this
+//			ssn : SocialSecurityNumber
+			lastName : string
+			firstName : string
+			otherNames : string*
+			netWorth : decimal
+			netWorthSpecialValue : SpecialValueEnum
+			preferredLanguage : string
+			DOB : string
+			// Do we go with reference or containing? 
+			// Or do we use a string?
+			taxFilings : reference to TaxFiling* //inverse taxpayer
+			addresses : containing Address*
+
+		structure Address
+			street1 : string
+			street2 : string
+			city : string
+			stateOrProvince : string
+			postalCode : string
+			country : string
+
+		simpleType CurrencyCodeEnum defined as string
+		simpleType TaxFilingStatusEnum defined as string
+		simpleType SpecialValueEnum defined as string
+		

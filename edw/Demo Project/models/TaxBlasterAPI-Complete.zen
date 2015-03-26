@@ -1,0 +1,105 @@
+import TaxBlasterDataModel.TaxBlasterDataModel from "TaxBlasterDataModel-Complete.zen"
+
+zenModel TaxBlaster
+
+	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+
+		/** The Index Resource is the entry point to the TaxBlaster API. To minimize 
+		    coupling, consuming applications should start here, and follow the links to 
+		    related resources. */
+		objectResource IndexObject type Index
+			URI index
+			// By default, reference links will use the reference property name
+			// as the link relation.  Here, we are overriding the reference
+			// links to use the IANA-registered 'subsection' link relation.
+			// http://www.iana.org/assignments/link-relations/link-relations.xhtml
+			referenceLink > people
+				targetResource PersonCollection
+				linkRelation subsection
+			referenceLink > taxFilings
+				targetResource TaxFilingCollection
+				linkRelation subsection
+			mediaTypes
+				application/xml
+			method GET getIndex
+				response IndexObject statusCode 200
+				response statusCode 404
+
+		/** The list of Tax Filings visible to the authorized user. */
+		default collectionResource TaxFilingCollection type TaxFiling
+			URI /taxfilings
+			mediaTypes
+				application/xml
+			method GET getTaxFilingCollection
+				request
+				response TaxFilingCollection statusCode 200
+			method POST updateTaxFilingCollection
+				request TaxFilingObject
+				response TaxFilingObject statusCode 200
+				response statusCode 400
+
+		/** The list of TaxBlaster users.  The results will vary in membership and level 
+		    of detail, depending on your access privileges. */
+		default collectionResource PersonCollection type Person
+			URI /people
+			with all properties including
+				firstName
+					of length from 2 // Demo: contextual constraint
+				addresses+ //Demo: cardinality override. 
+			excluding
+				otherNames
+				netWorthSpecialValue
+				preferredLanguage				
+			mediaTypes
+				application/xml
+			method GET getPersonCollection
+				request
+				response PersonCollection statusCode 200
+			method POST updatePersonCollection
+				request PersonObject
+				response PersonObject statusCode 200
+				response statusCode 400
+
+		/** An individual Tax Filing record, accessed by its ID */
+		objectResource TaxFilingObject type TaxFiling
+			URI taxFilings/{id}
+				/** filingID of the requested TaxFiling */
+				required templateParam id property filingID
+			// Demo recursive property subsets
+			with all properties excluding
+				jurisdiction
+				status
+			referenceEmbed > taxpayer
+				targetProperties
+					taxpayerID
+					lastName
+					firstName
+				referenceEmbed > addresses
+					targetProperties
+						city
+						postalCode
+						country
+			mediaTypes
+				application/xml
+			method GET getTaxFiling
+				request
+				response TaxFilingObject statusCode 200
+				response statusCode 404
+
+		/** An individual user by ID. */
+		objectResource PersonObject type Person
+			URI people/{id}
+				/** taxpayerID of the requested Person */
+				required templateParam id property taxpayerID
+			// Demo: cardinality override via property subset.
+			with all properties including
+				addresses+ // must have at least one address
+			mediaTypes
+				application/xml
+			method GET getPersonObject
+				request
+				response PersonObject statusCode 200
+			method PUT putPersonObject
+				request PersonObject
+				response PersonObject statusCode 200
+				response statusCode 400

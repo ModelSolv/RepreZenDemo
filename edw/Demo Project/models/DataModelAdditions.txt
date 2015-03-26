@@ -1,0 +1,49 @@
+		structure Index
+			people : reference to Person*
+			taxFilings : reference to TaxFiling*
+
+// How do we translate ERwin domains? We might be able to translate
+// them to a structure or a user defined simple type that we can convert
+// to enums?
+
+		enum int TaxFilingStatusEnum
+			DRAFT
+			PENDING_CPA_REVIEW
+			PENDING_CLIENT_REVIEW
+			FILED
+			AMENDED
+			CLOSED
+
+		enum int SpecialValueEnum
+			NORMAL_VALUE : 0
+			NOT_AVAILABLE : -65534
+			NOT_APPLICABLE : -65533
+			RESTRICTED : -65532
+
+		enum string CurrencyCodeEnum
+			EUR : "Euro"
+			CAD : "Canadian Dollar"
+			USD : "US Dollar"
+			CHF : "Swiss Franc"
+			JPY : "Japanese Yen"
+			INR : "Indian Rupee"
+			BRL : "Brazilian Real"
+
+
+		simpleType SocialSecurityNumber defined as string
+			matching regex '999-99-9999'
+			
+		simpleType DayOfYear1 as integer
+			valueRange from '1' to '365'
+
+		simpleType DayOfYear defined as integer
+			with valueRange from minimum '1' up to maximum '365' inclusive
+
+		simpleType WholesaleQuantity as integer
+			with valueRange from minimum '1000'
+
+		simpleType FractionalValue as decimal
+			with valueRange from '0' exclusive up to '1' exclusive
+
+		simpleType ChildTravelerAge defined as integer
+			valueRange up to '12'
