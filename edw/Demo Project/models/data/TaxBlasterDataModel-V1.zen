@@ -1,3 +1,8 @@
+
+// Steps to evolve this:
+// 0. Change long or string properties to references?
+// 1. Add ssn simple type with constraint.
+// 2. Add enumerations from the file.
 zenModel TaxBlasterDataModel
 
 	dataModel TaxBlasterDataModel
