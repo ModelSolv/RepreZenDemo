@@ -12,55 +12,24 @@
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-assets</artifactId>
-			<version>${dropwizard.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>fi.iki.elonen</groupId>
+			<artifactId>nanohttpd</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>fi.iki.elonen</groupId>
+			<artifactId>nanohttpd-webserver</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<createDependencyReducedPom>true</createDependencyReducedPom>
-					<filters>
-						<filter>
-							<artifact>*:*</artifact>
-							<excludes>
-								<exclude>META-INF/*.SF</exclude>
-								<exclude>META-INF/*.DSA</exclude>
-								<exclude>META-INF/*.RSA</exclude>
-							</excludes>
-						</filter>
-					</filters>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.modelsolv.reprezen.demo.swaggerui.SwaggerUiApplication</mainClass>
-								</transformer>
-							</transformers>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+	<repositories>
+		<repository>
+			<id>jsumners-github-releases</id>
+			<url>https://github.com/jsumners/mvn-repo/raw/master/releases/</url>
+		</repository>
+		<repository>
+			<id>jsumners-github-snapshots</id>
+			<url>https://github.com/jsumners/mvn-repo/raw/master/snapshots/</url>
+		</repository>
+	</repositories>
 </project>
