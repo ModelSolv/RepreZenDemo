@@ -62,7 +62,7 @@ zenModel TaxBlaster
 
 		/** An individual Tax Filing record, accessed by its ID */
 		objectResource TaxFilingObject type TaxFiling
-			URI taxFilings/{id}
+			URI taxfilings/{id}
 				/** filingID of the requested TaxFiling */
 				required templateParam id property filingID
 			// Demo recursive property subsets

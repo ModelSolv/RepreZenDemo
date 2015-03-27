@@ -1,0 +1,32 @@
+// TODO: Update this to import the data model we will grow/adapt by adding things.
+// Steps: 
+// - add example data to objectResources.
+// - run mock service with Swagger UI?
+import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
+
+zenModel TaxBlaster
+
+	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+
+		objectResource TaxFilingObject type TaxFiling
+			URI /taxfilings/{id}
+				required templateParam id property filingID
+			mediaTypes
+				application/json
+			method GET getTaxFilingObject
+				request
+				response TaxFilingObject statusCode 200
+		
+		objectResource PersonObject type Person
+			URI /people/{id}
+				required templateParam id property taxpayerID
+			mediaTypes
+				application/json
+			method GET getPersonObject
+				request
+				response PersonObject statusCode 200
+			method PUT putPersonObject
+				request PersonObject
+				response statusCode 200
+				response statusCode 400
+		

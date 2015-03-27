@@ -1,0 +1,76 @@
+// TODO: Update this to import the data model we will grow/adapt by adding things.
+// Steps: add example data to this using external files.
+import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
+
+zenModel TaxBlaster
+
+	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+	
+		collectionResource TaxFilingCollection type TaxFiling
+			URI /taxfilings
+			mediaTypes
+				application/json
+			method GET getTaxFilingCollection
+				request
+				response TaxFilingCollection statusCode 200
+			method POST updateTaxFilingCollection
+				request TaxFilingCollection
+				response statusCode 200
+				response statusCode 400
+				
+		collectionResource PersonCollection type Index
+			URI /people
+			mediaTypes
+				application/json
+			method GET getPersonCollection
+				request
+				response PersonCollection statusCode 200
+			method POST updatePersonCollection
+				request PersonCollection
+				response statusCode 200
+				response statusCode 400
+
+		objectResource TaxFilingObject type TaxFiling
+			URI /taxfilings/{id}
+				required templateParam id property filingID
+			with all properties excluding
+				jurisdiction
+				status
+			referenceEmbed > taxpayer
+				targetProperties
+					taxpayerID
+					lastName
+					firstName
+				referenceEmbed > addresses
+					targetProperties
+						city
+						postalCode
+						country
+			mediaTypes
+				application/json
+			method GET getTaxFilingObject
+				request
+				response TaxFilingObject statusCode 200
+
+		objectResource PersonObject type Person
+			URI /people/{id}
+				required templateParam id property taxpayerID
+			with all properties including
+				addresses+
+				firstName
+					of length from 2
+			excluding
+				otherNames
+				preferredLanguage
+				netWorth
+				netWorthSpecialValue
+			mediaTypes
+				application/json
+			method GET getPersonObject
+				request
+				response PersonObject statusCode 200
+			method PUT putPersonObject
+				request PersonObject
+				response statusCode 200
+				response statusCode 400
+		
