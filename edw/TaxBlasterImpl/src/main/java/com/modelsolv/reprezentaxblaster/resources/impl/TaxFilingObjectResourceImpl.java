@@ -13,7 +13,7 @@ import com.modelsolv.reprezen.schemas.taxblaster.taxblasterinterface.TaxFilingOb
 import com.modelsolv.reprezen.taxblaster.dao.TaxFilingDAO;
 import com.modelsolv.reprezen.taxblaster.dao.TaxFilingImpl;
 
-@Path("taxFilings/{id}")
+@Path("taxfilings/{id}")
 public class TaxFilingObjectResourceImpl implements TaxFilingObjectResource {
 
 	private TaxFilingDAO taxFilingDao;

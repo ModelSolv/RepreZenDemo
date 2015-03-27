@@ -9,7 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import com.modelsolv.reprezen.schemas.taxblaster.taxblasterinterface.TaxFilingObject;
 
-@Path("taxFilings/{id}")
+@Path("taxfilings/{id}")
 public interface TaxFilingObjectResource {
 
     @GET

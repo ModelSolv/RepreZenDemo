@@ -16,7 +16,7 @@ import com.modelsolv.reprezen.taxblaster.dao.PersonImpl;
 import com.modelsolv.reprezen.taxblaster.dao.TaxFilingDAO;
 import com.modelsolv.reprezen.taxblaster.dao.TaxFilingImpl;
 
-@Path("taxFilings")
+@Path("taxfilings")
 public class TaxFilingCollectionResourceImpl implements
 		TaxFilingCollectionResource {
 

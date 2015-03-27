@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import com.modelsolv.reprezen.schemas.taxblaster.taxblasterinterface.PersonTaxFilingCollection;
 
-@Path("people/{id}/taxFilings")
+@Path("people/{id}/taxfilings")
 public interface PersonTaxFilingCollectionResource {
 
     @GET
