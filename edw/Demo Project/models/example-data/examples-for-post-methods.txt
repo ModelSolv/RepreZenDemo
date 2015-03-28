@@ -1,0 +1,8 @@
+Create Person 1:
+{"firstName":"John","lastName":"Smith"}
+
+Create Person 2:
+'{"firstName":"Jack","lastName":"Johnson"}
+
+Create TaxFiling for Person 2
+{"jurisdiction":"HAW","grossIncome":100.10, "taxpayer":{"taxpayerID":2, "firstName":"Jack"}}
