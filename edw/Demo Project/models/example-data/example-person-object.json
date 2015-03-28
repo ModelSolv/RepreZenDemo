@@ -1,0 +1,8 @@
+{
+    "taxpayerID": "user1"
+    "lastName": "Smith"
+    "firstName": "John"
+    "otherNames": [
+      "Jean Poupon"
+    ]
+}

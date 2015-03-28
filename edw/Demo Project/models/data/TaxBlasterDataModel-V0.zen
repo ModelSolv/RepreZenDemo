@@ -1,0 +1,39 @@
+zenModel TaxBlasterDataModel
+
+	dataModel TaxBlasterDataModel
+	
+		structure TaxFiling
+			filingID : long
+			taxpayer : reference to Person
+			jurisdiction : string
+			year : int
+			period : int
+			currency : CurrencyCodeEnum
+			grossIncome : decimal
+			taxLiability : decimal
+			status : TaxFilingStatusEnum
+
+		structure Person
+			taxpayerID : long
+			lastName : string
+			firstName : string
+			otherNames : string*
+			netWorth : decimal
+			netWorthSpecialValue : SpecialValueEnum
+			preferredLanguage : string
+			DOB : string
+			taxFilings : reference to TaxFiling*
+			addresses : containing Address*
+
+		structure Address
+			street1 : string
+			street2 : string
+			city : string
+			stateOrProvince : string
+			postalCode : string
+			country : string
+
+		simpleType CurrencyCodeEnum defined as string
+		simpleType TaxFilingStatusEnum defined as string
+		simpleType SpecialValueEnum defined as string
+		

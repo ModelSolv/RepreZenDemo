@@ -1,0 +1,23 @@
+[
+    "filingID": "taxFiling1"
+    "jurisdiction": "BURLINGAME"
+    "year": 2012
+    "currency": "USD"
+    "grossIncome": 12345.67
+    "taxLiability": 12.34
+
+    "filingID": "taxFiling2"
+    "jurisdiction": "CORCORAN"
+    "year": 2013
+    "currency": "USD"
+    "grossIncome": 98765.43
+    "taxLiability": 23.45
+
+    "filingID": "taxFiling3"
+    "jurisdiction": "CLAYTON"
+    "year": 2012
+    "currency": "USD"
+    "grossIncome": 56789.12
+    "taxLiability": 12.34
+
+]
