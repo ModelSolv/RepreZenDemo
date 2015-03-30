@@ -28,15 +28,15 @@ zenModel TaxBlaster
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
-					externalExample "../../example-data/taxfiling-object.json"
+					externalExample "../example-data/taxfiling-object.json"
 
 		objectResource PersonObject type Person
 			URI people/{id}
 				required templateParam id property taxpayerID
 			with all properties including
 				addresses+
-				firstName
-					of length from 2
+				ssn
+					matching regex '(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}'
 			excluding
 				otherNames
 				preferredLanguage
@@ -47,7 +47,7 @@ zenModel TaxBlaster
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
-					externalExample "../../example-data/person-object.json"
+					externalExample "../example-data/person-object.json"
 			method PUT putPersonObject
 				request PersonObject
 				response statusCode 200
