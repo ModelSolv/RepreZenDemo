@@ -17,7 +17,7 @@ zenModel TaxBlaster
 			method GET getTaxFilingCollection
 				request
 				response TaxFilingCollection statusCode 200
-					externalExample "../example-data/example-taxfiling-collection.json"
+					externalExample "../../example-data/example-taxfiling-collection.json"
 			method POST updateTaxFilingCollection
 				request TaxFilingCollection
 				response statusCode 200
@@ -30,7 +30,7 @@ zenModel TaxBlaster
 			method GET getPersonCollection
 				request
 				response PersonCollection statusCode 200
-					externalExample "../example-data/example-person-collection.json"
+					externalExample "../../example-data/example-person-collection.json"
 			method POST updatePersonCollection
 				request PersonCollection
 				response statusCode 200
@@ -57,7 +57,7 @@ zenModel TaxBlaster
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
-					externalExample "../example-data/example-taxfiling-object.json"
+					externalExample "../../example-data/example-taxfiling-object.json"
 
 		objectResource PersonObject type Person
 			URI /people/{id}
@@ -76,7 +76,7 @@ zenModel TaxBlaster
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
-					externalExample "../example-data/example-person-object.json"
+					externalExample "../../example-data/example-person-object.json"
 			method PUT putPersonObject
 				request PersonObject
 				response statusCode 200
