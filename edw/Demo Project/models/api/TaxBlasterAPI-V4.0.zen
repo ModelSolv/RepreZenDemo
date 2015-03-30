@@ -1,7 +1,7 @@
 // Demo Steps: 
 // - Add collectionResources.
 // - Add example data to collection resources.
-import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" 
+import TaxBlaster.DataModel from "https://raw.githubusercontent.com/ModelSolv/DemoData/master/TaxBlaster/models/TaxBlasterDataModel.zen" 
 
 zenModel TaxBlaster
 

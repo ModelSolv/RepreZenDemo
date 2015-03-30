@@ -4,7 +4,7 @@
 // - Object resources with example data and realizations
 // - Data model with updates accepted and integrated.
 // - Imports github model again rather than local copy.
-import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" 
+import TaxBlaster.DataModel from "https://raw.githubusercontent.com/ModelSolv/DemoData/master/TaxBlaster/models/TaxBlasterDataModel.zen" 
 
 zenModel TaxBlaster
 

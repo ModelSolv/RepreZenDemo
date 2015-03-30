@@ -4,7 +4,7 @@
 // - Add ssn property to Person object from central data model.
 // - Push changes to central data model and open pull request for these changes.
 // - When changes are accepted and merged then update import statement to use github URL again.
-import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" 
+import TaxBlaster.DataModel from "https://raw.githubusercontent.com/ModelSolv/DemoData/master/TaxBlaster/models/TaxBlasterDataModel.zen" 
 
 zenModel TaxBlaster
 

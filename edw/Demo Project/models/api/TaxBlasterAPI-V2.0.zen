@@ -1,7 +1,7 @@
 // Demo Steps: 
 // - Add example data to objectResources. 
 // - Run mock service - with Swagger UI?
-import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" // TODO: update URL
+import TaxBlaster.DataModel from "https://raw.githubusercontent.com/ModelSolv/DemoData/master/TaxBlaster/models/TaxBlasterDataModel.zen"
 
 zenModel TaxBlaster
 
