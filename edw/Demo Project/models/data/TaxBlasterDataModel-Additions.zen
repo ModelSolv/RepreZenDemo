@@ -1,4 +1,4 @@
-import TaxBlaster.DataModel from "TaxBlasterDataModel-V2.zen"
+import TaxBlaster.DataModel from "TaxBlasterDataModel.zen"
 // This file contains the stuff we will add to the data model we imported from ERwin:
 // - Index Structure - don't think we will use this.
 // - SSN user defined type to use used in Person.

@@ -1,4 +1,4 @@
-import TaxBlasterDataModel.TaxBlasterDataModel from "TaxBlasterDataModel-Complete.zen"
+import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel.zen"
 
 zenModel TaxBlaster
 
