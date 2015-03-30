@@ -1,21 +1,25 @@
 [
-    "taxpayerID": "user1"
-    "lastName": "Smith"
-    "firstName": "John"
+  {
+    "taxpayerID": "user1",
+    "lastName": "Smith",
+    "firstName": "John",
     "otherNames": [
       "Jean Poupon"
     ]
-
-    "taxpayerID": "user2"
-    "lastName": "Williams"
+  },
+  {
+    "taxpayerID": "user2",
+    "lastName": "Williams",
     "firstName": "Nancy"
-
-    "taxpayerID": "user3"
-    "lastName": "Davis"
+  },
+  {
+    "taxpayerID": "user3",
+    "lastName": "Davis",
     "firstName": "Elizabeth"
-
-    "taxpayerID": "user4"
-    "lastName": "Johnson"
+  },
+  {
+    "taxpayerID": "user4",
+    "lastName": "Johnson",
     "firstName": "Robert"
-
+  }
 ]
