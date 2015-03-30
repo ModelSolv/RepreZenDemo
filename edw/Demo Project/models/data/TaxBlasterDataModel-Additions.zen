@@ -1,38 +1,23 @@
+import TaxBlaster.DataModel from "TaxBlasterDataModel-V2.zen"
+// This file contains the stuff we will add to the data model we imported from ERwin:
+// - Index Structure - don't think we will use this.
+// - SSN user defined type to use used in Person.
+// - Other user defined types that we may or may not want to show.
+zenModel TaxBlaster
+
+	dataModel DataModel
+
+		// Do we want to demo Index resources? I think not -- Miles
 		structure Index
 			people : reference to Person*
 			taxFilings : reference to TaxFiling*
 
-// How do we translate ERwin domains? We might be able to translate
-// them to a structure or a user defined simple type that we can convert
-// to enums?
-
-		enum int TaxFilingStatusEnum
-			DRAFT
-			PENDING_CPA_REVIEW
-			PENDING_CLIENT_REVIEW
-			FILED
-			AMENDED
-			CLOSED
-
-		enum int SpecialValueEnum
-			NORMAL_VALUE : 0
-			NOT_AVAILABLE : -65534
-			NOT_APPLICABLE : -65533
-			RESTRICTED : -65532
-
-		enum string CurrencyCodeEnum
-			EUR : "Euro"
-			CAD : "Canadian Dollar"
-			USD : "US Dollar"
-			CHF : "Swiss Franc"
-			JPY : "Japanese Yen"
-			INR : "Indian Rupee"
-			BRL : "Brazilian Real"
-
-
+		// Add this so we can add the ssn property to Person.
 		simpleType SocialSecurityNumber defined as string
 			matching regex '999-99-9999'
 			
+		// Additional user defined types that we may or may not want to show.
+		
 		simpleType DayOfYear1 as integer
 			valueRange from '1' to '365'
 

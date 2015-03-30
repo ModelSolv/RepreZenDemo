@@ -1,11 +1,14 @@
-// TODO: Update this to import the data model we will grow/adapt by adding things.
-// Steps: 
-// - Add example data to this using external files.
-import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
+// Demo Steps: 
+// - Switch to using local copy of central data model
+// - Add SSN user defined type to copy of central data model.
+// - Add ssn property to Person object from central data model.
+// - Push changes to central data model and open pull request for these changes.
+// - When changes are accepted and merged then update import statement to use github URL again.
+import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" 
 
 zenModel TaxBlaster
 
-	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
 	
 		collectionResource TaxFilingCollection type TaxFiling
 			URI /taxfilings
@@ -54,6 +57,7 @@ zenModel TaxBlaster
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
+					externalExample "../example-data/example-taxfiling-object.json"
 
 		objectResource PersonObject type Person
 			URI /people/{id}
@@ -72,6 +76,7 @@ zenModel TaxBlaster
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
+					externalExample "../example-data/example-person-object.json"
 			method PUT putPersonObject
 				request PersonObject
 				response statusCode 200

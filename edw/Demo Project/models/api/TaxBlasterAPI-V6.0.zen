@@ -1,11 +1,14 @@
-// TODO: Update this to import the data model we will grow/adapt by adding things.
-// Steps: 
+// Demo Steps: 
 // - None. End state API model.
-import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
+// - Collection resources with example data
+// - Object resources with example data and realizations
+// - Data model with updates accepted and integrated.
+// - Imports github model again rather than local copy.
+import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" 
 
 zenModel TaxBlaster
 
-	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
 	
 		collectionResource TaxFilingCollection type TaxFiling
 			URI /taxfilings
@@ -20,7 +23,7 @@ zenModel TaxBlaster
 				response statusCode 200
 				response statusCode 400
 				
-		collectionResource PersonCollection type Index
+		collectionResource PersonCollection type Person
 			URI /people
 			mediaTypes
 				application/json

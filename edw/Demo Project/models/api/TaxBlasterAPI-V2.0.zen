@@ -1,12 +1,11 @@
-// TODO: Update this to import the data model we will grow/adapt by adding things.
-// Steps: 
-// - Add example data to objectResources.
+// Demo Steps: 
+// - Add example data to objectResources. 
 // - Run mock service - with Swagger UI?
-import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
+import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen" // TODO: update URL
 
 zenModel TaxBlaster
 
-	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
 
 		objectResource TaxFilingObject type TaxFiling
 			URI /taxfilings/{id}

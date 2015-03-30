@@ -1,8 +1,12 @@
-// TODO: Update this API model to the central, imported data model.
-// Steps: 
+// Setup (before you get here):
+// - Import ERwin data model and inspect.
+// - Push imported data model to TaxBlasterDemo github repo.
+// - Get raw github URL of TaxBlaster data model - short form?
+// Demo Steps (from this model to the next version):
+// - Import data model from github into this model using HTTP URL.
 // - Add objectResources for TaxFiling and Person with template params.
-import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
-zenModel TaxBlasterAPI
 
-	
+zenModel TaxBlaster
+
+	resourceAPI MainInterface baseURI "http://taxblaster.com/api"

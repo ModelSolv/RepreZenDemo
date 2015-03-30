@@ -1,6 +1,6 @@
-zenModel TaxBlasterDataModel
+zenModel TaxBlaster
 
-	dataModel TaxBlasterDataModel
+	dataModel DataModel
 	
 		structure TaxFiling
 			filingID : long

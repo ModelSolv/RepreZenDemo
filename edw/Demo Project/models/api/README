@@ -1,0 +1,13 @@
+This folder contains API models for use in the demo:
+
+1. TaxBlasterAPI-V1.0.zen: empty resourceAPI def which imports data model from github using HTTP URL.
+2. TaxBlasterAPI-V2.0.zen: 1 + object resource defs for TaxFiling and Person
+3. TaxBlasterAPI-V3.0.zen: 2 + external example data
+4. TaxBlasterAPI-V4.0.zen: 3 + demo realizations added to object resources
+5. TaxBlasterAPI-V5.0.zen: 4 + collection resources with example data
+                           Used to demo github workflow for data model changes.
+                           Demo moves over to data model changes.
+                           Switches to using local copy of data model so we can make changes to it.
+                           Changes are made to local copy of data model and shown in diagram view.
+                           Changes are pushed and pull request opened.
+6. TaxBlasterAPI-V6.0.zen: 5 + Import statement reverted to use remote github model which now has our changes.
