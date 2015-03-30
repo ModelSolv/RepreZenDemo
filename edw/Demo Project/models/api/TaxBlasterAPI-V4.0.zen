@@ -5,7 +5,7 @@ import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen"
 
 zenModel TaxBlaster
 
-	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
+	resourceAPI InterfaceModel baseURI "http://localhost:8080"
 
 		objectResource TaxFilingObject type TaxFiling
 			URI taxfilings/{id}

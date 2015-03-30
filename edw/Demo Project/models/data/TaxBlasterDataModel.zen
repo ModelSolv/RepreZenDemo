@@ -1,0 +1,57 @@
+zenModel TaxBlaster
+
+	dataModel DataModel
+	
+		structure TaxFiling
+			filingID : long
+			taxpayer : reference to Person inverse taxFilings
+			jurisdiction : string
+			year : int
+			period : int
+			currency : CurrencyCodeEnum
+			grossIncome : decimal
+			taxLiability : decimal
+			status : TaxFilingStatusEnum
+
+		structure Person
+			taxpayerID : long
+			lastName : string
+			firstName : string
+			otherNames : string*
+			netWorth : decimal
+			netWorthSpecialValue : SpecialValueEnum
+			preferredLanguage : string
+			DOB : string
+			taxFilings : reference to TaxFiling* inverse taxpayer
+			addresses : containing Address*
+			
+		structure Address
+			street1 : string
+			street2 : string
+			city : string
+			stateOrProvince : string
+			postalCode : string
+			country : string
+
+		enum int TaxFilingStatusEnum
+			DRAFT
+			PENDING_CPA_REVIEW
+			PENDING_CLIENT_REVIEW
+			FILED
+			AMENDED
+			CLOSED
+
+		enum int SpecialValueEnum
+			NORMAL_VALUE : 0
+			NOT_AVAILABLE : -65534
+			NOT_APPLICABLE : -65533
+			RESTRICTED : -65532
+
+		enum string CurrencyCodeEnum
+			EUR : "Euro"
+			CAD : "Canadian Dollar"
+			USD : "US Dollar"
+			CHF : "Swiss Franc"
+			JPY : "Japanese Yen"
+			INR : "Indian Rupee"
+			BRL : "Brazilian Real"

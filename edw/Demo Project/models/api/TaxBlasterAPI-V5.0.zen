@@ -8,10 +8,10 @@ import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen"
 
 zenModel TaxBlaster
 
-	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
+	resourceAPI InterfaceModel baseURI "http://localhost:8080"
 	
 		collectionResource TaxFilingCollection type TaxFiling
-			URI /taxfilings
+			URI taxfilings
 			mediaTypes
 				application/json
 			method GET getTaxFilingCollection
@@ -24,7 +24,7 @@ zenModel TaxBlaster
 				response statusCode 400
 				
 		collectionResource PersonCollection type Person
-			URI /people
+			URI people
 			mediaTypes
 				application/json
 			method GET getPersonCollection
@@ -37,7 +37,7 @@ zenModel TaxBlaster
 				response statusCode 400
 
 		objectResource TaxFilingObject type TaxFiling
-			URI /taxfilings/{id}
+			URI taxfilings/{id}
 				required templateParam id property filingID
 			with all properties excluding
 				jurisdiction
@@ -60,7 +60,7 @@ zenModel TaxBlaster
 					externalExample "../../example-data/taxfiling-object.json"
 
 		objectResource PersonObject type Person
-			URI /people/{id}
+			URI people/{id}
 				required templateParam id property taxpayerID
 			with all properties including
 				addresses+

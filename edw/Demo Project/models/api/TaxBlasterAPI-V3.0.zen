@@ -4,10 +4,10 @@ import TaxBlaster.DataModel from "../data/TaxBlasterDataModel.zen"  // TODO: upd
 
 zenModel TaxBlaster
 
-	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
+	resourceAPI InterfaceModel baseURI "http://localhost:8080"
 
 		objectResource TaxFilingObject type TaxFiling
-			URI /taxfilings/{id}
+			URI taxfilings/{id}
 				required templateParam id property filingID
 			mediaTypes
 				application/json
@@ -17,7 +17,7 @@ zenModel TaxBlaster
 					externalExample "../../example-data/taxfiling-object.json"
 		
 		objectResource PersonObject type Person
-			URI /people/{id}
+			URI people/{id}
 				required templateParam id property taxpayerID
 			mediaTypes
 				application/json
