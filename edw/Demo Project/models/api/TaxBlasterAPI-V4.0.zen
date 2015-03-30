@@ -1,5 +1,6 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
-// Steps: add example data to this using external files.
+// Steps: 
+// - Add example data to this using external files.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster
@@ -13,6 +14,7 @@ zenModel TaxBlaster
 			method GET getTaxFilingCollection
 				request
 				response TaxFilingCollection statusCode 200
+					externalExample "../example-data/example-taxfiling-collection.json"
 			method POST updateTaxFilingCollection
 				request TaxFilingCollection
 				response statusCode 200
@@ -25,6 +27,7 @@ zenModel TaxBlaster
 			method GET getPersonCollection
 				request
 				response PersonCollection statusCode 200
+					externalExample "../example-data/example-person-collection.json"
 			method POST updatePersonCollection
 				request PersonCollection
 				response statusCode 200

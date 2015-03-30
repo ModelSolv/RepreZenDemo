@@ -1,7 +1,8 @@
-// TODO: Update this to import the data model we will grow/adapt by adding things.
-// Steps: add objectResources for TaxFiling and Person with template params.
+// TODO: Update this API model to the central, imported data model.
+// Steps: 
+// - Add objectResources for TaxFiling and Person with template params.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
-zenModel TaxBlaster
+zenModel TaxBlasterAPI
 
-	resourceAPI TaxBlasterInterface baseURI "http://taxblaster.com/api"
+	

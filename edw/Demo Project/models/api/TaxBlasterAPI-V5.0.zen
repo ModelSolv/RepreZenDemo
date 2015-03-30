@@ -1,5 +1,6 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
-// Steps: none. End state API model before we try with mock service.
+// Steps: 
+// - None. End state API model.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster

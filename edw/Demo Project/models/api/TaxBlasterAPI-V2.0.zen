@@ -1,7 +1,7 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
 // Steps: 
-// - add example data to objectResources.
-// - run mock service with Swagger UI?
+// - Add example data to objectResources.
+// - Run mock service - with Swagger UI?
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster

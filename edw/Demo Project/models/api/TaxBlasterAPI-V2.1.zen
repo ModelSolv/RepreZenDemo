@@ -1,6 +1,6 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
 // Steps: 
-// - add realizations to the objectResources.
+// - Add realizations to the objectResources.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster

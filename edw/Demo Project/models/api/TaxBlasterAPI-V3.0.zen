@@ -1,7 +1,7 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
 // Steps: 
-// - add collectionResources.
-// - add example data to collection resources.
+// - Add collectionResources.
+// - Add example data to collection resources.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster
