@@ -1,6 +1,6 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
 // Steps: 
-// - Add example data to this using external files.
+// - None. End state API model.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster
@@ -54,6 +54,7 @@ zenModel TaxBlaster
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
+					externalExample "../example-data/example-taxfiling-object.json"
 
 		objectResource PersonObject type Person
 			URI /people/{id}
@@ -72,6 +73,7 @@ zenModel TaxBlaster
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
+					externalExample "../example-data/example-person-object.json"
 			method PUT putPersonObject
 				request PersonObject
 				response statusCode 200

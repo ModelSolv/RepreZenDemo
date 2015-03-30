@@ -1,7 +1,6 @@
 // TODO: Update this to import the data model we will grow/adapt by adding things.
 // Steps: 
-// - Add collectionResources.
-// - Add example data to collection resources.
+// - Add realizations to the objectResources.
 import TaxBlasterDataModel.TaxBlasterDataModel from "../data/TaxBlasterDataModel-V2.zen" 
 
 zenModel TaxBlaster
@@ -11,38 +10,16 @@ zenModel TaxBlaster
 		objectResource TaxFilingObject type TaxFiling
 			URI /taxfilings/{id}
 				required templateParam id property filingID
-			with all properties excluding
-				jurisdiction
-				status
-			referenceEmbed > taxpayer
-				targetProperties
-					taxpayerID
-					lastName
-					firstName
-				referenceEmbed > addresses
-					targetProperties
-						city
-						postalCode
-						country
 			mediaTypes
 				application/json
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
 					externalExample "../example-data/example-taxfiling-object.json"
-
+		
 		objectResource PersonObject type Person
 			URI /people/{id}
 				required templateParam id property taxpayerID
-			with all properties including
-				addresses+
-				firstName
-					of length from 2
-			excluding
-				otherNames
-				preferredLanguage
-				netWorth
-				netWorthSpecialValue
 			mediaTypes
 				application/json
 			method GET getPersonObject
