@@ -8,7 +8,7 @@ zenModel TaxBlaster
 	resourceAPI MainInterface baseURI "http://taxblaster.com/api"
 
 		objectResource TaxFilingObject type TaxFiling
-			URI /taxfilings/{id}
+			URI taxfilings/{id}
 				required templateParam id property filingID
 			with all properties excluding
 				jurisdiction
@@ -28,10 +28,10 @@ zenModel TaxBlaster
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
-					externalExample "../../example-data/example-taxfiling-object.json"
+					externalExample "../../example-data/taxfiling-object.json"
 
 		objectResource PersonObject type Person
-			URI /people/{id}
+			URI people/{id}
 				required templateParam id property taxpayerID
 			with all properties including
 				addresses+
@@ -47,7 +47,7 @@ zenModel TaxBlaster
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
-					externalExample "../../example-data/example-person-object.json"
+					externalExample "../../example-data/person-object.json"
 			method PUT putPersonObject
 				request PersonObject
 				response statusCode 200
