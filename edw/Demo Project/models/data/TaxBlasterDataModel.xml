@@ -33,25 +33,8 @@ zenModel TaxBlaster
 			postalCode : string
 			country : string
 
-		enum int TaxFilingStatusEnum
-			DRAFT
-			PENDING_CPA_REVIEW
-			PENDING_CLIENT_REVIEW
-			FILED
-			AMENDED
-			CLOSED
+		simpleType CurrencyCodeEnum defined as string
 
-		enum int SpecialValueEnum
-			NORMAL_VALUE : 0
-			NOT_AVAILABLE : -65534
-			NOT_APPLICABLE : -65533
-			RESTRICTED : -65532
+		simpleType TaxFilingStatusEnum defined as string
 
-		enum string CurrencyCodeEnum
-			EUR : "Euro"
-			CAD : "Canadian Dollar"
-			USD : "US Dollar"
-			CHF : "Swiss Franc"
-			JPY : "Japanese Yen"
-			INR : "Indian Rupee"
-			BRL : "Brazilian Real"
+		simpleType SpecialValueEnum defined as string

@@ -7,25 +7,29 @@ zenModel TaxBlaster
 
 	dataModel DataModel
 
-		// Do we want to demo Index resources? I think not -- Miles
-		structure Index
-			people : reference to Person*
-			taxFilings : reference to TaxFiling*
-			
-		// What Person will look like when we have added ssn property 
-		structure Person
-			taxpayerID : long
-			ssn : SocialSecurityNumber
-			lastName : string
-			firstName : string
-			otherNames : string*
-			netWorth : decimal
-			netWorthSpecialValue : SpecialValueEnum
-			preferredLanguage : string
-			DOB : string
-			taxFilings : reference to TaxFiling* inverse taxpayer
-			addresses : containing Address*			
+		enum int TaxFilingStatusEnum
+			DRAFT
+			PENDING_CPA_REVIEW
+			PENDING_CLIENT_REVIEW
+			FILED
+			AMENDED
+			CLOSED
 
+		enum int SpecialValueEnum
+			NORMAL_VALUE : 0
+			NOT_AVAILABLE : -65534
+			NOT_APPLICABLE : -65533
+			RESTRICTED : -65532
+
+		enum string CurrencyCodeEnum
+			EUR : "Euro"
+			CAD : "Canadian Dollar"
+			USD : "US Dollar"
+			CHF : "Swiss Franc"
+			JPY : "Japanese Yen"
+			INR : "Indian Rupee"
+			BRL : "Brazilian Real"		
+		
 		// Add this so we can add the ssn property to Person.
 		simpleType SocialSecurityNumber defined as string
 			matching regex '999-99-9999'
