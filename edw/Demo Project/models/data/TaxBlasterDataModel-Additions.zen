@@ -11,6 +11,20 @@ zenModel TaxBlaster
 		structure Index
 			people : reference to Person*
 			taxFilings : reference to TaxFiling*
+			
+		// What Person will look like when we have added ssn property 
+		structure Person
+			taxpayerID : long
+			ssn : SocialSecurityNumber
+			lastName : string
+			firstName : string
+			otherNames : string*
+			netWorth : decimal
+			netWorthSpecialValue : SpecialValueEnum
+			preferredLanguage : string
+			DOB : string
+			taxFilings : reference to TaxFiling* inverse taxpayer
+			addresses : containing Address*			
 
 		// Add this so we can add the ssn property to Person.
 		simpleType SocialSecurityNumber defined as string

@@ -3,8 +3,5 @@ This folder contains data models for use in the demo:
 - TaxBlasterDataModel.xml: 
   The original data model, exported from ERwin, that we will import into RZAPIS (when it will renamed to TaxBlasterDataModel.zen) 
 
-- TaxBlasterDataModel.zen:
-  The end-state data model once we have added user defined types and added the ssn property to Person.
-  
 - TaxBlasterDataModel-Additions.zen:
-  The file from which we will copy the user defined types that will be added to our original data model.
+  The file from which we will copy the user defined types that will be added to our original, imported data model.
