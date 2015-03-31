@@ -16,6 +16,10 @@ zenModel TaxBlaster
 			method GET getTaxFilingObject
 				request
 				response TaxFilingObject statusCode 200
+			method PUT putTaxFilingObject
+				request TaxFilingObject
+				response statusCode 200
+				response statusCode 400
 		
 		objectResource PersonObject type Person
 			URI people/{id}
