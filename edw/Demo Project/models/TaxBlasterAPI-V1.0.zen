@@ -1,7 +1,7 @@
 // Setup (before you get here):
-// - Import ERwin data model and inspect.
+// - Import ERwin data model and inspect resulting zen model.
 // - Push imported data model to TaxBlasterDemo github repo.
-// - Get raw github URL of TaxBlaster data model - short form?
+// - Get raw github URL of TaxBlaster data model.
 // Demo Steps (from this model to the next version):
 // - Import data model from github into this model using HTTP URL.
 // - Add objectResources for TaxFiling and Person with template params.
