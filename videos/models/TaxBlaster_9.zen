@@ -1,0 +1,61 @@
+import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+
+zenModel TaxBlaster
+	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
+		objectResource TaxFilingObject type TaxFiling
+			URI taxfilings/{id}
+				required templateParam id property filingID
+			
+			with all properties excluding
+				jurisdiction
+				status
+			
+			referenceEmbed > taxpayer
+				targetProperties
+					taxpayerID
+					lastName
+					firstName
+					netWorth
+					preferredLanguage
+					addresses
+				referenceEmbed > addresses
+					targetProperties
+						city
+						state
+						country
+
+			mediaTypes
+				application/json
+			method GET getTaxFilingObject
+				request
+				response TaxFilingObject statusCode 200
+			method PUT putTaxFilingObject
+				request TaxFilingObject
+				response statusCode 200
+				response statusCode 400
+
+		objectResource PersonObject type Person
+			URI people/{id}
+				required templateParam id property taxpayerID
+			
+			// Mention properties for which contextual constraints are needed.
+			
+			with all properties including
+				// Use regular expression to treat this field as Social Security Number
+				taxpayerID 
+					matching regex '(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}'
+				// Cardinality override: need at least one address.
+				addresses+
+			// Properties we are not interested in in this context.
+			excluding
+				otherNames
+				preferredLanguage
+				netWorth
+				netWorthSpecialValue
+			
+			mediaTypes
+				application/json
+			method GET getPersonObject
+				request
+				response PersonObject statusCode 200
+

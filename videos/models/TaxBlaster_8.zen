@@ -1,0 +1,40 @@
+import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+
+zenModel TaxBlaster
+	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
+		objectResource TaxFilingObject type TaxFiling
+			URI taxfilings/{id}
+				required templateParam id property filingID
+			
+			with all properties excluding
+				jurisdiction
+				status
+			
+			referenceEmbed > taxpayer
+				targetProperties
+					taxpayerID
+					lastName
+					firstName
+					netWorth
+					preferredLanguage
+					addresses
+				referenceEmbed > addresses
+					targetProperties
+						city
+						state
+						country
+
+			mediaTypes
+				application/json
+			method GET getTaxFilingObject
+				request
+				response TaxFilingObject statusCode 200
+
+		objectResource PersonObject type Person
+			URI people/{id}
+				required templateParam id property taxpayerID
+			mediaTypes
+				application/json
+			method GET getPersonObject
+				request
+				response PersonObject statusCode 200
