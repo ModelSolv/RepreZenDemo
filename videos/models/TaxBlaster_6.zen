@@ -1,19 +1,16 @@
 import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
+// Reduce properties of Person.addresses to the subset we are interested in here.
 zenModel TaxBlaster
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
 		objectResource TaxFilingObject type TaxFiling
 			URI taxfilings/{id}
 				required templateParam id property filingID
 
-			referenceEmbed > taxpayer
+			referenceLink > taxpayer
 				targetProperties
-					taxpayerID
 					lastName
 					firstName
-					netWorth
-					preferredLanguage
-					addresses
 
 			mediaTypes
 				application/json
@@ -24,6 +21,14 @@ zenModel TaxBlaster
 		objectResource PersonObject type Person
 			URI people/{id}
 				required templateParam id property taxpayerID
+			
+			referenceEmbed > addresses
+				// Property subset applied to addresses
+				targetProperties
+					city
+					postalCode
+					country
+
 			mediaTypes
 				application/json
 			method GET getPersonObject

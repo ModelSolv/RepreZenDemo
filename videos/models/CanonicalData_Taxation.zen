@@ -2,6 +2,28 @@ zenModel Taxation
 	/** Supporting data types for Taxation related APIs */
 	dataModel GeneralTypes
 
+		/** A tax filing record for a given user, in a given tax jurisdiction, in a specified tax year. */
+		structure TaxFiling
+			/** A unique, system-assigned identifier for the tax filing. */
+			filingID : string
+			/** Reference to the person who owns this filing. */
+			taxpayer : reference to Person
+			/** Country, province, state or local tax authority 
+         	 	where this is being filed. */
+			jurisdiction : string
+			/** Tax year */
+			year : gYear
+			/** Period within the year, if any */
+			period : int
+			/** Currency code */
+			currency : CurrencyCodeEnum
+			/** Total income reported on tax filing. */
+			grossIncome : decimal
+			/** Net tax liability */
+			taxLiability : decimal
+			/** Tax filing status */
+			status : TaxFilingStatusEnum
+
 		/** A TaxBlaster user. */
 		structure Person
 			/** A unique, system-assigned identifier for the user. */
@@ -22,31 +44,6 @@ zenModel Taxation
 			DOB : date
 			/** Addresses */
 			addresses : reference to Address*
-//			/** Tax filings on record for this individual */
-//			taxFilings : reference to TaxFiling* //inverse taxpayer
-
-		/** A tax filing record for a given user, in a given tax jurisdiction, in a specified tax year. */
-		structure TaxFiling
-			/** A unique, system-assigned identifier for the tax filing. */
-			filingID : string
-			/** Reference to the person who owns this filing. */
-			taxpayer : reference to Person //inverse taxFilings
-			/** Country, province, state or local tax authority 
-         	 	where this is being filed. */
-			jurisdiction : string
-			/** Tax year */
-			year : gYear
-			/** Period
-			 within the year, if any */
-			period : int
-			/** Currency code */
-			currency : CurrencyCodeEnum
-			/** Total income reported on tax filing. */
-			grossIncome : decimal
-			/** Net tax liability */
-			taxLiability : decimal
-			/** Tax filing status */
-			status : TaxFilingStatusEnum
 
 		structure Address
 			firstLine : string

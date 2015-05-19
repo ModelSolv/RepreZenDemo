@@ -1,24 +1,24 @@
 import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
+// Adding contextual constraints to TaxFiling & Person properties.
 zenModel TaxBlaster
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
 		objectResource TaxFilingObject type TaxFiling
 			URI taxfilings/{id}
 				required templateParam id property filingID
 
-			referenceEmbed > taxpayer
+			with all properties
+			// Mention properties for which contextual constraints are needed.
+			including
+				jurisdiction
+					of length 6
+				period
+					with valueRange from '1' inclusive up to '4' inclusive
+			
+			referenceLink > taxpayer
 				targetProperties
-					taxpayerID
 					lastName
 					firstName
-					netWorth
-					preferredLanguage
-					addresses
-				referenceEmbed > addresses
-					targetProperties
-						city
-						state
-						country
 
 			mediaTypes
 				application/json
@@ -29,6 +29,22 @@ zenModel TaxBlaster
 		objectResource PersonObject type Person
 			URI people/{id}
 				required templateParam id property taxpayerID
+			
+			with all properties 
+			// Mention properties for which contextual constraints are needed.
+			including
+				// Use regular expression to treat this field as Social Security Number
+				taxpayerID 
+					matching regex '(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}'
+				// Cardinality override: need at least one address.
+				addresses+
+						
+			referenceEmbed > addresses
+				targetProperties
+					city
+					postalCode
+					country			
+			
 			mediaTypes
 				application/json
 			method GET getPersonObject

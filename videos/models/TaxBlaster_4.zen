@@ -1,5 +1,6 @@
 import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
+// Decorate the taxpayer hyperlink (explain why).
 zenModel TaxBlaster
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
 		objectResource TaxFilingObject type TaxFiling
@@ -10,7 +11,6 @@ zenModel TaxBlaster
 				targetProperties
 					lastName
 					firstName
-					preferredLanguage
 			
 			mediaTypes
 				application/json

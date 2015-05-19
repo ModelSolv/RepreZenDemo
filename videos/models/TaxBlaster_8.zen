@@ -1,28 +1,16 @@
 import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
+// Exclude Person properties we do not need in this context.
 zenModel TaxBlaster
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
 		objectResource TaxFilingObject type TaxFiling
 			URI taxfilings/{id}
 				required templateParam id property filingID
-			
-			with all properties excluding
-				jurisdiction
-				status
-			
-			referenceEmbed > taxpayer
+
+			referenceLink > taxpayer
 				targetProperties
-					taxpayerID
 					lastName
 					firstName
-					netWorth
-					preferredLanguage
-					addresses
-				referenceEmbed > addresses
-					targetProperties
-						city
-						state
-						country
 
 			mediaTypes
 				application/json
@@ -33,6 +21,25 @@ zenModel TaxBlaster
 		objectResource PersonObject type Person
 			URI people/{id}
 				required templateParam id property taxpayerID
+
+			with all properties 
+			including
+				taxpayerID 
+					matching regex '(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}'
+				addresses+
+			// Properties we are not interested in here.
+			excluding
+				otherNames
+				preferredLanguage
+				netWorth
+				netWorthSpecialValue
+						
+			referenceEmbed > addresses
+				targetProperties
+					city
+					postalCode
+					country			
+
 			mediaTypes
 				application/json
 			method GET getPersonObject
