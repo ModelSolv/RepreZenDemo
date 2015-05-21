@@ -1,6 +1,6 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// Single resource for TaxFiling: taxpayer data is embedded. 
+// Single resource for TaxFiling: all taxpayer data is embedded. 
 zenModel TaxBlaster
 	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"

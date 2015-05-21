@@ -1,4 +1,4 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
 // Decorate the taxpayer hyperlink (explain why).
 zenModel TaxBlaster

@@ -1,4 +1,4 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
 // Adding contextual constraints to TaxFiling & Person properties.
 zenModel TaxBlaster
@@ -40,7 +40,7 @@ zenModel TaxBlaster
 					matching regex '(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}'
 				// Cardinality override: need at least one address.
 				addresses+
-						
+
 			referenceEmbed > addresses
 				targetProperties
 					city

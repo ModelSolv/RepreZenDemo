@@ -1,6 +1,6 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// 
+// And finally, back to a referenceEmbed (though heaven knows why we would want to!)
 zenModel TaxBlaster
 	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
@@ -37,7 +37,7 @@ zenModel TaxBlaster
 				preferredLanguage
 				netWorth
 				netWorthSpecialValue
-						
+
 			referenceEmbed > addresses
 				targetProperties
 					city

@@ -1,4 +1,4 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
 // Exclude Person properties we do not need in this context.
 zenModel TaxBlaster
@@ -35,7 +35,7 @@ zenModel TaxBlaster
 				preferredLanguage
 				netWorth
 				netWorthSpecialValue
-						
+
 			referenceEmbed > addresses
 				targetProperties
 					city

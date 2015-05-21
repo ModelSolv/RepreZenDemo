@@ -1,6 +1,6 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// Add resource for Person: taxpayer data is hyperlinked implicitly.
+// Add resource for Person: taxpayer data is hyperlinked by default.
 zenModel TaxBlaster
 	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"

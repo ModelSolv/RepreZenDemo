@@ -1,8 +1,17 @@
-import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
+import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// Single resource for TaxFiling: taxpayer data is embedded. 
+// Perspective: forming a message hierarchy from a graph of data types.
+// - Where shall we start? What shall be our entry points? 
+// - Shall we hyperlink or embed?
 zenModel TaxBlaster
 	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
-		
+		// Object Resources
+//		objectResource TaxFilingObject type TaxFiling
+//		objectResource PersonObject type Person
+//		objectResource AddressObject type Address
+		// Collection Resources
+//		collectionResource TaxFilingCollection type TaxFiling
+//		collectionResource PersonCollection type Person
+//		collectionResource AddressCollection type Address
 		

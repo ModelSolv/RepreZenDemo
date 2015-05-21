@@ -1,3 +1,5 @@
+namespace somecorp.domainmodels
+
 zenModel Taxation
 	/** Supporting data types for Taxation related APIs */
 	dataModel GeneralTypes
@@ -7,7 +9,7 @@ zenModel Taxation
 			/** A unique, system-assigned identifier for the tax filing. */
 			filingID : string
 			/** Reference to the person who owns this filing. */
-			taxpayer : reference to Person
+			taxpayer : reference to Person inverse taxfilings
 			/** Country, province, state or local tax authority 
          	 	where this is being filed. */
 			jurisdiction : string
@@ -44,6 +46,8 @@ zenModel Taxation
 			DOB : date
 			/** Addresses */
 			addresses : reference to Address*
+			/** TaxFilings for this person */
+			taxfilings : reference to TaxFiling* inverse taxpayer
 
 		structure Address
 			firstLine : string
