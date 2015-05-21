@@ -1,17 +1,19 @@
 import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// Make implicit embedding of Person.addresses explicit so we can adapt the realization.
+// Decorate the taxpayer hyperlink (explain why).
 zenModel TaxBlaster
+	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
+		
 		objectResource TaxFilingObject type TaxFiling
 			URI taxfilings/{id}
 				required templateParam id property filingID
-
+				
 			referenceLink > taxpayer
 				targetProperties
 					lastName
 					firstName
-
+			
 			mediaTypes
 				application/json
 			method GET getTaxFilingObject
@@ -21,10 +23,6 @@ zenModel TaxBlaster
 		objectResource PersonObject type Person
 			URI people/{id}
 				required templateParam id property taxpayerID
-			
-			// Explicit referenceEmbed.
-			referenceEmbed > addresses
-			
 			mediaTypes
 				application/json
 			method GET getPersonObject

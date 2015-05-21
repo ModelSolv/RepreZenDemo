@@ -1,14 +1,13 @@
 import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// Make implicit taxpayer hyperlink explicit.
+// Add resource for Person: taxpayer data is hyperlinked implicitly.
 zenModel TaxBlaster
+	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
+		
 		objectResource TaxFilingObject type TaxFiling
 			URI  taxfilings/{id}
 				required templateParam id property filingID
-			
-			referenceLink > taxpayer
-			
 			mediaTypes
 				application/json
 			method GET getTaxFilingObject
@@ -23,3 +22,4 @@ zenModel TaxBlaster
 			method GET getPersonObject
 				request
 				response PersonObject statusCode 200
+				

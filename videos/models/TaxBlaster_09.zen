@@ -2,15 +2,19 @@ import Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
 // 
 zenModel TaxBlaster
+	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
+		
 		objectResource TaxFilingObject type TaxFiling
 			URI taxfilings/{id}
 				required templateParam id property filingID
 
-			referenceLink > taxpayer
+			referenceEmbed > taxpayer
 				targetProperties
+					taxpayerID
 					lastName
 					firstName
+					DOB
 
 			mediaTypes
 				application/json
