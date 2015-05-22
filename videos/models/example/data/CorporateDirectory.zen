@@ -1,0 +1,33 @@
+namespace com.someco
+
+import com.someco.Data.Common from "Common.zen" as Common
+
+zenModel Data
+	dataModel CorporateDirectory
+		structure CorporateContact
+			contactID : string
+			givenName : string
+			middleName : string
+			familyName : string
+			jobTitleDesc : string
+			departmentDesc : string
+			reportsToPerson : reference to CorporateContactReference
+			location : reference to Location*
+			phone : reference to PhoneNumber*
+			email : reference to Email
+			photoUri : reference to Common.Link
+		structure CorporateContactReference
+			givenName : string
+			familyName : string
+			associateUri : reference to Common.Link
+		structure Location
+			labelName : string
+			address : reference to Common.Address
+		structure PhoneNumber
+			labelName : string
+			channelCode : string
+			formattedDialNumber : string
+			extension : string
+		structure Email
+			labelName : string
+			uri : string

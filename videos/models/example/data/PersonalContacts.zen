@@ -1,0 +1,29 @@
+namespace com.someco
+
+import com.someco.Data.Common from "Common.zen" as Common
+
+zenModel Data
+	dataModel PersonalContacts
+		structure PersonalContact
+			/** The Organisational ID of the associate whose personal contact this is. Intruduced whilst reverse engineering this API.*/
+			associateOID : string
+			/** The ID of the personal contact in the context of this Associate's collection of contacts. */
+			itemID : string
+			contactName : reference to Common.ContactName
+			contactAddress : reference to ContactAddress
+			communication : reference to Common.CommunicationChannels
+			contactTypeCode : reference to Common.TypeCode
+			relationshipTypeCode : reference to Common.DateStampedTypeCode
+			precedenceCode : reference to Common.TypeCode
+		structure ContactAddress
+			nameCode : reference to Common.TypeCode
+			scriptCode : reference to Common.TypeCode
+			buildingNumber : string
+			streetName : string
+			streetTypeCode : reference to Common.TypeCode
+			cityName : string
+			countrySubDivisionLevel1 : reference to Common.CountrySubDivisionLevel1
+			countryCode : string
+			postalCode : string
+			geoCoordinate : reference to Common.GeoCoordinate
+			effectiveDate : string

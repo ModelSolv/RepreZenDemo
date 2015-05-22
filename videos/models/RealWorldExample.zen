@@ -1,0 +1,8 @@
+import com.someco.Data.Common from "example/data/Common.zen" as Common
+import com.someco.Data.Worker from "example/data/Worker.zen" as Worker
+
+zenModel RealWorldExample
+	
+	resourceAPI RealWorldExampleAPI baseURI "http://my-namespace.com"
+		
+		objectResource WorkerObject type Worker

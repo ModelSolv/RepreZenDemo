@@ -1,0 +1,41 @@
+namespace com.adp.marketplace.hr.intefaces
+
+import com.someco.Data.Common from "data/Common.zen" as Common
+import com.someco.Data.Worker from "data/Worker.zen" as Worker
+
+zenModel Worker
+	resourceAPI WorkerInterface baseURI "https://test-api.adp.com/hr/v2/"
+		collectionResource WorkerCollection type Worker
+			URI workers
+			mediaTypes
+				application/json
+			method GET getWorkerCollection
+				// TODO: Model header param(s): roleCode
+				request
+				// TODO: Model header param(s): ETag, Cache-Control
+				response WorkerCollection statusCode 200
+				response statusCode 400 // Bad Request
+				response statusCode 403 // Forbidden
+				response statusCode 404 // Not found
+				response statusCode 405 // Method Not Allowed
+				response statusCode 406 // Not Acceptable 
+				response statusCode 412 // Precondition Failed
+				response statusCode 500 // Internal Server Error
+
+		objectResource WorkerObject type Worker
+			URI workers/{associateOID}
+				required templateParam associateOID property associateOID
+			mediaTypes
+				application/json
+			method GET getWorkerObject
+				// TODO: Model header param(s): roleCode
+				request
+				// TODO: Model header param(s): ETag, Cache-Control
+				response WorkerObject statusCode 200
+				response statusCode 400 // Bad Request
+				response statusCode 403 // Forbidden
+				response statusCode 404 // Not found
+				response statusCode 405 // Method Not Allowed
+				response statusCode 406 // Not Acceptable 
+				response statusCode 412 // Precondition Failed
+				response statusCode 500 // Internal Server Error

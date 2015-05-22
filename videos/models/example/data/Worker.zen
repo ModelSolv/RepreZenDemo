@@ -1,0 +1,183 @@
+namespace com.someco
+
+import com.someco.Data.Common from "Common.zen" as Common
+
+zenModel Data
+	dataModel Worker
+		structure Worker
+			associateOID : string
+			workerID : reference to Common.ID
+			person : reference to Person
+			workerDates : reference to HireDates
+			workerStatus : reference to StatusCode
+			photos : reference to Photo
+			businessCommunication : reference to Common.CommunicationChannels
+			workAssignments : reference to WorkAssignment
+		structure DateStampedTypeCode //extends Common.TypeCode
+			effectiveDate : string
+			codeValue : string
+			shortName : string
+		structure Person
+			birthDate : string
+			genderCode : reference to Common.TypeCode
+			maritalStatusCode : reference to DateStampedTypeCode
+			socialInsurancePrograms : reference to InsuranceProgram*
+			immigrationDocuments : reference to ImmigrationDocument*
+			passports : reference to OfficialDocument*
+			workAuthorizationDocuments : reference to OfficialDocument*
+			preferredName : reference to Common.ContactName
+			formerNames : reference to Common.ContactName*
+			birthName : reference to Common.ContactName
+			birthPlace : reference to Common.Address
+			otherPersonalAddresses : reference to Common.Address*
+			raceCode : reference to RaceCode
+			citizenshipCountryCodes : reference to Common.TypeCode*
+			residencyCountryCodes : reference to Common.TypeCode*
+			militaryStatusCode : reference to Common.DateStampedTypeCode
+			militaryClassificationCodes : reference to Common.TypeCode*
+			governmentIDs : reference to GovernmentID*
+			legalName : reference to Common.ContactName
+			legalAddress : reference to Common.Address
+			communication : reference to Common.CommunicationChannels
+		structure InsuranceProgram
+			itemID : string
+			nameCode : reference to Common.TypeCode // example only required shortName field but re-use Common.TypeCode.
+			countryCode : string
+			coveredIndicator : boolean
+		structure OfficialDocument
+			documentID : string
+			countryCode : string
+			typeCode : reference to Common.TypeCode
+			issuingParty : reference to IssuingParty
+			issueDate : string
+			expirationDate : string
+		structure ImmigrationDocument //extends OfficialDocument
+			documentID : string
+			countryCode : string
+			typeCode : reference to Common.TypeCode
+			issuingParty : reference to IssuingParty
+			issueDate : string
+			expirationDate : string
+			// Following fields only make sense in this context. Structure in json clearly based on hierarchical ldap.
+			authorizedStayDuration : string
+			reentryRequirementDuration : string
+		structure IssuingParty
+			nameCode : reference to Common.TypeCode
+			address : reference to Common.Address
+		structure RaceCode
+			identificationMethodCode : reference to Common.TypeCode
+			codeValue : string
+			shortName : string
+		structure GovernmentID
+			itemID : string
+			idValue : string
+			nameCode : reference to Common.TypeCode
+			countryCode : string
+		structure HireDates
+			originalHireDate : string
+		structure StatusCode
+			statuscode : reference to Common.TypeCode
+			reasonCode : reference to Common.TypeCode
+		structure Photo
+			id : string
+			nameCode : reference to Common.TypeCode
+			links : reference to Common.Link*
+		structure WorkAssignment
+			primaryIndicator : boolean
+			offerExtensionDate : string
+			offerAcceptanceDate : string
+			hireDate : string
+			expectedStartDate : string
+			actualStartDate : string
+			assignmentStatus : reference to StatusCode
+			workerTypeCode : reference to Common.TypeCode
+			assignmentTermCode : reference to Common.TypeCode
+			workerLevelCode : reference to Common.TypeCode
+			nationalityContextCode : reference to Common.TypeCode
+			vipIndicator : boolean
+			executiveIndicator : boolean
+			officerIndicator : boolean
+			highlyCompensatedIndicator : boolean
+			highlyCompensatedTypeCode : reference to Common.TypeCode
+			stockOwnerIndicator : boolean
+			stockOwnerPercentage : double
+			workerGroups : reference to Group*
+			jobCode : reference to Common.TypeCode
+			jobTitle : string
+			occupationalClassifications : reference to Classification*
+			wageLawCoverage : reference to WageLawCoverage
+			workArrangementCode : reference to Common.TypeCode
+			standardHours : reference to StandardHours
+			homeOrganisationalUnits : reference to OrganisationalUnit*
+			assignedOrganisationalUnits : reference to OrganisationalUnit*
+			homeWorkLocation : reference to WorkLocation
+			assignedWorkLocations : reference to WorkLocation*
+			remunerationBasisCode : reference to Common.TypeCode
+			payCycleCode : reference to Common.TypeCode
+			standardPayPeriodHours : reference to StandardHours
+			baseRemuneration : reference to BaseRemuneration
+			additionalRemunerations : reference to AdditionalRemuneration*
+			reportsTo : reference to WorkerReference
+			payrollProcessingStatusCode : reference to Common.DateStampedTypeCode
+			payrollFileNumber : string
+			payrollRegionCode : string
+			payScaleCode : reference to Common.TypeCode
+			payGradeCode : reference to Common.TypeCode
+			payGradePayRange : reference to PayRange
+			//
+		structure Group 
+			nameCode : reference to Common.TypeCode
+			groupCode : reference to Common.TypeCode
+		structure Classification
+			nameCode : reference to Common.TypeCode
+			classificationCode : reference to Common.TypeCode
+		structure WageLawCoverage
+			wageLawNameCode : reference to Common.TypeCode
+			coverageCode : reference to Common.TypeCode
+		structure StandardHours
+			hoursQuantity : integer
+			unitCode : reference to Common.TypeCode
+		structure OrganisationalUnit
+			itemID : string
+			nameCode : reference to Common.TypeCode
+			typeCode : reference to Common.TypeCode
+		structure WorkLocation
+			address : reference to Common.Address
+			nameCode : reference to Common.TypeCode
+		structure BaseRemuneration
+			monthlyRateAmount : reference to CurrencyAmount
+			annualRateAmount : reference to CurrencyAmount
+			payPeriodRateAmount : reference to CurrencyAmount
+			commissionRatePercentage : reference to CommissionRatePercentage
+		structure CurrencyAmount
+			amountValue : double
+			currencyCode : string
+		structure CommissionRatePercentage
+			percentageValue : double
+			baseUnitCode : reference to Common.TypeCode
+		structure AdditionalRemuneration
+			itemID : string
+			typecode : reference to Common.TypeCode
+			intervalCode : reference to Common.TypeCode
+			nameCode : reference to Common.TypeCode
+			rate : reference to Rate
+		structure Rate
+			amountValue : integer
+			uniteCode : reference to Common.TypeCode
+			baseUnitCode : reference to Common.TypeCode
+		structure WorkerReference
+			itemID : string
+			positionID : string
+			associcateOID : string
+			workerID : reference to Common.ID
+			reportsToWorkerName : reference to Common.ContactName
+			reportsToRelationsshipCode : reference to Common.TypeCode
+		structure PayRange
+			minimumRate : reference to PayRate
+			medianRate : reference to PayRate
+			maximumRate : reference to PayRate
+			compaRatio : integer
+		structure PayRate
+			amountValu : double
+			currencyCode : string
+			baseUnitCode : reference to Common.TypeCode

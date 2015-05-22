@@ -1,0 +1,46 @@
+namespace com.someco.interfaces
+
+import com.someco.Data.Common from "data/Common.zen" as Common
+import com.someco.Data.CorporateDirectory from "data/CorporateDirectory.zen" as CorpDir
+
+zenModel CorporateDirectory
+
+	resourceAPI CorporateDirectoryInterface baseURI "https://test-api.adp.com/hr/v1/"
+
+		collectionResource CorporateContactCollection type CorporateContact
+			URI corporatecontacts
+			mediaTypes
+				application/json
+			method GET getCorporateContactCollection
+				// TODO: Model header param(s): roleCode, If-None-Match
+				// TODO: Model query param(s): searchNameLike, limit
+				request
+					param roleCode of type string in header
+					param IfNoneMatch of type string in header
+					param searchNameLike of type string in query
+					param limit of type string in query
+					
+				// TODO: Model header param(s): ETag, Cache-Control
+				response CorporateContactCollection statusCode 200 // OK
+				response statusCode 400 // Bad Request
+				response statusCode 403 // Forbidden
+				response statusCode 404 // Not found
+				response statusCode 500 // Internal Server Error
+
+		objectResource CorporateContactObject type CorporateContact
+			URI corporatecontacts/{contactID}
+				required templateParam contactID property contactID
+			mediaTypes
+				application/json
+			/** Retrieve a contact – GET */
+			method GET getCorporateContactObject
+				// TODO: Model header param(s): roleCode, If-None-Match
+				// TODO: Model query param(s): )
+				request
+				// TODO: Model header param(s): ETag, Cache-Control
+				response CorporateContactObject statusCode 200 // OK
+				response statusCode 400 // Bad Request
+				response statusCode 403 // Forbidden
+				response statusCode 404 // Not found
+				response statusCode 500 // Internal Server Error
+		

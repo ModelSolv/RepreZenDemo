@@ -9,10 +9,10 @@ zenModel TaxBlaster
 			URI taxfilings/{id}
 				required templateParam id property filingID
 				
-			referenceLink > taxpayer
-				targetProperties
-					lastName
-					firstName
+//			referenceLink > taxpayer
+//				targetProperties
+//					lastName
+//					firstName
 			
 			mediaTypes
 				application/json

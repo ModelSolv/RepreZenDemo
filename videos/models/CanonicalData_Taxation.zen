@@ -10,8 +10,7 @@ zenModel Taxation
 			filingID : string
 			/** Reference to the person who owns this filing. */
 			taxpayer : reference to Person inverse taxfilings
-			/** Country, province, state or local tax authority 
-         	 	where this is being filed. */
+			/** Country, province, state or local tax authority where this is being filed. */
 			jurisdiction : string
 			/** Tax year */
 			year : gYear
@@ -44,8 +43,8 @@ zenModel Taxation
 			preferredLanguage : string
 			/** Date of birth */
 			DOB : date
-			/** Addresses */
-			addresses : reference to Address*
+			/** Address */
+			address : reference to Address
 			/** TaxFilings for this person */
 			taxfilings : reference to TaxFiling* inverse taxpayer
 

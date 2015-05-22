@@ -8,6 +8,9 @@ zenModel TaxBlaster
 		objectResource TaxFilingObject type TaxFiling
 			URI  taxfilings/{id}
 				required templateParam id property filingID
+				
+			referenceLink > taxpayer
+				
 			mediaTypes
 				application/json
 			method GET getTaxFilingObject

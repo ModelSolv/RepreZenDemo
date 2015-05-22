@@ -1,14 +1,18 @@
 import somecorp.domainmodels.Taxation.GeneralTypes from "CanonicalData_Taxation.zen"
 
-// Perspective: forming a message hierarchy from a graph of data types.
-// - Where shall we start? What shall be our entry points? 
-// - Shall we hyperlink or embed?
+// ---------------------------------------------------------------
+// Purpose here: an API for getting information about Tax Filings.
+// ---------------------------------------------------------------
+// 1. Import the data model(s) containing the types we wish to use.
+// 2. Choose entry point(s) for the API in the data graph 
+// 3. Refactor: get the right balance between embedding and linking.
 zenModel TaxBlaster
 	
 	resourceAPI InterfaceModel baseURI "http://taxmasters.com/taxblaster"
 		// Object Resources
-//		objectResource TaxFilingObject type TaxFiling
-//		objectResource PersonObject type Person
+		objectResource TaxFilingObject type TaxFiling
+//			referenceEmbed > taxpayer
+		objectResource PersonObject type Person
 //		objectResource AddressObject type Address
 		// Collection Resources
 //		collectionResource TaxFilingCollection type TaxFiling

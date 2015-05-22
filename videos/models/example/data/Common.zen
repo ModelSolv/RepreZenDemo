@@ -1,0 +1,73 @@
+namespace com.someco
+
+
+
+zenModel Data
+	dataModel Common
+		structure ID
+			idValue : string
+			schemeCode : reference to Common.TypeCode
+		structure GeoCoordinate
+			lattitude : double
+			longitute : double
+		structure TypeCode
+			codeValue : string
+			shortName : string
+		structure DateStampedTypeCode //extends Common.TypeCode?
+			effectiveDate : string
+			codeValue : string
+			shortName : string
+		structure ContactName
+			preferredSalutations : reference to Salutation
+			givenName : string
+			middleName : string
+			familyName1 : string
+			familyName2 : string
+			formattedName : string
+		structure Address
+			nameCode : reference to Common.TypeCode
+			formatted : string
+			lineOne : string
+			cityName : string
+			countrySubDivision : reference to CountrySubDivision*
+			countrySubDivisionLevel1 : reference to CountrySubDivisionLevel1
+			countryCode : string
+			postalCode : string
+			geocoordinate : reference to GeoCoordinate
+		structure CountrySubDivision
+			code : string
+			typeCode : string
+		structure CountrySubDivisionLevel1 //extends Common.TypeCode?
+			subdivisionType : string
+			codeValue : string
+			shortName : string
+		structure Salutation
+			salutationCode : reference to Common.TypeCode
+			typeCode : reference to Common.TypeCode
+			sequenceNumber : integer
+		structure CommunicationChannels
+			landlines : reference to PhoneNumber*
+			mobiles : reference to PhoneNumber*
+			faxes : reference to PhoneNumber*
+			emails : reference to Email*
+			internetAddresses : reference to URIStructure*
+			socialNetworks : reference to URIStructure*
+			instantMessages : reference to URIStructure*
+		structure PhoneNumber
+			itemID : string
+			countryDialling : string
+			areadDialling : string
+			dialNumber : string
+			formattedNumber : string
+			effectiveDate : string
+		structure Email
+			itemID : string
+			emailUri : string
+			effectiveDate : string
+		structure URIStructure
+			itemID : string
+			uri : string
+			effectiveDate : string
+		structure Link
+			href : string
+			rel : string

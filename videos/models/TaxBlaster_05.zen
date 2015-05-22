@@ -25,7 +25,7 @@ zenModel TaxBlaster
 				required templateParam id property taxpayerID
 			
 			// Explicit referenceEmbed.
-			referenceEmbed > addresses
+			referenceEmbed > address
 			
 			mediaTypes
 				application/json

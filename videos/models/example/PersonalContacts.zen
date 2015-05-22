@@ -1,0 +1,274 @@
+namespace com.adp.marketplace.hr.intefaces
+
+import com.someco.Data.Common from "data/Common.zen" as Common
+import com.someco.Data.PersonalContacts from "data/PersonalContacts.zen" as PersonalContacts
+
+zenModel PersonalContacts
+
+	resourceAPI PersonalContactsInterface baseURI "https://test-api.adp.com/hr/v2/"
+
+		collectionResource PersonalContactCollection type PersonalContact
+			URI associates/{associateOID}/personalcontacts
+				/** Associate ID - person to whom the Personal Contacts belong. */
+				required templateParam associateOID property associateOID
+			mediaTypes
+				application/json
+			/** List all personal contacts – GET*/
+			method GET getPersonalContactCollection
+				// TODO: Model eader param(s): roleCode
+				request 
+				// TODO: Model header param(s): ETag, Cache-Control
+				response PersonalContactCollection statusCode 200 // OK
+					example '''{
+  "personalContacts":[
+    {
+      "itemID":"PC-118",
+      "contactName":
+      {
+        "givenName":"Ashley",
+        "middleName":"Marie",
+        "familyName1":"Albright",
+        "familyName2":"Abbot",
+        "formattedName":"Albright,
+         Ashley"
+      },
+      "contactAddress":
+      {
+        "nameCode":
+        {
+          "codeValue":"Residence",
+          "shortName":"Residence Address"
+        },
+        "scriptCode":
+        {
+          "codeValue":"Latn",
+          "shortName":"Latin"
+        },
+        "buildingNumber":"357",
+        "streetName":"Millburn",
+        "streetTypeCode":
+        {
+          "codeValue":"Avenue",
+          "shortName":"Avenue"
+        },
+        "cityName":"Millburn",
+        "countrySubdivisionLevel1":
+        {
+          "subdivisionType":"state",
+          "codeValue":"NJ",
+          "shortName":"New Jersey"
+        },
+        "countryCode":"US",
+        "postalCode":"07041",
+        "geoCoordinate":
+        {
+          "latitude":40.723825,
+          "longitude":-74.308335
+        },
+        "effectiveDate":"2002-08-12"
+      },
+      "communication":
+      {
+        "landlines":[
+          {
+            "itemID":"1",
+            "countryDialing":"1",
+            "areaDialing":"973",
+            "dialNumber":"5553245",
+            "formattedNumber":"1 (973) 555-3245",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "mobiles":[
+          {
+            "itemID":"1",
+            "countryDialing":"1",
+            "areaDialing":"973",
+            "dialNumber":"5553011",
+            "formattedNumber":"1 (973) 555-3011",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "emails":[
+          {
+            "itemID":"1",
+            "emailUri":"AlbrightAshley@yahoo.com",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "internetAddresses":[
+          {
+            "itemID":"1",
+            "uri":"http://www.albrightashley.com/",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "socialNetworks":[
+          {
+            "itemID":"1",
+            "uri":"http://www.facebook.com/AlbrightAshley",
+            "effectiveDate":"2002-08-12"
+          }
+        ]
+      },
+      "contactTypeCode":
+      {
+        "codeValue":"EC1",
+        "shortName":"Emergency Contact 1"
+      },
+      "relationshipTypeCode":
+      {
+        "effectiveDate":"2002-08-12",
+        "codeValue":"S",
+        "shortName":"Spouse"
+      },
+      "precedenceCode":
+      {
+        "codeValue":"E",
+        "shortName":"Emergency"
+      }
+    }
+  ]
+}'''
+				response statusCode 400 // Bad Request
+				response statusCode 403 // Forbidden
+				response statusCode 404 // Not found
+				response statusCode 405 // Method Not Allowed
+				response statusCode 406 // Not Acceptable 
+				response statusCode 412 // Precondition Failed
+				response statusCode 500 // Internal Server Error
+
+		objectResource PersonalContactObject type PersonalContact
+			URI associates/{associateOID}/personalcontacts/{personalContactID}
+				/** Associate ID - person to whom the Personal Contacts belong. */
+				required templateParam associateOID property associateOID
+				/** Personal Contact ID - ID of contact in question. */
+				required templateParam personalContactID property itemID
+			mediaTypes
+				application/json
+			/** Retrieve a personal contact – GET*/
+			method GET getPersonalContactObject
+				// TODO: Model header param(s): roleCode
+				request 
+				// TODO: Model header param(s): ETag, Cache-Control
+				response PersonalContactObject statusCode 200 // OK
+					example '''{
+  "personalContacts":[
+    {
+      "itemID":"PC-118",
+      "contactName":
+      {
+        "givenName":"Ashley",
+        "middleName":"Marie",
+        "familyName1":"Albright",
+        "familyName2":"Abbot",
+        "formattedName":"Albright,
+         Ashley"
+      },
+      "contactAddress":
+      {
+        "nameCode":
+        {
+          "codeValue":"Residence",
+          "shortName":"Residence Address"
+        },
+        "scriptCode":
+        {
+          "codeValue":"Latn",
+          "shortName":"Latin"
+        },
+        "buildingNumber":"357",
+        "streetName":"Millburn",
+        "streetTypeCode":
+        {
+          "codeValue":"Avenue",
+          "shortName":"Avenue"
+        },
+        "cityName":"Millburn",
+        "countrySubdivisionLevel1":
+        {
+          "subdivisionType":"state",
+          "codeValue":"NJ",
+          "shortName":"New Jersey"
+        },
+        "countryCode":"US",
+        "postalCode":"07041",
+        "geoCoordinate":
+        {
+          "latitude":40.723825,
+          "longitude":-74.308335
+        },
+        "effectiveDate":"2002-08-12"
+      },
+      "communication":
+      {
+        "landlines":[
+          {
+            "itemID":"1",
+            "countryDialing":"1",
+            "areaDialing":"973",
+            "dialNumber":"5553245",
+            "formattedNumber":"1 (973) 555-3245",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "mobiles":[
+          {
+            "itemID":"1",
+            "countryDialing":"1",
+            "areaDialing":"973",
+            "dialNumber":"5553011",
+            "formattedNumber":"1 (973) 555-3011",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "emails":[
+          {
+            "itemID":"1",
+            "emailUri":"AlbrightAshley@yahoo.com",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "internetAddresses":[
+          {
+            "itemID":"1",
+            "uri":"http://www.albrightashley.com/",
+            "effectiveDate":"2002-08-12"
+          }
+        ],
+        "socialNetworks":[
+          {
+            "itemID":"1",
+            "uri":"http://www.facebook.com/AlbrightAshley",
+            "effectiveDate":"2002-08-12"
+          }
+        ]
+      },
+      "contactTypeCode":
+      {
+        "codeValue":"EC1",
+        "shortName":"Emergency Contact 1"
+      },
+      "relationshipTypeCode":
+      {
+        "effectiveDate":"2002-08-12",
+        "codeValue":"S",
+        "shortName":"Spouse"
+      },
+      "precedenceCode":
+      {
+        "codeValue":"E",
+        "shortName":"Emergency"
+      }
+    }
+  ]
+}'''
+				response statusCode 400 // Bad Request
+				response statusCode 403 // Forbidden
+				response statusCode 404 // Not found
+				response statusCode 405 // Method Not Allowed
+				response statusCode 406 // Not Acceptable 
+				response statusCode 412 // Precondition Failed
+				response statusCode 500 // Internal Server Error
+
+
