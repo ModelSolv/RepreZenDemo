@@ -14,5 +14,5 @@ hs_err_pid*
 # OpenShot stuff
 videos/movie/thumbnail/*
 videos/RepreZen-generated/*
-*.mov
+#*.mov
 *.mp4
