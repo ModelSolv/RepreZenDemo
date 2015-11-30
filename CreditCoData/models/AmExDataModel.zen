@@ -1,0 +1,32 @@
+/* This is a Zen Model template. Customize it to describe your services and data types. */
+zenModel AmExDataModel
+	resourceAPI AmExDataModelAPI baseURI "http://my-namespace.com"
+		//object resource with GET and PUT methods
+		objectResource AmExDataModelObject type AmExDataModel
+			URI /uri/{id}
+			mediaTypes
+				application/xml
+			method GET getAmExDataModelObject
+				request
+				response AmExDataModelObject statusCode 200
+			method PUT putAmExDataModelObject
+				request AmExDataModelObject
+				response statusCode 200
+				response statusCode 400
+		
+		//collection resource with GET and POST methods
+		collectionResource AmExDataModelCollection type AmExDataModel
+			URI /uri
+			mediaTypes
+				application/xml
+			method GET getAmExDataModelCollection
+				request
+				response AmExDataModelCollection statusCode 200
+			method POST postAmExDataModelCollection
+				request AmExDataModelCollection
+				response statusCode 200
+				response statusCode 400
+
+	dataModel AmExDataModelDataModel
+		structure AmExDataModel
+			id : string
