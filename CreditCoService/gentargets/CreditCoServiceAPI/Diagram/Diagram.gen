@@ -1,0 +1,17 @@
+{
+    "name": "Diagram",
+    "genTemplateId": "com.modelsolv.reprezen.gentemplates.d3js.XDiagramGenTemplate",
+    "relativeOutputDir": "generated",
+    "prerequisites": [
+    ],
+    "primarySource": 
+        { 
+            "path" : "../../../models/CreditCoServiceAPI.zen",
+            "required" : false,
+            "description" : "not provided"
+        },
+    "namedSources":  [
+    ],
+    "parameters": [
+    ]
+}

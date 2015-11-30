@@ -1,0 +1,17 @@
+{
+    "name": "Swagger",
+    "genTemplateId": "com.modelsolv.reprezen.gentemplates.swagger.XSwaggerGenTemplate",
+    "relativeOutputDir": "generated",
+    "prerequisites": [
+    ],
+    "primarySource": 
+        { 
+            "path" : "../../../models/CreditCoServiceAPI.zen",
+            "required" : false,
+            "description" : "not provided"
+        },
+    "namedSources":  [
+    ],
+    "parameters": [
+    ]
+}

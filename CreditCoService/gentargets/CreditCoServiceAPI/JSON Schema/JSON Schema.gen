@@ -1,0 +1,17 @@
+{
+    "name": "JSON Schema",
+    "genTemplateId": "com.modelsolv.reprezen.gentemplates.jsonschema.xtend.XJsonSchemaGenTemplate",
+    "relativeOutputDir": "generated",
+    "prerequisites": [
+    ],
+    "primarySource": 
+        { 
+            "path" : "../../../models/CreditCoServiceAPI.zen",
+            "required" : false,
+            "description" : "not provided"
+        },
+    "namedSources":  [
+    ],
+    "parameters": [
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Documentation",
+    "genTemplateId": "com.modelsolv.reprezen.gentemplates.doc.XDocGenTemplate",
+    "relativeOutputDir": "generated",
+    "prerequisites": [
+    ],
+    "primarySource": 
+        { 
+            "path" : "../../../models/CreditCoServiceAPI.zen",
+            "required" : false,
+            "description" : "not provided"
+        },
+    "namedSources":  [
+    ],
+    "parameters": [
+    ]
+}

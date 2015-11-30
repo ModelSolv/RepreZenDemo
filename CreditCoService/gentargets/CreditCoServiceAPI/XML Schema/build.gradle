@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+	repositories {
+		maven {
+			url "http://maven.reprezen.com/repository/releases/"
+		}
+		maven {
+			url "http://maven.reprezen.com/repository/eclipse/"
+		}
+		mavenCentral()
+	}
+	
+	dependencies {
+		compile ('com.modelsolv.reprezen:com.modelsolv.reprezen.generators.api:0.8.208.2581')
+		compile ('com.modelsolv.reprezen:com.modelsolv.reprezen.generators.xtend:0.8.208.2581') {
+	        exclude module: 'org.eclipse.equinox.bidi'
+	        exclude module: 'org.eclipse.emf.common.ui'
+	        exclude module: 'org.eclipse.e4.ui.workbench3'
+	        exclude module: 'org.apache.batik.css'
+	        exclude module: 'org.eclipse.e4.ui.css.swt'
+		}
+		compile ('com.modelsolv.reprezen:com.modelsolv.reprezen.generators.standard:0.8.208.2581')
+		compile fileTree(dir: 'C:\Users\Ted\AmExDemo2/shared/GenTemplates', include: ['*.jar'])
+	}
+	
+	task(execGenTarget, dependsOn: 'classes', type: JavaExec) {
+		main = 'com.modelsolv.reprezen.generators.api.GeneratorLauncher'
+		classpath = sourceSets.main.runtimeClasspath
+		args '/CreditCoService/gentargets/CreditCoServiceAPI/XML Schema/XML Schema.gen'
+	}
+	
+	defaultTasks 'execGenTarget' 
