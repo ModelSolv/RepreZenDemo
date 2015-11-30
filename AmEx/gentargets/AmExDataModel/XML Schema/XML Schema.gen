@@ -1,0 +1,16 @@
+{
+    /* XML Schema */
+    "genTemplate": "com.modelsolv.reprezen.gentemplates.xsd",
+    "sources": [
+       {
+          "name" : "zenModel",
+          "path":  "../../../models/AmExDataModel.zen"
+       }
+       
+    ],
+    "outputDir": "generated",
+    "genTemplateParameters": {
+        "param1": "you can define your generator parameters and values here",
+        "param2" : "paramValue2"
+    }
+}
