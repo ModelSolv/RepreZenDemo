@@ -1,0 +1,605 @@
+zenModel ECDM_AR	
+	dataModel Logical	
+		/**DEFINITION: An ACCOUNT represents an administrative means of creating and 
+		    maintaining multiple relationships between the Acquirer, Issuer/Bank and 
+		    Customer. 
+		    
+		    Examples: Consumer Card Accounts, Corporate Card Accounts, Bank Accounts (e.g.,  
+		    Loans, Savings), Rewards Accounts like Membership Rewards, Coalition Loyalty 
+		    Accounts; 
+		    
+		    A customer may have multiple credit cards, each of which is considered an 
+		    'account' and the account number is the same as the credit card number. 
+		    
+		    In some cases depending on the billing arrangement,  a customer may have one or 
+		    more accounts and each account may have one or more credit cards associated with 
+		    it.  For example, a corporation may have an account with multiple credit cards 
+		    linked to it for employees. 
+		    
+		    However, in most cases the customer account number is the same as the credit 
+		    card number. 
+		    
+		    NOTE: An ACCOUNT represents an administrative means of creating and maintaining 
+		    multiple relationships between the Issuer/Bank and Customer. */
+		structure ACCOUNT	
+			event : reference EVENT+ inverse account
+			generalLedgerAccount : containing GENERAL_LEDGER_ACCOUNT inverse account
+			transaction : containing TRANSACTION inverse account
+			plan : reference PLAN* inverse account
+			productAccount1 : containing PRODUCT_ACCOUNT_1 inverse account
+			statement : containing STATEMENT inverse account
+			product : reference PRODUCT* inverse account
+			customer : reference CUSTOMER* inverse account
+			merchantAccount : containing MERCHANT_ACCOUNT inverse account		
+		/**DEFINITION: The PK here is PAN 11 Card Account Number and it includes all the 
+		    Supps and Basic Card Numbers and their balances as a whole. ACCOUNT BALANCE has 
+		    STMT DATE as PRIMARY KEY too as it being calculated every month..thatswhy it is 
+		    1:M between CARD ACCOUNT: ACCOUNT BALANCE. */
+		structure ACCOUNT_BALANCE	
+			cardAccount : container CARD_ACCOUNT! inverse accountBalance
+			statement : container STATEMENT! inverse accountBalance
+			pointIndirectBalance : containing POINT__INDIRECT_BALANCE* inverse accountBalance
+			planBalance : containing PLAN_BALANCE* inverse accountBalance
+			cardDirectBalance : containing CARD__DIRECT_BALANCE* inverse accountBalance		
+		/**NOTE: American Express may hold multiple addresses for communication with a 
+		    Constituent via all forms . Like physical address, telephone address,  
+		    electronic address, legal address -  Must include foreign address structures */
+		structure ADDRESS	
+			location : container LOCATION_! inverse address		
+		structure ADJUSTMENT	
+			disputeAdjustment : containing DISPUTE_ADJUSTMENT inverse adjustment
+			manualCmAdjustment : containing MANUAL_CM_ADJUSTMENT inverse adjustment
+			directDebitReturn : containing DIRECT_DEBIT_RETURN inverse adjustment
+			transaction : container TRANSACTION! inverse adjustment
+			refundCheck : containing REFUND_CHECK* inverse adjustment		
+		/**DEFINITION: AMEX RELATIONSHIP is an attributive entity that captures a 
+		    specific relationship of a CONSTITUENT to AMEX. 
+		    
+		    AMEX RELATIONSHIP is a supertype; a given instance of AMEX RELATIONSHIP will be 
+		    either a WORKFORCE MEMBER, PROSPECT, NON-PARTNER, CUSTOMER, BUSINESS PARTNER or 
+		    ASSOCIATED PERSON. 
+		    
+		    A PARTY may have many relationships to AMEX at any time or over time. 
+		    
+		    NOTE: AMEX RELATIONSHIP - captures a specific relationship of a CONSTITUENT to 
+		    Amex */
+		structure AMEX_RELATIONSHIP	
+			amexRelationship : reference AMEX_RELATIONSHIP
+			customer : containing CUSTOMER inverse amexRelationship
+			constituent : reference CONSTITUENT inverse amexRelationship		
+		/**DEFINITION: AR Market - this is not consumer card market but the almalgum of 
+		    corporate, GNA and consumer.  In globestar this is know as ORG. 
+		    
+		    An AR MARKET may have some ACCOUNT STMT DETAILS. 
+		    
+		    
+		    
+		    An AR MARKET may have some PLAN SETTLEMENTS. */
+		structure AR_MARKET	
+			market : container MARKET! inverse arMarket
+			cardMarket : reference CARD_MARKET inverse arMarket		
+		/**DEFINITION: AR Product represets the types of plastic cards in a market. 
+		    
+		    The codes used must be keyed by market - examples reveal the nature of the data. 
+		    
+		    Examples MARKET      ORG      LOGO Australia        001        001 Gold Credit 
+		    Card Australia        001        002 GOLD CREDIT CARD MR H2L Australia        
+		    001        010 Gold Cashback Australia        001        011 Gold Rewards 
+		    Maximiser ... Hong Kong    101       001 Gold Hong Kong    101       006 Gold 
+		    Companion Hong Kong    101       010 Gold Prospect ... INTL EURO CARD (IEC)     
+		    543    801-GREEN RCP INTL EURO CARD (IEC)     543    802-GOLD RCP INTL EURO CARD 
+		    (IEC)     543    803-PLATINUM RCP .... Australia       003         701-QANTAS 
+		    CO-BRAND GREEN Australia       003         702-QANTAS CO-BRAND GOLD Australia    
+		       003         703-QANTAS CO-BRAND PLATINUM 
+		    
+		    Note ORG clarifies corporate or consumer as in the Australia example Logo is not 
+		    unique and must be clarified with ORG. E.g. 001 */
+		structure AR_PRODUCT__LOGO_	
+			product : container PRODUCT! inverse arProductLogo
+			cardProduct : reference CARD_PRODUCT inverse arProductLogo		
+		/**DEFINITION: A Segmentation code that represents a market or GNS Product or 
+		    Corporate Market. Could map to the Globe Star Org Id. */
+		structure AR_SEGMENT	
+			cardAccount : reference CARD_ACCOUNT inverse arSegment
+			market : container MARKET! inverse arSegment
+			product : reference PRODUCT inverse arSegment		
+		/**DEFINITION: The Basic Cardmember is the primary Cardmember against whom the 
+		    Account is set up (e.g. Account owner) */
+		structure BASIC	
+			cardAccount : container CARD_ACCOUNT! inverse ^basic		
+		/**DEFINITION: To be defined */
+		structure BILLING_CYCLE	
+			statement : reference STATEMENT inverse billingCycle		
+		/**DEFINITION: Other descriptive information (eg.  Payflex memos) */
+		structure BILLING_INFORMATION	
+			transactionLineItemSummary : container TRANSACTION_LINE_ITEM_SUMMARY! inverse billingInformation		
+		/**DEFINITION: A CARD ACCOUNT or MONETARY ACCOUNT manages goverment issued 
+		    currency recievables and / or currency payables.  Can also include pass-thru 
+		    finacial transactions managed for a third party. 
+		    
+		    Examples would include a Credit Card where AMEX collects from the card holding 
+		    customer for charges made at a Merchant.  A MONETARY ACCOUNT is maintaind for 
+		    both parties to allow AMEX to move funds. 
+		    
+		    Format:  PAN 19.  However, digits 11 and 12 differ for Supplementary 
+		    Cardholders. */
+		structure CARD_ACCOUNT	
+			accountBalance : containing ACCOUNT_BALANCE* inverse cardAccount
+			arSegment : reference AR_SEGMENT inverse cardAccount
+			plan : containing PLAN* inverse cardAccount
+			cardmember : reference CARDMEMBER inverse cardAccount
+			product : reference PRODUCT inverse cardAccount
+			^basic : containing BASIC* inverse cardAccount
+			supplementary : containing SUPPLEMENTARY* inverse cardAccount		
+		structure CARD_MARKET	
+			market : container MARKET! inverse cardMarket
+			arMarket : reference AR_MARKET inverse cardMarket		
+		/**DEFINITION: The goods and services that can be offered, sold, or purchased by 
+		    American Express, its Customers, Competitors, Suppliers, and other Parties 
+		    (Card, Investment, Life, Travel, erc). */
+		structure CARD_PRODUCT	
+			product : container PRODUCT! inverse cardProduct
+			arProductLogo : reference AR_PRODUCT__LOGO_ inverse cardProduct		
+		structure CARD_STATEMENT	
+			statement : container STATEMENT! inverse cardStatement		
+		/**DEFINITION: Balance Summary model provides information of card accounts as of 
+		    a particular statement cycle, such as outstanding balance, amount due, payments, 
+		    credits and others balance data.It is the balance under each Plastic Card and 
+		    the PK Card Account Number is PAN 13 number. The entity shows the latest balance 
+		    only an dno history stored. The data is agregared as the name implies = derived 
+		    data; not a model for the purists. */
+		structure CARD__DIRECT_BALANCE	
+			accountBalance : container ACCOUNT_BALANCE! inverse cardDirectBalance		
+		/**DEFINITION: Individual who has entered into an agreement with American 
+		    Express to acquire a Card Product eg. Charge, Revolve. Cardmembers may be 
+		    'Basic' (the account owner) or 'Supplementary' (additional cardmembers 
+		    identified by the Basic Cardmember) eg family member, employee. */
+		structure CARDMEMBER	
+			customer : container CUSTOMER! inverse cardmember
+			cardAccount : reference CARD_ACCOUNT inverse cardmember		
+		/**DEFINITION: A Case represents a process that may require multiple tasks or 
+		    steps over time to resolve, and the data needed to support the process 
+		    (including a record of contact activity).   This does not include issues that 
+		    can be resolved at initial point of contact. 
+		    
+		    Examples: Service Case, Collection Case, Fraud Case 
+		    
+		    NOTE: A Case represents a process that may require multiple tasks or steps over 
+		    time to resolve, and the data needed to support the process */
+		structure CASE	
+			collectionCase : containing COLLECTION_CASE inverse case
+			serviceCase : containing SERVICE_CASE inverse case
+			constituent : reference CONSTITUENT+ inverse case
+			event : reference EVENT+ inverse case		
+		/**DEFINITION: Information about purchases made by the cardmember charged to 
+		    their Amex account.  These are debits for Amex. 
+		    
+		    NOTE: The acquisition of something by means of a financial transaction */
+		structure CHARGE	
+			transaction : container TRANSACTION! inverse charge		
+		/**DEFINITION: A CLAIM CASE is a subtype of SERVICE CASE opened to resolve a 
+		    claim against an Insurance policy. examples: include but are not limited to: 
+		    Lost Luggage (Baggage) claim against a Travel Insurance policy */
+		structure CLAIM_CASE	
+			serviceCase : container SERVICE_CASE! inverse claimCase		
+		/**DEFINITION: A COLLECTION CASE is  opened when a sum of money owed to the 
+		    Enterprise is overdue, and the process to collect or recover the debt has been 
+		    initiated. 
+		    
+		    NOTE: A COLLECTION CASE is  opened when a sum of money owed to the Enterprise is 
+		    overdue */
+		structure COLLECTION_CASE	
+			case : container CASE! inverse collectionCase		
+		/**DEFINITION: A CONSTITUENT may be an ORGANISATION, an INDIVIDUAL or any OTHER 
+		    LEGAL ENTITY - Can play multiple ROLES at a given point in time.  Eg.: an 
+		    EMPLOYEE may also be a CUSTOMER. 
+		    
+		    CONSTITUENT types include: 
+		    
+		    Prospects Customers Workforce Members Business Partners (e.g. issuers, 
+		    acquirers, suppliers). 
+		    
+		    For each Constituent: " we may find several Accounts it is associated with " we 
+		    may find several Agreements it is associated with " we will find at least one 
+		    Amex Relationship it is associated with " we will find at least one Business 
+		    Partner Role it is associated with " we will find at least one Case it is 
+		    associated with " we may find several Constituents it is associated with " we 
+		    will find at least one Credit Risk it is associated with " we will find at least 
+		    one Demographics it is associated with " we will find at least one Event it is 
+		    associated with " we will find at least one Interests it is associated with " we 
+		    will find at least one Point of Interest it is associated with " we will find at 
+		    least one Preferences it is associated with 
+		    
+		    NOTE: A CONSTITUENT may be one of many different types, but also can lay 
+		    multiple ROLES at a given point in time.  Eg.: an EMPLOYEE may also be a 
+		    CUSTOMER. */
+		structure CONSTITUENT	
+			case : reference CASE+ inverse constituent
+			organization : containing ORGANIZATION inverse constituent
+			legalEntityTrustEstate : containing LEGAL_ENTITY___TRUST___ESTATE inverse constituent
+			event : reference EVENT+ inverse constituent
+			individual : containing INDIVIDUAL inverse constituent
+			location : reference LOCATION_* inverse constituent
+			amexRelationship : reference AMEX_RELATIONSHIP inverse constituent		
+		/**DEFINITION: A COUNTRY is a geographic area delimited by internationally 
+		    recognised borders as defined by ISO 3166. Note: Such an area will often be 
+		    further defined through separate internal political and economic administration 
+		    by its own government, See COUNTRY SUB DIVISION. 
+		    
+		    NOTE: A COUNTRY is a geographic area delimited by internationally recognised 
+		    borders */
+		structure COUNTRY	
+			market : reference MARKET* inverse country
+			currency : reference CURRENCY* inverse country
+			language : reference LANGUAGE* inverse country		
+		/**DEFINITION: CURRENCY is circulating money accepted as a medium of exchange 
+		    for payment of debts,  recognised as legal tender in one or more countries. 
+		    examples include but are not limited to: Pound Sterling, US Dollar, Australian 
+		    Dollar, Tajikistan Somoni Mexican Peso, CFA Franc BEAC, 
+		    
+		    NOTE: Circulating money accepted as a medium of exchange for payment */
+		structure CURRENCY	
+			market : reference MARKET* inverse currency
+			country : reference COUNTRY* inverse currency		
+		/**DEFINITION: A CUSTOMER is a Constituent with a relationship with the 
+		    enterprise through the purchase or use of products and, or, services offered by 
+		    the Enterprise 
+		    
+		    Examples include 
+		    
+		    -  Card Member/Card Holder -  Travel Customer -  Merchant -  401K participant, - 
+		     Investor -  Plan Participants -  Retail Clients  (including Membership Banking, 
+		    Advisory) -  TPD Clients . 
+		    
+		    NOTE: A Constituent with a relationship with the enterprise through the purchase 
+		    or use of products and/or services offered by the Company. */
+		structure CUSTOMER	
+			cardmember : containing CARDMEMBER inverse customer
+			merchant : containing MERCHANT inverse customer
+			amexRelationship : container AMEX_RELATIONSHIP! inverse customer
+			account : reference ACCOUNT* inverse customer
+			demographic : reference DEMOGRAPHIC+ inverse customer		
+		/**DEFINITION: Personal information of the Customer, that is used in marketing 
+		    and customer service. Includes gender, age, ethnicity, knowledge of languages, 
+		    disabilities, mobility, home ownership, and employment status.  It does NOT 
+		    include LOCATION. 
+		    
+		    NOTE: Personal information of the Customer, such as name, address, email, phone 
+		    number., etc */
+		structure DEMOGRAPHIC	
+			language : containing LANGUAGE inverse demographic
+			customer : reference CUSTOMER inverse demographic		
+		structure DIRECT_DEBIT_RETURN	
+			adjustment : container ADJUSTMENT! inverse directDebitReturn		
+		structure DISPUTE_ADJUSTMENT	
+			adjustment : container ADJUSTMENT! inverse disputeAdjustment		
+		/**DEFINITION: A DISPUTE CASE is a subtype of SERVICE CASE, opened to resolve a 
+		    problem between the Enterprise and a PARTY or between PARTIES. example a Card 
+		    CUSTOMER disputes a transaction on a Statement. */
+		structure DISPUTE_CASE	
+			serviceCase : container SERVICE_CASE! inverse disputeCase		
+		/**DEFINITION: An EVENT is the occurrence of an activity about which the 
+		    Enterprise wishes to know, and / or record information. An EVENT may trigger 
+		    additional action or processing e.g. creation of a CASE. Types of Event - - Life 
+		    Event - Risk Event - Contact Event - Communication Event - Travel Event - 
+		    Collection Event - Service Event 
+		    
+		    NOTE: An EVENT is the occurrence of an activity about which the Enterprise 
+		    wishes to know / record information. */
+		structure EVENT	
+			case : reference CASE+ inverse event
+			constituent : reference CONSTITUENT+ inverse event
+			account : reference ACCOUNT+ inverse event		
+		/**DEFINITION: A GENERAL LEDGER ACCOUNT is the information representing the 
+		    enterprise's financial  activities (e.g. debit and credit entries), status, and 
+		    values. Examples: General Ledger Accounts set up in Pound Sterling include the 
+		    following: A/R Unbilled Unidentified Remittances Unidentified Remittances 
+		    Written Off A/R Billings A/R Suspense A/R Misposted Clear */
+		structure GENERAL_LEDGER_ACCOUNT	
+			account : container ACCOUNT! inverse generalLedgerAccount		
+		/**DEFINITION: An INDIVIDUAL is any person, living or deceased, that the 
+		    enterprise  wishes to maintain information about 
+		    
+		    NOTE: An INDIVIDUAL is any person that the enterprise  wishes to maintain 
+		    information about */
+		structure INDIVIDUAL	
+			constituent : container CONSTITUENT! inverse individual		
+		/**DEFINITION: Standard Industry Code (SIC Code) which defines the industry of 
+		    the Cardmember/Cardmember business. */
+		structure INDUSTRY	
+			merchant : reference MERCHANT inverse industry		
+		/**DEFINITION: Reference entity that contains all of the official languages 
+		    recognized as a formal means of communication by the International Organization 
+		    for Standardization (ISO).  The two-character (alpha) codes are defined by ISO 
+		    639-1 (the three-character alpha codes are defined by ISO 639-2).  These are the 
+		    codes that are populated in the P_LANGUAGE Common Reference Table (CRT) at AXP. 
+		    
+		    The Language Codes were devised by ISO for use in terminology, lexicography, 
+		    information, documentation (i.e., for libraries, information services, and 
+		    publishers), and linguistics. */
+		structure LANGUAGE	
+			demographic : container DEMOGRAPHIC! inverse language
+			country : reference COUNTRY* inverse language		
+		/**DEFINITION: A LEGAL ENTITY is a type of Constiuent, other than an 
+		    ORGANIZATION or INDIVIDUAL with ownership and/or fiduciary responsibilities for 
+		    the assets (e.g., Accounts) under its control. Examples include:  Trusts,  
+		    Estates */
+		structure LEGAL_ENTITY___TRUST___ESTATE	
+			constituent : container CONSTITUENT! inverse legalEntityTrustEstate		
+		structure LOAN_PLAN_STATEMENT	
+			statement : container STATEMENT! inverse loanPlanStatement		
+		/**DEFINITION: A place, business site, residence, or a travel destination.  
+		    Location may be designated by physical, geographic, political or logical 
+		    (virtual) characteristics. 
+		    
+		    A location / address may be specific to the means of communication. It is also a 
+		    mechanism for knowing where physical assets reside for inventory purposes. 
+		    
+		    NOTE: A place, business site, residence, or a travel destination. */
+		structure LOCATION_	
+			address : containing ADDRESS* inverse location
+			market : reference MARKET inverse location
+			constituent : reference CONSTITUENT* inverse location		
+		structure MANUAL_CM_ADJUSTMENT	
+			adjustment : container ADJUSTMENT! inverse manualCmAdjustment		
+		/**DEFINITION: A MARKET is a the combination of one or more of the following: 
+		    PRODUCT, AREA, CURRENCY, and Demographic characteristics or criteria Examples of 
+		    how MARKET could be used are: For Organisational purposes - (e.g. EMEA, LA/C). 
+		    For the development, definition and promotion of PRODUCTS, (e.g. UK, US, EU). 
+		    For more specific segmentation of the population for marketing purposes (e.g. 
+		    Affluent Minnesotans over the age of 50). A MARKET could be defined to support 
+		    the segmentation and servicing of a given PRODUCT line for a given COUNTRY (or 
+		    countries), and CURRENCY (e.g. CARD MARKET). A MARKET e.g. APA (Asia, Pacific, 
+		    Australasia) could comprise many MARKETS based on the application of additional 
+		    criteria, including Demographic criteria. (This further definition of a MARKET 
+		    is sometimes known as a Market Segment). 
+		    
+		    NOTE: A MARKET is a the combination of one or more of PRODUCT, AREA, CURRENCY, 
+		    and Demographic characteristics. */
+		structure MARKET	
+			currency : reference CURRENCY* inverse market
+			planSettlement : reference PLAN_SETTLEMENT inverse market
+			country : reference COUNTRY* inverse market
+			arSegment : containing AR_SEGMENT inverse market
+			location : reference LOCATION_ inverse market
+			product : reference PRODUCT* inverse market
+			arMarket : containing AR_MARKET inverse market
+			cardMarket : containing CARD_MARKET* inverse market		
+		/**DEFINITION: A Merchant is any Constituent that has established a Business 
+		    Partner Agreement with the Company wherein they a) permit any Cardholder to 
+		    charge purchases of goods and services at, or with such establishment by means 
+		    of the Card,  and to transfer such Charge to an Acquirer or b)  to whom 
+		    commission payments are made, in respect of the acquisition of card Customers, 
+		    through the distribution of promotional or marketing material. 
+		    
+		    AKA:  Service Establishment 
+		    
+		    NOTE: A Merchant is any Constituent that has established a Business Partner 
+		    Agreement with the Company for usage of AXP products */
+		structure MERCHANT	
+			customer : container CUSTOMER! inverse merchant
+			industry : reference INDUSTRY inverse merchant		
+		/**DEFINITION: An MERCHANT ACCOUNT represents an administrative means of 
+		    creating and maintaining multiple relationships between the Acquirer, 
+		    Issuer/Bank and Merchant. */
+		structure MERCHANT_ACCOUNT	
+			account : container ACCOUNT! inverse merchantAccount		
+		/**DEFINITION: From the Triumph MARKET OFFERING enitity / table.  MARKET 
+		    OFFERING is a solicitation or special program offered to cardholders and 
+		    cardholder products.  These offerings represent special financial terms 
+		    (Promotional Processing), rebate or rewards (Indirect Balance Processing), 
+		    special terms for checks and balance transfers (Checks Processing), and 
+		    possibily other special offerings. Market Offerings can include the terms for 
+		    product features, i.e. Sign and Travel, Special Purchase Accounts, and 
+		    Activators. */
+		structure OFFER	
+			transaction : reference TRANSACTION inverse offer
+			product : reference PRODUCT+ inverse offer		
+		/**DEFINITION: ORGANZIATION - An ORGANIZATION is any Constituent, other than an 
+		    INDIVIDUAL or OTHER LEGAL ENTITY, formed to conduct business, provide a service, 
+		    or for other reasons, about  which the enterprise wishes to store information, 
+		    subject to Data Protection Legislation. Organization covers both internal and 
+		    external organizations. 
+		    
+		    NOTE: ORGANZIATION - An ORGANIZATION is any Constituent, other than an 
+		    INDIVIDUAL or OTHER LEGAL ENTITY, formed to conduct business, provide a service, 
+		    or for other reasons, about  which the enterprise wishes to store information, 
+		    subject to Data Protection Legislation. Organization covers both internal and 
+		    external organizations. */
+		structure ORGANIZATION	
+			constituent : container CONSTITUENT! inverse organization		
+		/**DEFINITION: Payment Breakdown details */
+		structure PAYMENT_BREAKDOWN	
+			transactionLineItemSummary : container TRANSACTION_LINE_ITEM_SUMMARY! inverse paymentBreakdown		
+		structure PAYMENT_DEVICE
+		/**DEFINITION: Financial payment (payflex) plan (e.g. Payflex, etc) against 
+		    which the transaction posted. 
+		    
+		    Note:  A plan of 00000 means the transaction is “Global” (meaning parts of it 
+		    can be posted across multiple plans (payments/payment reversals). Including RTRs 
+		    */
+		structure PAYMENT_PLAN	
+			plan : container PLAN! inverse paymentPlan		
+		/**DEFINITION: Organized sequence of pre-determined actions that management has 
+		    chosen to achieve future organizational objectives. 
+		    
+		    NOTE: Organized sequence of pre-determined actions that management has chosen to 
+		    achieve future organizational objectives. */
+		structure PLAN	
+			planBalance : containing PLAN_BALANCE* inverse plan
+			planSettlement : containing PLAN_SETTLEMENT* inverse plan
+			account : reference ACCOUNT* inverse plan
+			paymentPlan : containing PAYMENT_PLAN inverse plan
+			cardAccount : container CARD_ACCOUNT! inverse plan		
+		/**DEFINITION: It is the balance for each loan plan of the CARD ACCOUNT holder'd 
+		    loan account. This entity has STMT DATE as PRIMARY KEY too as it being 
+		    calculated every month. */
+		structure PLAN_BALANCE	
+			accountBalance : container ACCOUNT_BALANCE! inverse planBalance
+			plan : container PLAN! inverse planBalance
+			planSettlement : container PLAN_SETTLEMENT! inverse planBalance		
+		/**DEFINITION: When a financial (credit or loan) plan has been completed or 
+		    liquidated.The Payment plan as to how the loan holder chooses to repay. The 
+		    entity shows the current status & balance only. */
+		structure PLAN_SETTLEMENT	
+			market : reference MARKET inverse planSettlement
+			plan : container PLAN! inverse planSettlement
+			planBalance : containing PLAN_BALANCE* inverse planSettlement		
+		/**DEFINITION: An indirect balance is a separate balance that is maintained for 
+		    promotional reasons. 
+		    
+		    period to date bonus points/rebates forfeited indirect balance bonus points / 
+		    rebate award The current CTD Bonus Point/Rebate balance on a specific account 
+		    will become the cycle-end balance and will continue to be used for YTD totals 
+		    when the current cycle passes. */
+		structure POINT__INDIRECT_BALANCE	
+			accountBalance : container ACCOUNT_BALANCE! inverse pointIndirectBalance		
+		/**DEFINITION: A PRODUCT is any instrument or service manufactured, distributed, 
+		    managed, and/or serviced by American Express. 
+		    
+		    is typically, but not always, associated with a fee, charge, and/or premium can 
+		    be purchased separately (i.e., 'stand-alone') can be sold with zero, one, or 
+		    more PRODUCT FEATURES may be re-branded by a Business Partner and sold under a 
+		    different name may be bundled with other Products to form a new Product 
+		    
+		    Examples- Charge and Credit Cards for Consumer / Small Business / Corporates. 
+		    Travel Services, Traveler's cheques, Network Products, Card Processing Services 
+		    Foreign Exchange Services. Payment & Billing products. 
+		    
+		    NOTE: A PRODUCT is any instrument or service manufactured, distributed, managed, 
+		    and/or serviced by AXP. */
+		structure PRODUCT	
+			productAccount1 : containing PRODUCT_ACCOUNT_1 inverse product
+			cardProduct : containing CARD_PRODUCT inverse product
+			market : reference MARKET* inverse product
+			arSegment : reference AR_SEGMENT inverse product
+			productFeature : reference PRODUCT_FEATURE inverse product
+			account : reference ACCOUNT* inverse product
+			arProductLogo : containing AR_PRODUCT__LOGO_* inverse product
+			cardAccount : reference CARD_ACCOUNT inverse product
+			offer : reference OFFER+ inverse product		
+		structure PRODUCT_ACCOUNT_1	
+			product : container PRODUCT! inverse productAccount1
+			account : container ACCOUNT! inverse productAccount1		
+		/**DEFINITION: A characteristic of a product that may define the parameters of 
+		    financial behaviour, servicing, or other benefits the customer may receive with 
+		    product enrollment/purchase */
+		structure PRODUCT_FEATURE	
+			product : reference PRODUCT inverse productFeature		
+		/**DEFINITION: Membership Rewards Redemption */
+		structure REDEMPTION	
+			transaction : container TRANSACTION! inverse redemption		
+		/**DEFINITION: (A/R Credit Balance)  Type of Transaction.  Goods are returned 
+		    and a check for the amount of the purchase is sent to the customer */
+		structure REFUND_CHECK	
+			adjustment : container ADJUSTMENT! inverse refundCheck		
+		/**DEFINITION: The remittance is the financial transaction created as a result 
+		    of Amex receiving payment from a Card member, or payment to loyalty coalition 
+		    partners.  It is the cardmember payment received or credit to AR 
+		    
+		    The remittance is then applied to the account balances in order to reduce the 
+		    liabilities. AECB and its affiliates will credit payments to the customer's 
+		    account as of the day the payment is received if the remittance is: " received 
+		    by mail; " at the designated remittance address before noon local time; " 
+		    received in U.S. currency, with a draft or a check drawn on a bank in the U.S. 
+		    and payable in U.S. Dollars or with a money order payable in U.S. Dollars and 
+		    that is complete and accurate; " received with the remittance stub or some other 
+		    notation of the account number for posting. 
+		    
+		    A remittance is a bank transfer or cash payment made by CM based on outstanding 
+		    balance on the card. */
+		structure REMITTANCE	
+			remittanceDelinquency : containing REMITTANCE_DELINQUENCY inverse remittance
+			transaction : container TRANSACTION! inverse remittance		
+		/**DEFINITION: Negative or no-good information related to a cardmember payment. 
+		    Payment or remittance applied towards a delinquency bucket. 
+		    
+		    How is this different than Remittance No-good Activity? */
+		structure REMITTANCE_DELINQUENCY	
+			remittance : container REMITTANCE! inverse remittanceDelinquency		
+		/**DEFINITION: SERVICE CASE is as a result of CONTACT made by a CUSTOMER or 
+		    BUSINESS PARTNER to the Enterprise requesting the resolution of a problem or 
+		    dispute, or request for other servicing, e.g, handling an Insurance Claim. 
+		    
+		    NOTE: SERVICE CASE is as a result of CONTACT made by a CUSTOMER or BUSINESS 
+		    PARTNER to the Enterprise requesting the resolution of a problem or dispute, or 
+		    request for other servicing, e.g, handling an Insurance Claim. */
+		structure SERVICE_CASE	
+			case : container CASE! inverse serviceCase
+			claimCase : containing CLAIM_CASE inverse serviceCase
+			disputeCase : containing DISPUTE_CASE inverse serviceCase		
+		/**DEFINITION: Description of how CMS generates a statement for this account. 
+		    
+		    Blank=Normal statement 0=User defined statement hold code 10 1-9=User defined 
+		    statement hold code 1-9 H=Hold statement R=Returned statement S=Sign out 
+		    statement O=Online/archive-only statement P=Paperless statement U=Suppress 
+		    statement, do not generate Z=User defined value that suppresses statement 
+		    generation */
+		structure STATEMENT	
+			accountBalance : containing ACCOUNT_BALANCE* inverse statement
+			loanPlanStatement : containing LOAN_PLAN_STATEMENT inverse statement
+			cardStatement : containing CARD_STATEMENT inverse statement
+			account : container ACCOUNT! inverse statement
+			billingCycle : reference BILLING_CYCLE inverse statement		
+		/**DEFINITION: Type of Transaction.  Goods are returned and a credit is applied 
+		    to the customer's account. */
+		structure STATEMENT_CREDIT	
+			transaction : container TRANSACTION! inverse statementCredit		
+		/**DEFINITION: An Account always has a Basic Cardmember, who owns the Account, 
+		    and who may nominated zero, one or more supplementary Cardemembers. 
+		    
+		    Type of Card member role that includes all supplemental cardholders for a 
+		    specific account.  Supplemental cardholders are authorized to charge using a 
+		    given plastic, they are, however, not necessarily financially responsible for 
+		    those charges - the basic cardholder is. Supp information is NOT available in 
+		    all systems (e.g. GRMS and WCC do not carry Supp information).  AR, CAS, GNAT 
+		    and GNA does carry Supp data. Note: GNAT has Supp information from Triumph and 
+		    Legacy - not from Optima. */
+		structure SUPPLEMENTARY	
+			cardAccount : container CARD_ACCOUNT! inverse supplementary		
+		/**DEFINITION: A TRANSACTION is the set of data related to an event that changes 
+		    ACCOUNT status (balances, values, number of shares) or asset values e.g. The 
+		    financial event between a CUSTOMER (Cardholder) and MERCHANT described in the 
+		    Record of Charge (ROC), a Balance Transfer, Investment account transfers, data 
+		    related to a Stock purchases etc. Further examples include: Purchases, 
+		    Transfers, Cash Advances, Remittances, Redemptions, Merchant Payments, Payments 
+		    to Customers. 
+		    
+		    specific to financial or monetary transactions, and used in a manner of 
+		    accounting or financial reporting. i.e., Record of Charge, Purchase, Credit, 
+		    Debit, Adjustment, Fee Assessment, Sale, Balance Transfer, etc. 
+		    
+		    NOTE: A Transaction is the set of data related to an event that changes Account 
+		    status (balances, values, number of shares) or asset values */
+		structure TRANSACTION	
+			redemption : containing REDEMPTION inverse transaction
+			transactionLineItemDetail : containing TRANSACTION_LINE_ITEM_DETAIL inverse transaction
+			charge : containing CHARGE inverse transaction
+			adjustment : containing ADJUSTMENT inverse transaction
+			account : container ACCOUNT! inverse transaction
+			remittance : containing REMITTANCE inverse transaction
+			transactionLineItemSummary : containing TRANSACTION_LINE_ITEM_SUMMARY+ inverse transaction
+			statementCredit : containing STATEMENT_CREDIT inverse transaction
+			offer : reference OFFER inverse transaction		
+		/**DEFINITION: Line Item details is the list of specific items purchased at a 
+		    specific merchant.  Only select Merchants remit this information to the ARs. 
+		    
+		    Part of Globestar ETD Block (Enhanced Transaction Block) houses line item detail 
+		    as either general, merchandise, etc.  Triumph houses content from Airline, 
+		    Hotel, and Restaurant only -- no retail. 
+		    
+		    NOTE: Line Item details is the list of specific items purchased at a specific 
+		    merchant.  Only select Merchants remit this information to the ARs. */
+		structure TRANSACTION_LINE_ITEM_DETAIL	
+			transaction : container TRANSACTION! inverse transactionLineItemDetail		
+		/**DEFINITION: Transaction details for accounts receivables data, like debits 
+		    and credits (Merchant based), fees, payments and non-Merchant credits (e.g., for 
+		    pay-with-points credits), redemptions. */
+		structure TRANSACTION_LINE_ITEM_SUMMARY	
+			transaction : container TRANSACTION! inverse transactionLineItemSummary
+			paymentBreakdown : containing PAYMENT_BREAKDOWN* inverse transactionLineItemSummary
+			transactionRolldown : containing TRANSACTION_ROLLDOWN* inverse transactionLineItemSummary
+			billingInformation : containing BILLING_INFORMATION* inverse transactionLineItemSummary		
+		/**DEFINITION: Other descriptive information (eg.  Payflex memos) */
+		structure TRANSACTION_ROLLDOWN	
+			transactionLineItemSummary : container TRANSACTION_LINE_ITEM_SUMMARY! inverse transactionRolldown			

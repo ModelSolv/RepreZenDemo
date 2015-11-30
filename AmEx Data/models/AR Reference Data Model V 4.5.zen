@@ -1,0 +1,1806 @@
+zenModel AR_Reference_Data_Model_V_4_1_dm1	
+	dataModel Logical	
+		/**DEFINITION: An ACCOUNT represents an administrative means of creating and 
+		    maintaining multiple relationships between the Acquirer, Issuer/Bank and 
+		    Customer. 
+		    
+		    Examples: Consumer Card Accounts, Corporate Card Accounts, Bank Accounts (e.g.,  
+		    Loans, Savings), Rewards Accounts like Membership Rewards, Coalition Loyalty 
+		    Accounts; 
+		    
+		    A customer may have multiple credit cards, each of which is considered an 
+		    'account' and the account number is the same as the credit card number. 
+		    
+		    In some cases depending on the billing arrangement,  a customer may have one or 
+		    more accounts and each account may have one or more credit cards associated with 
+		    it.  For example, a corporation may have an account with multiple credit cards 
+		    linked to it for employees. 
+		    
+		    However, in most cases the customer account number is the same as the credit 
+		    card number. 
+		    
+		    NOTE: An ACCOUNT represents an administrative means of creating and maintaining 
+		    multiple relationships between the Issuer/Bank and Customer. */
+		structure ACCOUNT	
+			event : reference EVENT+ inverse account
+			generalLedgerAccount : containing GENERAL_LEDGER_ACCOUNT inverse account
+			transaction : containing TRANSACTION inverse account
+			plan : reference PLAN* inverse account
+			productAccount1 : containing PRODUCT_ACCOUNT_1 inverse account
+			statement : containing STATEMENT inverse account
+			product : reference PRODUCT* inverse account
+			customer : reference CUSTOMER* inverse account
+			merchantAccount : containing MERCHANT_ACCOUNT inverse account
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Means of distinguishing different type of accounts being 
+			    processed on the GRS platform:  Card products versus non-card products (e.g 
+			    Leaseworks, Managed Assets, BOH, etc.) */
+			accountCategoryCode : string		
+		/**DEFINITION: The PK here is PAN 11 Card Account Number and it includes all the 
+		    Supps and Basic Card Numbers and their balances as a whole. ACCOUNT BALANCE has 
+		    STMT DATE as PRIMARY KEY too as it being calculated every month..thatswhy it is 
+		    1:M between CARD ACCOUNT: ACCOUNT BALANCE. */
+		structure ACCOUNT_BALANCE	
+			cardAccount : container CARD_ACCOUNT! inverse accountBalance
+			statement : container STATEMENT! inverse accountBalance
+			pointIndirectBalance : containing POINT__INDIRECT_BALANCE* inverse accountBalance
+			planBalance : containing PLAN_BALANCE* inverse accountBalance
+			cardDirectBalance : containing CARD__DIRECT_BALANCE* inverse accountBalance
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			statementDate : date
+			priorityMessageText : string
+			customerNominatedDirectDebitAmount : decimal
+			withdrawalDirectDebitAmount : decimal
+			directDebitDate : date
+			paymentMethodCode : string
+			downPaymentAmount : integer
+			downPaymentPlanText : string
+			directDebitIndicator : string
+			hashTotalAmount : decimal
+			payflexIndicator : string
+			payflexDisclosureIndicator : string
+			autoSweepPlanNumber : integer
+			autoSweepInstallmentAmount : decimal
+			autoSweepDownPaymentAmount : string
+			autoSweepOfferMonthTermCount : integer
+			autoSweepTotalLoanAmount : decimal
+			availableCashLimitAmount : decimal
+			availableCreditLimitAmount : decimal
+			/**DEFINITION: The remaining Late payment fee balance on the plan after this 
+			    payment was applied. 
+			    
+			    NOTE: LSRR-LATE-CHGS-BAL */
+			lateChargeBalanceAmount : decimal
+			/**DEFINITION: The remaining Annual fee balance on the plan after this payment 
+			    was applied. 
+			    
+			    NOTE: LSRR-ANNUAL-FEES-BAL */
+			annualFeeBalanceAmount : decimal
+			/**DEFINITION: The remaining principal balance on the plan after this payment 
+			    was applied. 
+			    
+			    NOTE: LSRR-PRINCIPAL-BAL */
+			principalBalanceAmount : decimal
+			/**DEFINITION: The remaining Insurance balance on the plan after this payment 
+			    was applied. 
+			    
+			    NOTE: LSRR-INSURANCE-BAL */
+			insuranceBalanceAmount : decimal
+			/**DEFINITION: The remaining collection fee balance on the plan after this 
+			    payment was applied.  (amex typically does not use this bucket) 
+			    
+			    NOTE: LSRR-COLL-FEES-BAL */
+			collectionFeeBalanceAmount : decimal
+			/**DEFINITION: The remaining overlimit fee balance on the plan after this 
+			    payment was applied. 
+			    
+			    NOTE: LSRR-OVLM-FEES-BAL */
+			overlimitFeeBalanceAmount : decimal
+			/**DEFINITION: The remaining balance on the User fee buckets  after this payment 
+			    was applied.  G* has six user fee buckets (TAX is user fee 3). 
+			    
+			    NOTE: LSRR-USER-1-FEES-BAL */
+			userFeeBalanceAmount : decimal
+			/**DEFINITION: The remaining Interest balance on the plan after this payment was 
+			    applied. 
+			    
+			    NOTE: LSRR-INTEREST-BAL */
+			interestBalanceAmount : decimal
+			/**DEFINITION: The remaining Service fee balance on the plan after this payment 
+			    was applied. 
+			    
+			    NOTE: LSRR-SVC-CHGS-BAL */
+			serviceFeeBalanceAmount : decimal
+			/**DEFINITION: The remaining recovery fee balance on the plan after this payment 
+			    was applied.  (amex typically does not use this bucket) 
+			    
+			    NOTE: LSRR-RECV-FEES-BAL */
+			recoveryFeeBalanceAmount : decimal		
+		/**NOTE: American Express may hold multiple addresses for communication with a 
+		    Constituent via all forms . Like physical address, telephone address,  
+		    electronic address, legal address -  Must include foreign address structures */
+		structure ADDRESS	
+			location : container LOCATION_! inverse address
+			/**DEFINITION: American Express may hold multiple addresses for communication 
+			    with a PARTY via all forms . Examples may include physical address, telephone 
+			    address,  electronic address, legal address 
+			    
+			    -  Must include foreign address structures */
+			locationIdentifier : string
+			addressTypeCode : string		
+		structure ADJUSTMENT	
+			disputeAdjustment : containing DISPUTE_ADJUSTMENT inverse adjustment
+			manualCmAdjustment : containing MANUAL_CM_ADJUSTMENT inverse adjustment
+			directDebitReturn : containing DIRECT_DEBIT_RETURN inverse adjustment
+			transaction : container TRANSACTION! inverse adjustment
+			refundCheck : containing REFUND_CHECK* inverse adjustment
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Main Account Adjustments (total). The account's adjustments for 
+			    the billing period, less any related promotions adjustments.  Includes suspense 
+			    adjustments for non-promotions adjustment transactions. Current Adjustments for 
+			    the billing period - NOT balanc */
+			totalAdjustmentAmount : decimal
+			adjustmentTypeCode : string
+			adjustmentReasonCode : string		
+		/**DEFINITION: AMEX RELATIONSHIP is an attributive entity that captures a 
+		    specific relationship of a CONSTITUENT to AMEX. 
+		    
+		    AMEX RELATIONSHIP is a supertype; a given instance of AMEX RELATIONSHIP will be 
+		    either a WORKFORCE MEMBER, PROSPECT, NON-PARTNER, CUSTOMER, BUSINESS PARTNER or 
+		    ASSOCIATED PERSON. 
+		    
+		    A PARTY may have many relationships to AMEX at any time or over time. 
+		    
+		    NOTE: AMEX RELATIONSHIP - captures a specific relationship of a CONSTITUENT to 
+		    Amex */
+		structure AMEX_RELATIONSHIP	
+			amexRelationship : reference AMEX_RELATIONSHIP
+			customer : containing CUSTOMER inverse amexRelationship
+			constituent : reference CONSTITUENT inverse amexRelationship
+			amexRelationshipIdentifier : string
+			constituentIdentifier : string		
+		/**DEFINITION: AR Market - this is not consumer card market but the almalgum of 
+		    corporate, GNA and consumer.  In globestar this is know as ORG. 
+		    
+		    An AR MARKET may have some ACCOUNT STMT DETAILS. 
+		    
+		    
+		    
+		    An AR MARKET may have some PLAN SETTLEMENTS. */
+		structure AR_MARKET	
+			market : container MARKET! inverse arMarket
+			cardMarket : reference CARD_MARKET inverse arMarket
+			/**DEFINITION: AR Org code - representing the market / product e.g. Australia 
+			    Consumer - 001, Aus Corp - 003 */
+			marketCode : string		
+		/**DEFINITION: AR Product represets the types of plastic cards in a market. 
+		    
+		    The codes used must be keyed by market - examples reveal the nature of the data. 
+		    
+		    Examples MARKET      ORG      LOGO Australia        001        001 Gold Credit 
+		    Card Australia        001        002 GOLD CREDIT CARD MR H2L Australia        
+		    001        010 Gold Cashback Australia        001        011 Gold Rewards 
+		    Maximiser ... Hong Kong    101       001 Gold Hong Kong    101       006 Gold 
+		    Companion Hong Kong    101       010 Gold Prospect ... INTL EURO CARD (IEC)     
+		    543    801-GREEN RCP INTL EURO CARD (IEC)     543    802-GOLD RCP INTL EURO CARD 
+		    (IEC)     543    803-PLATINUM RCP .... Australia       003         701-QANTAS 
+		    CO-BRAND GREEN Australia       003         702-QANTAS CO-BRAND GOLD Australia    
+		       003         703-QANTAS CO-BRAND PLATINUM 
+		    
+		    Note ORG clarifies corporate or consumer as in the Australia example Logo is not 
+		    unique and must be clarified with ORG. E.g. 001 */
+		structure AR_PRODUCT__LOGO_	
+			product : container PRODUCT! inverse arProductLogo
+			cardProduct : reference CARD_PRODUCT inverse arProductLogo
+			/**DEFINITION: AR Product Number (e.g. G* Logo) 
+			    
+			    Defines the business product code. Contains value of zeros for Market level 
+			    Record */
+			productCode : string		
+		/**DEFINITION: A Segmentation code that represents a market or GNS Product or 
+		    Corporate Market. Could map to the Globe Star Org Id. */
+		structure AR_SEGMENT	
+			cardAccount : reference CARD_ACCOUNT inverse arSegment
+			market : container MARKET! inverse arSegment
+			product : reference PRODUCT inverse arSegment
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string		
+		/**DEFINITION: The Basic Cardmember is the primary Cardmember against whom the 
+		    Account is set up (e.g. Account owner) */
+		structure BASIC	
+			cardAccount : container CARD_ACCOUNT! inverse ^basic
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Card number used for the transaction. System generated 
+			    transactions with the exception of Supp card fees will assign the transaction to 
+			    the basic card number. */
+			cardmemberNumber : string		
+		/**DEFINITION: To be defined */
+		structure BILLING_CYCLE	
+			statement : reference STATEMENT inverse billingCycle
+			billingCycleDate : date
+			/**DEFINITION: THE BATCH NUMBER IDENTIFIES A BATCH OF RECEIPTS OF CHARGE (ROCS) 
+			    CREATED BY A MERCHANT.  A STATEMENT OF CHARGE (SOC) WILL BE CREATED FOR EACH 
+			    BATCH.  THIS BATCH IS RECEIVED FROM FINCAP AND IS USED BY OLAF TO RETRIEVE ROC 
+			    IMAGES. */
+			batchReferenceNumber : string
+			nextCycleDate : string
+			previousCycleDate : string		
+		/**DEFINITION: Other descriptive information (eg.  Payflex memos) */
+		structure BILLING_INFORMATION	
+			transactionLineItemSummary : container TRANSACTION_LINE_ITEM_SUMMARY! inverse billingInformation
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: CURRENCY KEY IDENTIFIER: This is an AXP-generated physical 
+			    identifier for a given instance of Currency.  This field's value is generated 
+			    (by an AXP application?  By the first AXP DBMS into which an ISO Currency is 
+			    loaded? Some other process, such as assigned by some AXP business user? The AXP 
+			    CRT load team ( Which?).  The intent of this field is to provide AXP its own 
+			    unique identifier for an ISO Currency. 
+			    
+			    The business and technical value of this field is unclear.  Given that ISO 
+			    already provides two means of uniquely identifying a Currency, and ISO is the 
+			    International Standards Organization responsible for identifying Currency, it is 
+			    not clear why this field is needed and not clear how it provides AXP any 
+			    additional value to the business or to the technical implementation. 
+			    
+			    It is believed that a Currency Key Identifier maps to one and only one ISO 
+			    Currency, and that an ISO Currency maps to one and only one Currency Key 
+			    Identifier, at any given point in time.  It is unclear whether Currency Key 
+			    Identifiers are reused. 
+			    
+			    The column name of IDENTIFIER_ID represents the column of the DB2 table that is 
+			    the Common Reference Table (CRT) in the DB2 mainframe subsystem. 
+			    
+			    
+			    
+			    Example: 
+			    
+			    Currency Key Identifier   ISO Numeric Currency Code     ISO Alpha Currency Code 
+			    -----------------------------------     
+			    --------------------------------------------      
+			    ---------------------------------------- 001                         840         
+			                                             USD 005                         124     
+			                                                 CAD 007                         484 
+			                                                     MXN 011                         
+			    886                                                  YER 012                     
+			        834                                                  TZS */
+			billingCurrencyCode : string
+			/**DEFINITION: Billing Amount is amount of the transaction that is billed.  It 
+			    is associated with the market billing currency not a local spend currency of the 
+			    transaction.  Triumph therefore always has this in US dollars since Triumph 
+			    bills only in US dollars - spend currencies may differ. 
+			    
+			    Globestar Definition: Transaction Amount previously documented by Globestar as 
+			    Transaction Amount 
+			    
+			    Triumph Definition: The dollar amount of the transaction. previously documented 
+			    by Triumph as Transaction Amt 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 
+			    Attribute=Transaction Amt GTD / DB2 Field=GTD3008 GTD-TXN-AMT-D TXN_AMT 
+			    
+			    Extra Info: To be used by GDM to narrow down the search results */
+			billingAmount : decimal
+			/**DEFINITION: Descriptive Billing Code 
+			    
+			    also documented as Descriptive Billing Code 
+			    
+			    originally documented as Globestar only 
+			    
+			    NOTE: Triumph Notes: None - Globestar only */
+			descriptiveBillingCode : string
+			/**DEFINITION: also documented as 
+			    
+			    originally documented as Globestar only 
+			    
+			    NOTE: Triumph Notes: None - Globestar only 
+			    
+			    Extra Info: Denormalize to columns */
+			descriptiveBillingSequenceNumber : integer
+			/**DEFINITION: Stores description of the data associated with a Print Ready 
+			    memo. 
+			    
+			    In Triumph this appears to be stored in separate industry related entities e.g. 
+			    restaurant, care hire etc. 
+			    
+			    also documented as Descriptive Billing Description 
+			    
+			    originally documented as Globestar only 
+			    
+			    NOTE: Triumph Notes: None - Globestar only 
+			    
+			    Extra Info: Denormalize to columns */
+			descriptiveBillingDescription : string		
+		/**DEFINITION: A CARD ACCOUNT or MONETARY ACCOUNT manages goverment issued 
+		    currency recievables and / or currency payables.  Can also include pass-thru 
+		    finacial transactions managed for a third party. 
+		    
+		    Examples would include a Credit Card where AMEX collects from the card holding 
+		    customer for charges made at a Merchant.  A MONETARY ACCOUNT is maintaind for 
+		    both parties to allow AMEX to move funds. 
+		    
+		    Format:  PAN 19.  However, digits 11 and 12 differ for Supplementary 
+		    Cardholders. */
+		structure CARD_ACCOUNT	
+			accountBalance : containing ACCOUNT_BALANCE* inverse cardAccount
+			arSegment : reference AR_SEGMENT inverse cardAccount
+			plan : containing PLAN* inverse cardAccount
+			cardmember : reference CARDMEMBER inverse cardAccount
+			product : reference PRODUCT inverse cardAccount
+			^basic : containing BASIC* inverse cardAccount
+			supplementary : containing SUPPLEMENTARY* inverse cardAccount
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			accountsReceivableAccountTypeCode : string
+			/**DEFINITION: Date the Account was set up on NACH.   Will be initialized at 
+			    implementation, and will only be updated when a new account is set up on NACH.  
+			    Applies to Account Effective Date and Account Conversion Date. */
+			accountEffectiveDate : date
+			/**DEFINITION: Account setup date.  The date the account was setup 
+			    
+			    NOTE: DOR: 
+			    
+			    See TRMH-SETUP-DATE Length: CHAR(5) */
+			accountSetupDate : date
+			/**DEFINITION: Account anniversary date.  Shows the date that the cardmember 
+			    first obtained a card (format: YYMM). 
+			    
+			    NOTE: DOR: 
+			    
+			    See TRMH-ANNIV-DATE Length: CHAR(4) */
+			accountAnniversaryDate : date
+			/**DEFINITION: Supplemental card count.  Used to describe the number of supp 
+			    cards associated with the basic account. 
+			    
+			    NOTE: DOR: 
+			    
+			    See TRMH-SUPP-COUNT Length: CHAR(3) */
+			supplementalCount : int
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string
+			/**DEFINITION: Card number used for the transaction. System generated 
+			    transactions with the exception of Supp card fees will assign the transaction to 
+			    the basic card number. */
+			amexRelationshipIdentifier : string
+			productCode : string		
+		structure CARD_MARKET	
+			market : container MARKET! inverse cardMarket
+			arMarket : reference AR_MARKET inverse cardMarket
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string		
+		/**DEFINITION: The goods and services that can be offered, sold, or purchased by 
+		    American Express, its Customers, Competitors, Suppliers, and other Parties 
+		    (Card, Investment, Life, Travel, erc). */
+		structure CARD_PRODUCT	
+			product : container PRODUCT! inverse cardProduct
+			arProductLogo : reference AR_PRODUCT__LOGO_ inverse cardProduct
+			productCode : string
+			cardProductDescription : string		
+		structure CARD_STATEMENT	
+			statement : container STATEMENT! inverse cardStatement
+			statementDate : date
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		/**DEFINITION: Balance Summary model provides information of card accounts as of 
+		    a particular statement cycle, such as outstanding balance, amount due, payments, 
+		    credits and others balance data.It is the balance under each Plastic Card and 
+		    the PK Card Account Number is PAN 13 number. The entity shows the latest balance 
+		    only an dno history stored. The data is agregared as the name implies = derived 
+		    data; not a model for the purists. */
+		structure CARD__DIRECT_BALANCE	
+			accountBalance : container ACCOUNT_BALANCE! inverse cardDirectBalance
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			statementDate : date
+			/**DEFINITION: Main Account Non-promotional Balance (Total).  The account's 
+			    balance, less any related promotions balances.  Includes suspense balance for 
+			    non-promotions balances. */
+			totalBalanceAmount : decimal		
+		/**DEFINITION: Individual who has entered into an agreement with American 
+		    Express to acquire a Card Product eg. Charge, Revolve. Cardmembers may be 
+		    'Basic' (the account owner) or 'Supplementary' (additional cardmembers 
+		    identified by the Basic Cardmember) eg family member, employee. */
+		structure CARDMEMBER	
+			customer : container CUSTOMER! inverse cardmember
+			cardAccount : reference CARD_ACCOUNT inverse cardmember
+			/**DEFINITION: Card number used for the transaction. System generated 
+			    transactions with the exception of Supp card fees will assign the transaction to 
+			    the basic card number. */
+			amexRelationshipIdentifier : string
+			cardmemberFirstName : string
+			cardmemberLastName : string
+			cardmemberAddressCode : string		
+		/**DEFINITION: A Case represents a process that may require multiple tasks or 
+		    steps over time to resolve, and the data needed to support the process 
+		    (including a record of contact activity).   This does not include issues that 
+		    can be resolved at initial point of contact. 
+		    
+		    Examples: Service Case, Collection Case, Fraud Case 
+		    
+		    NOTE: A Case represents a process that may require multiple tasks or steps over 
+		    time to resolve, and the data needed to support the process */
+		structure CASE	
+			collectionCase : containing COLLECTION_CASE inverse case
+			serviceCase : containing SERVICE_CASE inverse case
+			constituent : reference CONSTITUENT+ inverse case
+			event : reference EVENT+ inverse case		
+		/**DEFINITION: Information about purchases made by the cardmember charged to 
+		    their Amex account.  These are debits for Amex. 
+		    
+		    NOTE: The acquisition of something by means of a financial transaction */
+		structure CHARGE	
+			transaction : container TRANSACTION! inverse charge
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Main Account Balance (Merchandise).  Portion of acocunt's 
+			    balance, less any related promotions balances, associated with purchase 
+			    transactions */
+			totalChargeBalanceAmount : decimal
+			totalPayflexBalanceAmount : string
+			/**DEFINITION: Average Daily Balance (Merchandise). The field represents the 
+			    average daily balance of purchases which is used to calculate the finance charge 
+			    assessed to the cardmember for that particular month. These are the carrying 
+			    charges - what you do your finance */
+			averageDailyChargeAmount : decimal
+			/**DEFINITION: Charge Date is the date of purchase when card transaction 
+			    (traditionally a card swipe) was recorded. 
+			    
+			    Globestar Definition: The date when the purhcase was made with the merchant 
+			    previously documented by Globestar as Effective Date 
+			    
+			    Triumph Definition: Date the transaction took place previously documented by 
+			    Triumph as Transaction Charge Dt 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 
+			    Attribute=Transaction Charge Dt GTD / DB2 Field=GTD3004 GTD-TXN-CHRG-DATE-D 
+			    TXN_CHRG_DT */
+			chargeDate : date
+			foreignSpendIndicator : string
+			foreignIsoAlphaCurrencyCode : string
+			foreignIsoNumericCurrencyCode : string
+			foreignCurrencyCodeDescription : string
+			foreignCurrencyDecimalsNumber : int
+			foreignSpendExchangeRate : decimal
+			foreignSpendAmount : decimal
+			foreignSpendFormattedAmountText : string
+			foreignSpendExchangeCommissionAmount : decimal
+			foreignSpendExchangeCommissionRate : decimal		
+		/**DEFINITION: A CLAIM CASE is a subtype of SERVICE CASE opened to resolve a 
+		    claim against an Insurance policy. examples: include but are not limited to: 
+		    Lost Luggage (Baggage) claim against a Travel Insurance policy */
+		structure CLAIM_CASE	
+			serviceCase : container SERVICE_CASE! inverse claimCase		
+		/**DEFINITION: A COLLECTION CASE is  opened when a sum of money owed to the 
+		    Enterprise is overdue, and the process to collect or recover the debt has been 
+		    initiated. 
+		    
+		    NOTE: A COLLECTION CASE is  opened when a sum of money owed to the Enterprise is 
+		    overdue */
+		structure COLLECTION_CASE	
+			case : container CASE! inverse collectionCase		
+		/**DEFINITION: A CONSTITUENT may be an ORGANISATION, an INDIVIDUAL or any OTHER 
+		    LEGAL ENTITY - Can play multiple ROLES at a given point in time.  Eg.: an 
+		    EMPLOYEE may also be a CUSTOMER. 
+		    
+		    CONSTITUENT types include: 
+		    
+		    Prospects Customers Workforce Members Business Partners (e.g. issuers, 
+		    acquirers, suppliers). 
+		    
+		    For each Constituent: " we may find several Accounts it is associated with " we 
+		    may find several Agreements it is associated with " we will find at least one 
+		    Amex Relationship it is associated with " we will find at least one Business 
+		    Partner Role it is associated with " we will find at least one Case it is 
+		    associated with " we may find several Constituents it is associated with " we 
+		    will find at least one Credit Risk it is associated with " we will find at least 
+		    one Demographics it is associated with " we will find at least one Event it is 
+		    associated with " we will find at least one Interests it is associated with " we 
+		    will find at least one Point of Interest it is associated with " we will find at 
+		    least one Preferences it is associated with 
+		    
+		    NOTE: A CONSTITUENT may be one of many different types, but also can lay 
+		    multiple ROLES at a given point in time.  Eg.: an EMPLOYEE may also be a 
+		    CUSTOMER. */
+		structure CONSTITUENT	
+			case : reference CASE+ inverse constituent
+			organization : containing ORGANIZATION inverse constituent
+			legalEntityTrustEstate : containing LEGAL_ENTITY___TRUST___ESTATE inverse constituent
+			event : reference EVENT+ inverse constituent
+			individual : containing INDIVIDUAL inverse constituent
+			location : reference LOCATION_* inverse constituent
+			amexRelationship : reference AMEX_RELATIONSHIP inverse constituent
+			constituentIdentifier : string		
+		/**DEFINITION: A COUNTRY is a geographic area delimited by internationally 
+		    recognised borders as defined by ISO 3166. Note: Such an area will often be 
+		    further defined through separate internal political and economic administration 
+		    by its own government, See COUNTRY SUB DIVISION. 
+		    
+		    NOTE: A COUNTRY is a geographic area delimited by internationally recognised 
+		    borders */
+		structure COUNTRY	
+			market : reference MARKET* inverse country
+			currency : reference CURRENCY* inverse country
+			language : reference LANGUAGE* inverse country
+			/**DEFINITION: ISO NUMERIC COUNTRY IDENTIFIER: ISO (International Standards 
+			    Organization) code that uniquely identifies a country; this Country Identifier 
+			    is the numeric three Country Code.   A country is a geographic area delimited by 
+			    internationally recognized borders as defined by a previous ISO standard.  This 
+			    cross references legacy system country codes. 
+			    
+			    Valid Values: 840 = US */
+			countryIsoNumericIdentifier : string
+			/**DEFINITION: ISO ALPHA 2 COUNTRY CODE:   ISO Alpha-2 Country Code is an 
+			    identification attribute. ISO Country Code records a unique instance of a 
+			    country defined by the Industry Standard Organization. ISO Alpha-2 Country Code 
+			    is the standard 2 byte alphabetic code used within American Express to define 
+			    country.A country is a geographic area delimited by internationally recognized 
+			    borders as defined by ISO 3166-1. 
+			    
+			    Aligns to Amex Country Code Standard: Country code is stored as a single 
+			    2-character data element. 
+			    
+			    Standard ISO alphabetic-2 code values are used for all countries. 
+			    
+			    
+			    
+			    
+			    
+			    Examples include but are not limited to: ISO Alpha-2 Code      Country Name 
+			    ----------------------------      ---------------------------- US                
+			                 UNITED STATES MX                             MEXICO CA              
+			                    CANADA IN                               INDIA GB                 
+			                UNITED KINGDOM */
+			countryIsoAlpha2Code : string
+			/**DEFINITION: COUNTRY NAME: the Country Name associated to the ISO Alpha2  and 
+			    numeric three Country Code.. 
+			    
+			    UNITED STATES MEXICO CANADA INDIA UNITED KINGDOM */
+			countryIsoName : string
+			/**DEFINITION: COUNTRY EFFECTIVE DATE:Country Effective Date documents the most 
+			    recent date on which this entity instance (and corresponding table row) was 
+			    created or modified.  Only the most recent information about the entity instance 
+			    is documented; therefore, there is no audit trail of modifications. 
+			    
+			    The column name of EFF_DT represents the column of the DB2 table that is the 
+			    Common Reference Table (CRT) in the DB2 mainframe subsystem. */
+			countryEffectiveDate : date		
+		/**DEFINITION: CURRENCY is circulating money accepted as a medium of exchange 
+		    for payment of debts,  recognised as legal tender in one or more countries. 
+		    examples include but are not limited to: Pound Sterling, US Dollar, Australian 
+		    Dollar, Tajikistan Somoni Mexican Peso, CFA Franc BEAC, 
+		    
+		    NOTE: Circulating money accepted as a medium of exchange for payment */
+		structure CURRENCY	
+			market : reference MARKET* inverse currency
+			country : reference COUNTRY* inverse currency
+			/**DEFINITION: CURRENCY KEY IDENTIFIER: This is an AXP-generated physical 
+			    identifier for a given instance of Currency.  This field's value is generated 
+			    (by an AXP application?  By the first AXP DBMS into which an ISO Currency is 
+			    loaded? Some other process, such as assigned by some AXP business user? The AXP 
+			    CRT load team ( Which?).  The intent of this field is to provide AXP its own 
+			    unique identifier for an ISO Currency. 
+			    
+			    The business and technical value of this field is unclear.  Given that ISO 
+			    already provides two means of uniquely identifying a Currency, and ISO is the 
+			    International Standards Organization responsible for identifying Currency, it is 
+			    not clear why this field is needed and not clear how it provides AXP any 
+			    additional value to the business or to the technical implementation. 
+			    
+			    It is believed that a Currency Key Identifier maps to one and only one ISO 
+			    Currency, and that an ISO Currency maps to one and only one Currency Key 
+			    Identifier, at any given point in time.  It is unclear whether Currency Key 
+			    Identifiers are reused. 
+			    
+			    The column name of IDENTIFIER_ID represents the column of the DB2 table that is 
+			    the Common Reference Table (CRT) in the DB2 mainframe subsystem. 
+			    
+			    
+			    
+			    Example: 
+			    
+			    Currency Key Identifier   ISO Numeric Currency Code     ISO Alpha Currency Code 
+			    -----------------------------------     
+			    --------------------------------------------      
+			    ---------------------------------------- 001                         840         
+			                                             USD 005                         124     
+			                                                 CAD 007                         484 
+			                                                     MXN 011                         
+			    886                                                  YER 012                     
+			        834                                                  TZS */
+			currencyKeyIdentifier : string
+			isoAlphaCurrencyCode : string
+			/**DEFINITION: CURRENCY ISO SHORT NAME:  Currency ISO Short Name is defined and 
+			    provided by ISO.  This field documents an ISO ratified, shortened form of 
+			    Currency name.  This field can be used on screens, reports, web pages and other 
+			    forms to provide a meaningful, yet abbreviated, name of a Currency. 
+			    
+			    The source of this value is the ISO organization.  AXP's CRT load team simply 
+			    loads or updates the ISO source to this field. AXP does not modify the contents 
+			    of this field, in either the load process or through any other maintenance 
+			    function. 
+			    
+			    
+			    
+			    Example: 
+			    
+			    Currency Long Name              Currency Short Name 
+			    ---------------------------------               
+			    ---------------------------------- UNITED STATES DOLLAR US DOLLAR CANADIAN 
+			    DOLLAR CN DOLLAR MEXICAN PESO                 MX PESO YEMENI RIAL                
+			     YE RIAL */
+			currencyIsoShortName : string
+			/**DEFINITION: CURRENCY EFFECTIVE DATE: documents the most recent date on which 
+			    this entity instance (and corresponding table row) was created or modified. 
+			    Modification to currency data originates from ISO and Amex Treasury Department. 
+			    
+			    The date is stored in standard DB2 format of CCYYMMDD. 
+			    
+			    Example value: 
+			    
+			    20120131 - representing January 31, 2012. -  Date when it is loaded to the table 
+			    or updated. */
+			currencyEffectiveDate : date
+			/**DEFINITION: CURRENCY ISO DECIMAL POSITION COUNT:  documents the count of 
+			    decimal positions used for a given Currency. 
+			    
+			    Different currencies display a different number of decimal places, with 2 
+			    decimal positions being the majority.  0 decimal positions might exist (i.e., 
+			    indicating no "cents" in their currency) such as with the Japanese yen. 
+			    
+			    The source of this data the ISO (International Standards Organization) and this 
+			    data is simply loaded into AXP's Currency Common Reference Table by the CRT load 
+			    with no modification. 
+			    
+			    Example: USD = '2' - In the USA, it is common to see dollar amounts written with 
+			    2 decimal places: $1.25 YEN = '0' - No cents in Japan's currency, therefore no 
+			    decimal places. 
+			    
+			    This data seems to be redundant with Currency External Decimal Position Code.  
+			    However, given this field is sourced from ISO it will be considered accurate and 
+			    valid. */
+			currencyIsoDecimalPositionCount : int		
+		/**DEFINITION: A CUSTOMER is a Constituent with a relationship with the 
+		    enterprise through the purchase or use of products and, or, services offered by 
+		    the Enterprise 
+		    
+		    Examples include 
+		    
+		    -  Card Member/Card Holder -  Travel Customer -  Merchant -  401K participant, - 
+		     Investor -  Plan Participants -  Retail Clients  (including Membership Banking, 
+		    Advisory) -  TPD Clients . 
+		    
+		    NOTE: A Constituent with a relationship with the enterprise through the purchase 
+		    or use of products and/or services offered by the Company. */
+		structure CUSTOMER	
+			cardmember : containing CARDMEMBER inverse customer
+			merchant : containing MERCHANT inverse customer
+			amexRelationship : container AMEX_RELATIONSHIP! inverse customer
+			account : reference ACCOUNT* inverse customer
+			demographic : reference DEMOGRAPHIC+ inverse customer
+			amexRelationshipIdentifier : string		
+		/**DEFINITION: Personal information of the Customer, that is used in marketing 
+		    and customer service. Includes gender, age, ethnicity, knowledge of languages, 
+		    disabilities, mobility, home ownership, and employment status.  It does NOT 
+		    include LOCATION. 
+		    
+		    NOTE: Personal information of the Customer, such as name, address, email, phone 
+		    number., etc */
+		structure DEMOGRAPHIC	
+			language : containing LANGUAGE inverse demographic
+			customer : reference CUSTOMER inverse demographic
+			demographicIdentifier : string
+			amexRelationshipIdentifier : string		
+		structure DIRECT_DEBIT_RETURN	
+			adjustment : container ADJUSTMENT! inverse directDebitReturn
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		structure DISPUTE_ADJUSTMENT	
+			adjustment : container ADJUSTMENT! inverse disputeAdjustment
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			caseNumber : int		
+		/**DEFINITION: A DISPUTE CASE is a subtype of SERVICE CASE, opened to resolve a 
+		    problem between the Enterprise and a PARTY or between PARTIES. example a Card 
+		    CUSTOMER disputes a transaction on a Statement. */
+		structure DISPUTE_CASE	
+			serviceCase : container SERVICE_CASE! inverse disputeCase		
+		/**DEFINITION: An EVENT is the occurrence of an activity about which the 
+		    Enterprise wishes to know, and / or record information. An EVENT may trigger 
+		    additional action or processing e.g. creation of a CASE. Types of Event - - Life 
+		    Event - Risk Event - Contact Event - Communication Event - Travel Event - 
+		    Collection Event - Service Event 
+		    
+		    NOTE: An EVENT is the occurrence of an activity about which the Enterprise 
+		    wishes to know / record information. */
+		structure EVENT	
+			case : reference CASE+ inverse event
+			constituent : reference CONSTITUENT+ inverse event
+			account : reference ACCOUNT+ inverse event		
+		/**DEFINITION: A GENERAL LEDGER ACCOUNT is the information representing the 
+		    enterprise's financial  activities (e.g. debit and credit entries), status, and 
+		    values. Examples: General Ledger Accounts set up in Pound Sterling include the 
+		    following: A/R Unbilled Unidentified Remittances Unidentified Remittances 
+		    Written Off A/R Billings A/R Suspense A/R Misposted Clear */
+		structure GENERAL_LEDGER_ACCOUNT	
+			account : container ACCOUNT! inverse generalLedgerAccount
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: A code representing the Center responsible for the balance. The 
+			    management hierarchy will be based on this segment. */
+			responsibilityCenterCode : string
+			/**DEFINITION: A code representing a sub grouping of natural account, the 
+			    extension of Natural Account that will capture granular details to meet MIS and 
+			    Control needs for local markets. */
+			subAccountNumber : string
+			/**DEFINITION: A code representing the other Responsibility Center with whom the 
+			    transaction was done. It will be used for management eliminations. */
+			interCenterCode : string
+			/**DEFINITION: A code representing the other Entity with whom the transaction 
+			    was done. It is essential for legal eliminations. */
+			interEntityCode : string
+			/**DEFINITION: A unique 3 Character Code for the Currency, as defined by the 
+			    International Standards Organization, ISO. The currency in which monetary 
+			    amounts are billed or settled. 
+			    
+			    Examples: 
+			    
+			    USD = United States Dollar CAD = Canadian Dollar MXN = Mexican Peso 
+			    
+			    NOTE: IND017 */
+			generalLedgerCurrencyCode : string		
+		/**DEFINITION: An INDIVIDUAL is any person, living or deceased, that the 
+		    enterprise  wishes to maintain information about 
+		    
+		    NOTE: An INDIVIDUAL is any person that the enterprise  wishes to maintain 
+		    information about */
+		structure INDIVIDUAL	
+			constituent : container CONSTITUENT! inverse individual
+			constituentIdentifier : string
+			individualFirstName : string
+			individualLastName : string		
+		/**DEFINITION: Standard Industry Code (SIC Code) which defines the industry of 
+		    the Cardmember/Cardmember business. */
+		structure INDUSTRY	
+			merchant : reference MERCHANT inverse industry
+			/**DEFINITION: Major Industry Code associated with the merchant at which the 
+			    transaction was made. 
+			    
+			    The general meaning of this data is the same for Triumph and Globestar, however 
+			    the exact values will differ and may not map.  The prefix Local clarified that 
+			    the value are used local in the context of Triumph or Globestar. 
+			    
+			    Globestar Definition: Major Industry Code previously documented by Globestar as 
+			    Major Industry Code 
+			    
+			    Triumph Definition: Service Establishment (SE) Major Industry Code as provided 
+			    by FINCAP previously documented by Triumph as Major Industry Cd 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 Attribute=Major 
+			    Industry Cd GTD / DB2 Field=GTD2022 GTD-TXN-MAJ-IND-CODE-D-1 MAJ_INDUS_CD */
+			majorIndustryCode : string
+			/**DEFINITION: Minor Industry Code associated with the merchant at which the 
+			    transaction was made. 
+			    
+			    The general meaning of this data is the same for Triumph and Globestar, however 
+			    the exact values will differ and may not map.  The prefix Local clarified that 
+			    the value are used local in the context of Triumph or Globestar. 
+			    
+			    Globestar Definition: Sub Industry Code previously documented by Globestar as 
+			    Sub Industry Code 
+			    
+			    Triumph Definition: Service Establishment (SE) Minor Industry Code as provided 
+			    by FINCAP previously documented by Triumph as Minor Industry Cd 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 Attribute=Minor 
+			    Industry Cd GTD / DB2 Field=GTD2023 GTD-TXN-MAJ-SUB-CODE-D-1 MNR_INDUS_CD */
+			subIndustryCode : string		
+		/**DEFINITION: Reference entity that contains all of the official languages 
+		    recognized as a formal means of communication by the International Organization 
+		    for Standardization (ISO).  The two-character (alpha) codes are defined by ISO 
+		    639-1 (the three-character alpha codes are defined by ISO 639-2).  These are the 
+		    codes that are populated in the P_LANGUAGE Common Reference Table (CRT) at AXP. 
+		    
+		    The Language Codes were devised by ISO for use in terminology, lexicography, 
+		    information, documentation (i.e., for libraries, information services, and 
+		    publishers), and linguistics. */
+		structure LANGUAGE	
+			demographic : container DEMOGRAPHIC! inverse language
+			country : reference COUNTRY* inverse language
+			demographicIdentifier : string
+			/**DEFINITION: LANGUAGE ISO NAME: This is the full textual common name value for 
+			    a language delimited by a community, a nation, the same geographical area, the 
+			    same cultural tradition defined by ISO 639-1. 
+			    
+			    SOURCE AND POPULATION MECHANISM: Data is purchased from the International 
+			    Standards Organization (ISO), and is based on the ISO Language Code standard 
+			    639-1.The Language code data updates are made based on ISO change notifications 
+			    and are done via online screens used by the CRT table load team. AXP does not 
+			    modify the contents of this field, in either the load process or through any 
+			    other maintenance function. 
+			    
+			    LANGUAGE ISO ALPHA2 CODE NAME_NM 
+			    ---------------------------------------------------             
+			    ------------------ AA                                                AFAR AB     
+			                                               ABKHAZIAN; ABKHAZ AE                  
+			                                  AVESTAN AF                                         
+			           AFRIKAANS AK                                                AKAN */
+			languageIsoName : string
+			/**DEFINITION: LANGUAGE ISO SHORT NAME. This a truncated and sometimes common 
+			    name value for a language delimited by a community, a nation, the same 
+			    geographical area, the same cultural tradition defined by ISO 639-1. Sometimes 
+			    this may be the the Language name. 
+			    
+			    In AXP this field is often seen as "Display Name" via various Amex Screens. 
+			    
+			    SOURCE AND POPULATION MECHANISM: Data is purchased from the International 
+			    Standards Organization (ISO), and is based on the ISO Language Code standard 
+			    639-1.The Language code data updates are made based on ISO change notifications 
+			    and are done via online screens used by the CRT table load team. AXP does not 
+			    modify the contents of this field, in either the load process or through any 
+			    other maintenance function. 
+			    
+			    EXAMPLE VALUES: LANGUAGE ISO ALPHA2 CODE NAME_NM   SHORT_NM 
+			    ----------------------------------------------------            
+			    ------------------                --------------------- BE                       
+			                              BELARUSIAN   BELARUS */
+			languageIsoShortName : string
+			/**DEFINITION: LANGUAGE ISO ABBREVIATED NAME. This is the common abbreviation 
+			    used for a language. Sometimes this may be the same as the Short name and or the 
+			    Language name. Language Abbreviated name is defined by ISO along with its 
+			    corresponding Language code. 
+			    
+			    In AXP this field is often seen as "Alternate Input Name" via various Amex 
+			    Screens. 
+			    
+			    SOURCE AND POPULATION MECHANISM: Data is purchased from the International 
+			    Standards Organization (ISO), and is based on the ISO Language Code standard 
+			    639-1.The Language code data updates are made based on ISO change notifications 
+			    and are done via online screens used by the CRT table load team. AXP does not 
+			    modify the contents of this field, in either the load process or through any 
+			    other maintenance function. 
+			    
+			    EXAMPLE VALUES: LANGUAGE ISO ALPHA2 CODE NAME_NM             SHORT_NM 
+			    ABBREVIATED_NM 
+			    -----------------------------------------------------+------------------------------------------+------------------------------------+--------------------------------------------+ 
+			    EN                                                 ENGLISH                       
+			          ENGLISH                 ENGLIS HR                                          
+			           CROATIAN             CROATIAN                 CROATI */
+			languageIsoAbbreviatedName : string
+			/**DEFINITION: LANGUAGE EFFECTIVE DATE: This date documents the most recent date 
+			    on which this entity instance (and corresponding table row) was created or 
+			    modified. Modification to language data originates from ISO. 
+			    
+			    SOURCE AND POPULATION MECHANISM: Data is purchased from the International 
+			    Standards Organization (ISO), and is  based on the ISO Language Code standard 
+			    639.The Language code data updates are made based on ISO change notifications 
+			    and are done via online screens used by the CRT table load team. 
+			    
+			    The date is stored in standard DB2 format of CCYYMMDD. 
+			    
+			    EXAMPLE VALUE: 
+			    
+			    20120131 - representing January 31, 2012. -  Date when it is loaded to the table 
+			    or updated. */
+			languageIsoEffectiveDate : date
+			/**DEFINITION: LANGUAGE END DATE: This date documents the most recent date on 
+			    which this entity instance (and corresponding table row) is no longer effective. 
+			    Modification to language data originates from ISO. 
+			    
+			    SOURCE AND POPULATION MECHANISM: Data is purchased from the International 
+			    Standards Organization (ISO), and is  based on the ISO Language Code standard 
+			    639.The Language code data updates are made based on ISO change notifications 
+			    and are done via online screens used by the CRT table load team. 
+			    
+			    The date is stored in standard DB2 format of CCYYMMDD. 
+			    
+			    EXAMPLE VALUE: 20120131 - representing January 31, 2012 - Date when the language 
+			    is no longer effective */
+			languageIsoEndDate : date
+			/**DEFINITION: LANGUAGE CASE SENSITIVE INDICATOR: An indicator to determine 
+			    whether the language stored is case sensitive or not. SOURCE AND POPULATION 
+			    MECHANISM: Case sensitive indicator is sourced and defined by American Express.  
+			    The language case sensitive updates are done via online screens used by the CRT 
+			    table load team. 
+			    
+			    NOTE: It is unclear if this fields is used  by any applications or how it is 
+			    used. According to the CRT table load team based on the most recent update 
+			    request, the Genesis team might use this information. We will continue to 
+			    further investigate with the help of the Genesis teams to get an understanding 
+			    on the purpose of this field. 
+			    
+			    EXAMPLE VALUES: 
+			    
+			    1 = language is not case sensitive 2 = language is case sensitive. */
+			languageCaseSensitiveIndicator : string
+			/**DEFINITION: LANGUAGE DOUBLE BYTE INDICATOR: An indicator to determine whether 
+			    the language being stored is a double-byte or not. 
+			    
+			    SOURCE AND POPULATION MECHANISM: Language Double Byte Indicator is sourced and 
+			    defined by American Express.  The language case sensitive updates are done via 
+			    online screens used by the CRT table load team. 
+			    
+			    NOTE: All languages currently held on this table are set to "1". It is unclear 
+			    if this fields is used  by any applications or how it is used. According to the 
+			    CRT table load team based on the most recent update request, the Genesis team 
+			    might use this information. We will continue to further investigate with the 
+			    help of the Genesis teams to get an understanding on the purpose of this field. 
+			    
+			    EXAMPLE VALUES: 
+			    
+			    1 = Language is not Double Byte. 2 = Language is double byte. */
+			languageDoubleByteIndicator : string		
+		/**DEFINITION: A LEGAL ENTITY is a type of Constiuent, other than an 
+		    ORGANIZATION or INDIVIDUAL with ownership and/or fiduciary responsibilities for 
+		    the assets (e.g., Accounts) under its control. Examples include:  Trusts,  
+		    Estates */
+		structure LEGAL_ENTITY___TRUST___ESTATE	
+			constituent : container CONSTITUENT! inverse legalEntityTrustEstate
+			constituentIdentifier : string
+			/**DEFINITION: A short name for the bank where the Basel II exposure is booked. 
+			    
+			    NOTE: IND044 */
+			legalEntityShortName : string
+			/**DEFINITION: A code that uniquely identifies the stand-alone American Express 
+			    financial/banking organization that has legal capacity to enter into agreements 
+			    or contracts, assume obligations, incur and pay debts and be held responsible 
+			    for its actions. This is the bank where the Basel II exposure is booked. 
+			    
+			    Examples are: FSB, AECB, AXP 
+			    
+			    NOTE: IND044 */
+			legalEntityCode : string
+			/**DEFINITION: A descriptive name for the bank where the Basel II exposure is 
+			    booked. 
+			    
+			    NOTE: IND044 */
+			legalEntityLongName : string		
+		structure LOAN_PLAN_STATEMENT	
+			statement : container STATEMENT! inverse loanPlanStatement
+			statementDate : date
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		/**DEFINITION: A place, business site, residence, or a travel destination.  
+		    Location may be designated by physical, geographic, political or logical 
+		    (virtual) characteristics. 
+		    
+		    A location / address may be specific to the means of communication. It is also a 
+		    mechanism for knowing where physical assets reside for inventory purposes. 
+		    
+		    NOTE: A place, business site, residence, or a travel destination. */
+		structure LOCATION_	
+			address : containing ADDRESS* inverse location
+			market : reference MARKET inverse location
+			constituent : reference CONSTITUENT* inverse location
+			locationIdentifier : string
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string		
+		structure MANUAL_CM_ADJUSTMENT	
+			adjustment : container ADJUSTMENT! inverse manualCmAdjustment
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		/**DEFINITION: A MARKET is a the combination of one or more of the following: 
+		    PRODUCT, AREA, CURRENCY, and Demographic characteristics or criteria Examples of 
+		    how MARKET could be used are: For Organisational purposes - (e.g. EMEA, LA/C). 
+		    For the development, definition and promotion of PRODUCTS, (e.g. UK, US, EU). 
+		    For more specific segmentation of the population for marketing purposes (e.g. 
+		    Affluent Minnesotans over the age of 50). A MARKET could be defined to support 
+		    the segmentation and servicing of a given PRODUCT line for a given COUNTRY (or 
+		    countries), and CURRENCY (e.g. CARD MARKET). A MARKET e.g. APA (Asia, Pacific, 
+		    Australasia) could comprise many MARKETS based on the application of additional 
+		    criteria, including Demographic criteria. (This further definition of a MARKET 
+		    is sometimes known as a Market Segment). 
+		    
+		    NOTE: A MARKET is a the combination of one or more of PRODUCT, AREA, CURRENCY, 
+		    and Demographic characteristics. */
+		structure MARKET	
+			currency : reference CURRENCY* inverse market
+			planSettlement : reference PLAN_SETTLEMENT inverse market
+			country : reference COUNTRY* inverse market
+			arSegment : containing AR_SEGMENT inverse market
+			location : reference LOCATION_ inverse market
+			product : reference PRODUCT* inverse market
+			arMarket : containing AR_MARKET inverse market
+			cardMarket : containing CARD_MARKET* inverse market
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string
+			/**DEFINITION: Card Market Name: The name of the country used for identification 
+			    of a card market. Examples: 
+			    
+			    Card Market Name ----------------------------- CANADA MEXICO VENEZUELA BRAZIL 
+			    ARGENTINA AUSTRALIA NEW ZEALAND */
+			marketName : string
+			/**DEFINITION: Card Market Description Text: Any further description/notes 
+			    relating to the Card Market Examples: 
+			    
+			    Card market Code       Card Market Description Text ---------------------------- 
+			          ---------------------------------------------- 003                    
+			    INDEPENDENT OPERATOR 008                    BILLED FROM HONG KONG 012            
+			            LOCAL USE ONLY 019                    44 DOLLAR */
+			marketDescription : string		
+		/**DEFINITION: A Merchant is any Constituent that has established a Business 
+		    Partner Agreement with the Company wherein they a) permit any Cardholder to 
+		    charge purchases of goods and services at, or with such establishment by means 
+		    of the Card,  and to transfer such Charge to an Acquirer or b)  to whom 
+		    commission payments are made, in respect of the acquisition of card Customers, 
+		    through the distribution of promotional or marketing material. 
+		    
+		    AKA:  Service Establishment 
+		    
+		    NOTE: A Merchant is any Constituent that has established a Business Partner 
+		    Agreement with the Company for usage of AXP products */
+		structure MERCHANT	
+			customer : container CUSTOMER! inverse merchant
+			industry : reference INDUSTRY inverse merchant
+			/**DEFINITION: Merchant Service Establishment Number a fundamental piece of Amex 
+			    Data. 
+			    
+			    Globestar Definition: SE Number previously documented by Globestar as SE Number 
+			    
+			    Triumph Definition: Number of the Service Establishment where the charge 
+			    originated. previously documented by Triumph as Service Establishment Nbr 
+			    
+			    More details  from  the Merchant SOR Certification Logical Master model */
+			amexRelationshipIdentifier : string
+			/**DEFINITION: The business name of the Service Establishment. 
+			    
+			    previously documented as Service Establishment Nm 
+			    
+			    originally documented as Triumph only 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 Attribute=Service 
+			    Establishment Nm GTD / DB2 Field=not provided */
+			serviceEstablishmentName : string
+			/**DEFINITION: Major Industry Code associated with the merchant at which the 
+			    transaction was made. 
+			    
+			    The general meaning of this data is the same for Triumph and Globestar, however 
+			    the exact values will differ and may not map.  The prefix Local clarified that 
+			    the value are used local in the context of Triumph or Globestar. 
+			    
+			    Globestar Definition: Major Industry Code previously documented by Globestar as 
+			    Major Industry Code 
+			    
+			    Triumph Definition: Service Establishment (SE) Major Industry Code as provided 
+			    by FINCAP previously documented by Triumph as Major Industry Cd 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 Attribute=Major 
+			    Industry Cd GTD / DB2 Field=GTD2022 GTD-TXN-MAJ-IND-CODE-D-1 MAJ_INDUS_CD */
+			majorIndustryCode : string
+			/**DEFINITION: A code associated with the Merchant at which the transaction was 
+			    made. 
+			    
+			    The general meaning of this data is the same for Triumph and Globestar, however 
+			    the exact values will differ and may not map.  The prefix Local clarified that 
+			    the value are used local in the context of Triumph or Globestar. 
+			    
+			    Globestar Definition: Category Code 
+			    
+			    Triumph Definition: The industry to which an Service Establishment (SE) belongs 
+			    (SIC Code) previously documented by Triumph as Merchant Category Cd 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 
+			    Attribute=Merchant Category Cd GTD / DB2 Field=GTD2030 GTD-TXN-CODE-MERCH-CATG-1 
+			    MERCH_CATG_CD */
+			localMerchantCategoryCode : string
+			/**DEFINITION: This relates to "Amex" categorization of merchant spend records 
+			    */
+			subIndustryCode : string
+			/**DEFINITION: Refers to alias name of merchant */
+			sellerIdentifierAliasName : string		
+		/**DEFINITION: An MERCHANT ACCOUNT represents an administrative means of 
+		    creating and maintaining multiple relationships between the Acquirer, 
+		    Issuer/Bank and Merchant. */
+		structure MERCHANT_ACCOUNT	
+			account : container ACCOUNT! inverse merchantAccount
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			merchantName : string		
+		/**DEFINITION: From the Triumph MARKET OFFERING enitity / table.  MARKET 
+		    OFFERING is a solicitation or special program offered to cardholders and 
+		    cardholder products.  These offerings represent special financial terms 
+		    (Promotional Processing), rebate or rewards (Indirect Balance Processing), 
+		    special terms for checks and balance transfers (Checks Processing), and 
+		    possibily other special offerings. Market Offerings can include the terms for 
+		    product features, i.e. Sign and Travel, Special Purchase Accounts, and 
+		    Activators. */
+		structure OFFER	
+			transaction : reference TRANSACTION inverse offer
+			product : reference PRODUCT+ inverse offer
+			/**DEFINITION: Market Offering Identifier is the unique identifier for a Market 
+			    Offering. */
+			marketOfferingId : string
+			/**DEFINITION: Offering Term Id uniquely identifies a set of offering terms. 
+			    
+			    It is a sequential system generated alphnumeric field that is added to the 
+			    transaction during the qualification process. */
+			marketOfferingTermsId : string
+			/**DEFINITION: Market Offering Priority Number is a number used to rank 
+			    different Market Offerings among each other.  Each Transaction could qualify for 
+			    more than one Market Offering.  This will help ensure that the best Market 
+			    Offering is selected. */
+			marketOfferingPriorityNbr : int
+			/**DEFINITION: Market Offering Type Code specifies the type of Market Offering 
+			    which drives how the Market Offering is processed (i.e. transaction 
+			    qualification). 
+			    
+			    For Example: B  Balance Transfer C  Check I   Indirect Balance P  Promotion D  
+			    Direct Debit A  Activator S  Privilege Assets */
+			marketOfferingTypeCd : string
+			/**DEFINITION: Market Offering Effective Date is the date that the Market 
+			    Offering becomes effective and can be used. */
+			marketOfferingEffectiveDt : date
+			/**DEFINITION: Market Offering End Date is the expiration date of a Market 
+			    Offering and can no longer be used. */
+			marketOfferingEndDt : date
+			/**DEFINITION: Contains the name or short description of a Market Offering. */
+			marketOfferingNm : string		
+		/**DEFINITION: ORGANZIATION - An ORGANIZATION is any Constituent, other than an 
+		    INDIVIDUAL or OTHER LEGAL ENTITY, formed to conduct business, provide a service, 
+		    or for other reasons, about  which the enterprise wishes to store information, 
+		    subject to Data Protection Legislation. Organization covers both internal and 
+		    external organizations. 
+		    
+		    NOTE: ORGANZIATION - An ORGANIZATION is any Constituent, other than an 
+		    INDIVIDUAL or OTHER LEGAL ENTITY, formed to conduct business, provide a service, 
+		    or for other reasons, about  which the enterprise wishes to store information, 
+		    subject to Data Protection Legislation. Organization covers both internal and 
+		    external organizations. */
+		structure ORGANIZATION	
+			constituent : container CONSTITUENT! inverse organization
+			constituentIdentifier : string
+			organizationName : string		
+		/**DEFINITION: Payment Breakdown details */
+		structure PAYMENT_BREAKDOWN	
+			transactionLineItemSummary : container TRANSACTION_LINE_ITEM_SUMMARY! inverse paymentBreakdown
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		structure PAYMENT_DEVICE	
+			/**DEFINITION: DPAN 
+			    
+			    This is a temporary payment token associated with a card plastic and used for 
+			    digital payments. 
+			    
+			    Because the focus of the model is a cache and not a payment device oltp /sor  - 
+			    this is only included in the transactional level.  It would probably be a 1:m 
+			    from card to payment token and an entity with attributes in its own right! 
+			    
+			    also documented as Device Pan Number originally documented as Globestar only 
+			    
+			    NOTE: suggested to be at the txn level per Mike Campbell June 2015 */
+			paymentDeviceIdentifier : string
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		/**DEFINITION: Financial payment (payflex) plan (e.g. Payflex, etc) against 
+		    which the transaction posted. 
+		    
+		    Note:  A plan of 00000 means the transaction is “Global” (meaning parts of it 
+		    can be posted across multiple plans (payments/payment reversals). Including RTRs 
+		    */
+		structure PAYMENT_PLAN	
+			plan : container PLAN! inverse paymentPlan
+			planNumber : integer
+			planSequenceNumber : integer
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Unique code to refer to Credit Plan Type */
+			planTypeCode : string
+			/**DEFINITION: Credit Plan Sub-Type. */
+			planSubTypeCode : string
+			/**DEFINITION: The amount that was remaining as “requested” at the time the 
+			    payment was applied. 
+			    
+			    NOTE: LSRR-AMOUNT-REQUESTED */
+			requestedAmount : decimal
+			/**DEFINITION: If the plan had a fixed payment amount asked, this will be 
+			    non-zero. 
+			    
+			    NOTE: LSRR-FIXED-PAYMENT-AMT */
+			fixedPaymentAmount : decimal
+			/**DEFINITION: Total amount due remaining after the payment is applied. 
+			    
+			    NOTE: Globestar Source LSRR-TOTAL-DUE */
+			totalDueAmount : decimal
+			/**DEFINITION: Stores the amount of payment for which this plan segment was 
+			    applied to principal balance. 
+			    
+			    NOTE: LSRR-POSTED-PRINCIPAL */
+			principalAmount : decimal
+			/**DEFINITION: Stores the amount of payment for which this plan segment was 
+			    applied to Interest bucket. 
+			    
+			    NOTE: LSRR-POSTED-INTEREST */
+			interestAmount : decimal		
+		/**DEFINITION: Organized sequence of pre-determined actions that management has 
+		    chosen to achieve future organizational objectives. 
+		    
+		    NOTE: Organized sequence of pre-determined actions that management has chosen to 
+		    achieve future organizational objectives. */
+		structure PLAN	
+			planBalance : containing PLAN_BALANCE* inverse plan
+			planSettlement : containing PLAN_SETTLEMENT* inverse plan
+			account : reference ACCOUNT* inverse plan
+			paymentPlan : containing PAYMENT_PLAN inverse plan
+			cardAccount : container CARD_ACCOUNT! inverse plan
+			planNumber : integer
+			planSequenceNumber : integer
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: The date the credit plan to which this transaction posts was 
+			    opened. 
+			    
+			    also documented as Credit Plan Open Date 
+			    
+			    originally documented as Globestar only 
+			    
+			    NOTE: Triumph Notes: None - Globestar only */
+			planOpenDate : date
+			/**DEFINITION: Description of the plan where transaction is posted. 
+			    
+			    also documented as Plan Description 
+			    
+			    originally documented as Globestar only 
+			    
+			    NOTE: Triumph Notes: None - Globestar only */
+			planDescription : string		
+		/**DEFINITION: It is the balance for each loan plan of the CARD ACCOUNT holder'd 
+		    loan account. This entity has STMT DATE as PRIMARY KEY too as it being 
+		    calculated every month. */
+		structure PLAN_BALANCE	
+			accountBalance : container ACCOUNT_BALANCE! inverse planBalance
+			plan : container PLAN! inverse planBalance
+			planSettlement : container PLAN_SETTLEMENT! inverse planBalance
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			statementDate : date
+			planNumber : integer
+			planSequenceNumber : integer
+			/**DEFINITION: This is the portion of the Installment for the period under 
+			    inquiry that went to principal. 
+			    
+			    NOTE: globestar source LSRR_EPP_INSTL_DFR_PRIN */
+			installmentPrincipalAmount : decimal
+			/**DEFINITION: The loan will have a term.  This reflects the number of 
+			    instalments billed Life to date on the loan. 
+			    
+			    NOTE: globestar source LSRR_EPP_INSTLMNT_NBR */
+			currentInstallmentNumber : integer
+			/**DEFINITION: The amount of principal remaining on the loan. 
+			    
+			    NOTE: globestar source LSRR_OUTST_PRIN_BAL */
+			outstandingPrincipalAmount : decimal
+			/**DEFINITION: The term of the loan.  G* loan system runs monthly. 
+			    
+			    NOTE: globestar source LSRR_EPP_INSTLMNT_TOT */
+			numberOfInstallmentMonthsCount : integer
+			/**DEFINITION: Date the loan was agreed upon.  Typically the same as the date it 
+			    was created/started. 
+			    
+			    NOTE: globestar source LSRR_EPP_PLAN_OPEN_DATE */
+			loanAgreementDate : date
+			/**DEFINITION: The amount borrowed. 
+			    
+			    NOTE: globestar source LSRR_EPP_ORIG_AMT */
+			originalPrincipalAmount : decimal		
+		/**DEFINITION: When a financial (credit or loan) plan has been completed or 
+		    liquidated.The Payment plan as to how the loan holder chooses to repay. The 
+		    entity shows the current status & balance only. */
+		structure PLAN_SETTLEMENT	
+			market : reference MARKET inverse planSettlement
+			plan : container PLAN! inverse planSettlement
+			planBalance : containing PLAN_BALANCE* inverse planSettlement
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			planNumber : integer
+			planSequenceNumber : integer
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string
+			/**DEFINITION: Settlement Type: From Posting - "S" ACL Online - "A" ACL Waive - 
+			    "C" From Online - "P" Inq Online - "X" Waive Online - "W" Waive Online Settle - 
+			    "Y" Quote settled - "Z" Quote cancelled - "D" */
+			projectedQuoteSettlementTypeCode : string
+			/**DEFINITION: Date when Settlement Quote was generated. 
+			    
+			    NOTE: globestar source LSRR__sd_date_added */
+			addedDate : date
+			/**DEFINITION: Date when Settlement Quote was settled. 
+			    
+			    NOTE: globestar source LSRR__sd_settled_date */
+			settledDate : date
+			/**DEFINITION: Current balance at the time of quote. 
+			    
+			    NOTE: globestar source LSRR__sd_curr_bal_at_quote */
+			quoteCurrentBalanceAmount : decimal
+			/**DEFINITION: Stores the Quote settled date 
+			    
+			    NOTE: globestar source LSRR__sd_quote_setl_date */
+			paymentHistoryDate : date
+			/**DEFINITION: Projected Settlement Quote date - i.e. valid till date. 
+			    
+			    NOTE: globestar source LSRR__sd_prj_quote_dte */
+			projectQuoteDate : date		
+		/**DEFINITION: An indirect balance is a separate balance that is maintained for 
+		    promotional reasons. 
+		    
+		    period to date bonus points/rebates forfeited indirect balance bonus points / 
+		    rebate award The current CTD Bonus Point/Rebate balance on a specific account 
+		    will become the cycle-end balance and will continue to be used for YTD totals 
+		    when the current cycle passes. */
+		structure POINT__INDIRECT_BALANCE	
+			accountBalance : container ACCOUNT_BALANCE! inverse pointIndirectBalance
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			statementDate : date
+			cycleToDateBalancePointCount : string
+			priorToDatePointCount : string		
+		/**DEFINITION: A PRODUCT is any instrument or service manufactured, distributed, 
+		    managed, and/or serviced by American Express. 
+		    
+		    is typically, but not always, associated with a fee, charge, and/or premium can 
+		    be purchased separately (i.e., 'stand-alone') can be sold with zero, one, or 
+		    more PRODUCT FEATURES may be re-branded by a Business Partner and sold under a 
+		    different name may be bundled with other Products to form a new Product 
+		    
+		    Examples- Charge and Credit Cards for Consumer / Small Business / Corporates. 
+		    Travel Services, Traveler's cheques, Network Products, Card Processing Services 
+		    Foreign Exchange Services. Payment & Billing products. 
+		    
+		    NOTE: A PRODUCT is any instrument or service manufactured, distributed, managed, 
+		    and/or serviced by AXP. */
+		structure PRODUCT	
+			productAccount1 : containing PRODUCT_ACCOUNT_1 inverse product
+			cardProduct : containing CARD_PRODUCT inverse product
+			market : reference MARKET* inverse product
+			arSegment : reference AR_SEGMENT inverse product
+			productFeature : reference PRODUCT_FEATURE inverse product
+			account : reference ACCOUNT* inverse product
+			arProductLogo : containing AR_PRODUCT__LOGO_* inverse product
+			cardAccount : reference CARD_ACCOUNT inverse product
+			offer : reference OFFER+ inverse product
+			productCode : string
+			/**DEFINITION: Card Market Code: A code that uniquely identifies individual 
+			    occurrences of card markets. Examples: 
+			    
+			    Card Market Code     Card Market Name ----------------------------      
+			    ----------------------------- 001   CANADA 002   MEXICO 003                  
+			    VENEZUELA 004   BRAZIL 005   ARGENTINA */
+			marketCode : string
+			/**DEFINITION: Product full name is assciated with the IA code for a product. 
+			    Business will determine the full name based on the need. Any new IA introducing 
+			    for online channel will be assigned a full name at PMC and same should be 
+			    inserted at eApply. Any update of full name for existing IA code at PMC should 
+			    be updated at eApply. 
+			    
+			    Note: Descriptive name for the PRODUCT. 
+			    
+			    PRODUCT NAME (Product Standard): An attributive entity of PRODUCT. A PRODUCT 
+			    NAME identifies the existence of a label given to a specific PRODUCT to identify 
+			    or distinguish it from other PRODUCTSs. Historical information is retained. 
+			    eApply will get this information from PMC a day or so after received of the 
+			    source code and corresponding IA code.  This is the reason this field is defined 
+			    as Nullable.  Product Full Name is not available immediately upon received of 
+			    the Soruce code and IA code from PMC. */
+			productName : string
+			/**DEFINITION: Name of the product. A product can have multiple IA, and the name 
+			    will be the same for all the IA's. It cannot be considered for different IA. 
+			    
+			    Sample Values 
+			    
+			    Morgan Stanley Credit Card, Mercedes Credit Card */
+			productTypeName : string
+			multipleProductsIndicator : string
+			productMarketingNameIdentifier : string
+			productAbbreviatedName : string
+			/**DEFINITION: Product grouping code field indicates the grouping code assigned 
+			    for a product at PMC. Any new product introducing will be assigned a new 
+			    grouping code at PMC and same should be inserted at eApply. Any update for 
+			    existing grouping code at PMC should be updated here. 
+			    
+			    Business rules:   A given Product Group Code is associated with one or more IA 
+			    codes.  An IA code is grouped by one Product Group Code 
+			    
+			    Example of Product Group Code:   795 = Blue Cash Everyday. 795 (Card Product 
+			    Group Code) - Blue Cash Everyday (Card Product Group Name) 
+			    
+			    
+			    
+			    IA code LPQ (Blue Cash Everyday) is grouped by One  Product Grouping Code of 795 
+			    
+			    Product Group Code is sourced from PMC 
+			    
+			    Example:  795 (Card Product Group Code) - Blue Cash Everyday (Card Product Group 
+			    Name) 
+			    
+			    Note: 
+			    
+			    Product Group Code come from PMC.  However, a Group code is not immediately 
+			    assigned to an IA code at the time the IA code and source code is received from 
+			    ATS.  This is the reason this field is defined as 'NULLABLE" In table "CARD 
+			    PRODUCT".  Because of this, the relationship between "CARD PRODUCT" and "CARD 
+			    PRODUCT GROUP" is now OPTIONAL.  In reality, this should be shown as MANDATORY 
+			    since a given IA code will always be grouped by a 'Product Group Code' 
+			    eventually (just a matter of time ). 
+			    
+			    Product Group code - also refer to as PMC Code.  In PMC it is call 'Product 
+			    Group code'.  Product Group code is at the same level as eApply Product ID. */
+			productGroupCode : integer		
+		structure PRODUCT_ACCOUNT_1	
+			product : container PRODUCT! inverse productAccount1
+			account : container ACCOUNT! inverse productAccount1
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			productCode : string		
+		/**DEFINITION: A characteristic of a product that may define the parameters of 
+		    financial behaviour, servicing, or other benefits the customer may receive with 
+		    product enrollment/purchase */
+		structure PRODUCT_FEATURE	
+			product : reference PRODUCT inverse productFeature
+			productFeatureIdentifier : string
+			productCode : string		
+		/**DEFINITION: Membership Rewards Redemption */
+		structure REDEMPTION	
+			transaction : container TRANSACTION! inverse redemption
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			redemptionPointsUsedCount : string
+			purchaseChargeAmount : string		
+		/**DEFINITION: (A/R Credit Balance)  Type of Transaction.  Goods are returned 
+		    and a check for the amount of the purchase is sent to the customer */
+		structure REFUND_CHECK	
+			adjustment : container ADJUSTMENT! inverse refundCheck
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			refundCheckAmount : string		
+		/**DEFINITION: The remittance is the financial transaction created as a result 
+		    of Amex receiving payment from a Card member, or payment to loyalty coalition 
+		    partners.  It is the cardmember payment received or credit to AR 
+		    
+		    The remittance is then applied to the account balances in order to reduce the 
+		    liabilities. AECB and its affiliates will credit payments to the customer's 
+		    account as of the day the payment is received if the remittance is: " received 
+		    by mail; " at the designated remittance address before noon local time; " 
+		    received in U.S. currency, with a draft or a check drawn on a bank in the U.S. 
+		    and payable in U.S. Dollars or with a money order payable in U.S. Dollars and 
+		    that is complete and accurate; " received with the remittance stub or some other 
+		    notation of the account number for posting. 
+		    
+		    A remittance is a bank transfer or cash payment made by CM based on outstanding 
+		    balance on the card. */
+		structure REMITTANCE	
+			remittanceDelinquency : containing REMITTANCE_DELINQUENCY inverse remittance
+			transaction : container TRANSACTION! inverse remittance
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Current Minimum amount due.  This field contains the minmum 
+			    amount due for that billing cycle - it does not contain any past due amounts. */
+			minDuePaymentAmount : decimal
+			/**DEFINITION: Full payment due. The total amount due from the cardmember for 
+			    that billing cycle, and which includes all past due amounts */
+			fullDuePaymentAmount : decimal
+			paymentAmount : decimal
+			paymentAccumulatedSinceDate : date
+			paymentAccumulatedAmount : decimal
+			/**DEFINITION: Stores the total amount that has been paid 
+			    
+			    NOTE: Globestar source LSRR-TOTAL-PAID */
+			totalPaidAmount : decimal
+			/**DEFINITION: Total amount due remaining after the payment is applied. 
+			    
+			    NOTE: Globestar Source LSRR-TOTAL-DUE */
+			totalDueAmount : decimal
+			/**DEFINITION: Current balance */
+			currentBalanceAmount : decimal
+			currentDuePaidAmount : decimal
+			"30DaysDelinquencyPaidAmount" : decimal
+			localTransactionTypeCode : string
+			cycleDueAccountAgeCount : int
+			reversalIndicator : string
+			totalDelinquencyPaidAmount : decimal		
+		/**DEFINITION: Negative or no-good information related to a cardmember payment. 
+		    Payment or remittance applied towards a delinquency bucket. 
+		    
+		    How is this different than Remittance No-good Activity? */
+		structure REMITTANCE_DELINQUENCY	
+			remittance : container REMITTANCE! inverse remittanceDelinquency
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Stores the amount of the payment that was applied against 
+			    TotalDue. Example : I have a balance of 1000$ and I am past due (30$ owning this 
+			    month and 20$ from last month) and I pay 100$.  The above array will show a 
+			    distribution of 30+20+seven 0s.  This tag will show 50$ and my Current balance 
+			    would show 900$. 
+			    
+			    NOTE: Gloebstar Source LSRR-TOTAL-DELINQ-AMT */
+			totalDelinquencyPaidAmount : decimal		
+		/**DEFINITION: SERVICE CASE is as a result of CONTACT made by a CUSTOMER or 
+		    BUSINESS PARTNER to the Enterprise requesting the resolution of a problem or 
+		    dispute, or request for other servicing, e.g, handling an Insurance Claim. 
+		    
+		    NOTE: SERVICE CASE is as a result of CONTACT made by a CUSTOMER or BUSINESS 
+		    PARTNER to the Enterprise requesting the resolution of a problem or dispute, or 
+		    request for other servicing, e.g, handling an Insurance Claim. */
+		structure SERVICE_CASE	
+			case : container CASE! inverse serviceCase
+			claimCase : containing CLAIM_CASE inverse serviceCase
+			disputeCase : containing DISPUTE_CASE inverse serviceCase		
+		/**DEFINITION: Description of how CMS generates a statement for this account. 
+		    
+		    Blank=Normal statement 0=User defined statement hold code 10 1-9=User defined 
+		    statement hold code 1-9 H=Hold statement R=Returned statement S=Sign out 
+		    statement O=Online/archive-only statement P=Paperless statement U=Suppress 
+		    statement, do not generate Z=User defined value that suppresses statement 
+		    generation */
+		structure STATEMENT	
+			accountBalance : containing ACCOUNT_BALANCE* inverse statement
+			loanPlanStatement : containing LOAN_PLAN_STATEMENT inverse statement
+			cardStatement : containing CARD_STATEMENT inverse statement
+			account : container ACCOUNT! inverse statement
+			billingCycle : reference BILLING_CYCLE inverse statement
+			statementDate : date
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			statementYearNumber : string
+			statementMonthNumber : string
+			/**DEFINITION: Minimum Payment Due Date. Format is CCYYMMDD. ID52-DATE-DUE(1) */
+			dueDate : date
+			/**DEFINITION: Payments Total (FLEX + DIF). ID52-AMT-TOT-PYMT(1) */
+			paymentTotalAmt : decimal
+			/**DEFINITION: Total Payment Due on the account. ID52-AMT-CURR-MIN-DUE(1) */
+			balanceDueNowAmt : decimal
+			/**DEFINITION: Payments on Due in Full Bal. ID52-AMT-PYMT-PRCH(1) */
+			paymentDueInFullAmt : decimal
+			billingCycleDate : date		
+		/**DEFINITION: Type of Transaction.  Goods are returned and a credit is applied 
+		    to the customer's account. */
+		structure STATEMENT_CREDIT	
+			transaction : container TRANSACTION! inverse statementCredit
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			returnReasonDescriptionText : string		
+		/**DEFINITION: An Account always has a Basic Cardmember, who owns the Account, 
+		    and who may nominated zero, one or more supplementary Cardemembers. 
+		    
+		    Type of Card member role that includes all supplemental cardholders for a 
+		    specific account.  Supplemental cardholders are authorized to charge using a 
+		    given plastic, they are, however, not necessarily financially responsible for 
+		    those charges - the basic cardholder is. Supp information is NOT available in 
+		    all systems (e.g. GRMS and WCC do not carry Supp information).  AR, CAS, GNAT 
+		    and GNA does carry Supp data. Note: GNAT has Supp information from Triumph and 
+		    Legacy - not from Optima. */
+		structure SUPPLEMENTARY	
+			cardAccount : container CARD_ACCOUNT! inverse supplementary
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Card number used for the transaction. System generated 
+			    transactions with the exception of Supp card fees will assign the transaction to 
+			    the basic card number. */
+			cardmemberNumber : string		
+		/**DEFINITION: A TRANSACTION is the set of data related to an event that changes 
+		    ACCOUNT status (balances, values, number of shares) or asset values e.g. The 
+		    financial event between a CUSTOMER (Cardholder) and MERCHANT described in the 
+		    Record of Charge (ROC), a Balance Transfer, Investment account transfers, data 
+		    related to a Stock purchases etc. Further examples include: Purchases, 
+		    Transfers, Cash Advances, Remittances, Redemptions, Merchant Payments, Payments 
+		    to Customers. 
+		    
+		    specific to financial or monetary transactions, and used in a manner of 
+		    accounting or financial reporting. i.e., Record of Charge, Purchase, Credit, 
+		    Debit, Adjustment, Fee Assessment, Sale, Balance Transfer, etc. 
+		    
+		    NOTE: A Transaction is the set of data related to an event that changes Account 
+		    status (balances, values, number of shares) or asset values */
+		structure TRANSACTION	
+			redemption : containing REDEMPTION inverse transaction
+			transactionLineItemDetail : containing TRANSACTION_LINE_ITEM_DETAIL inverse transaction
+			charge : containing CHARGE inverse transaction
+			adjustment : containing ADJUSTMENT inverse transaction
+			account : container ACCOUNT! inverse transaction
+			remittance : containing REMITTANCE inverse transaction
+			transactionLineItemSummary : containing TRANSACTION_LINE_ITEM_SUMMARY+ inverse transaction
+			statementCredit : containing STATEMENT_CREDIT inverse transaction
+			offer : reference OFFER inverse transaction
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			transactionTimestamp : dateTime
+			debitCreditMonetaryCode : string
+			paymentTokenNumber : string
+			cardNumberBasicSuppNumber : int
+			issuingIsoAlphaCountryCode : string
+			issuingBusinessUnitCode : string
+			/**DEFINITION: This is a code which uniquely identifies a transaction to the 
+			    system.  This will enable the tranaction to be posted to the correct balances. 
+			    */
+			transactionTypeCode : string
+			/**DEFINITION: Code reprsenting Billed or Unbilled.   Default will return both 
+			    billed and unbilled. If a specific statement date is provided but this is 
+			    selected as unbilled then this will take precedence and the statement date will 
+			    be ignored.    Set to “unbilled” for RTRs 
+			    
+			    also documented as Billed UnBilled Code originally documented as Globestar only 
+			    
+			    This Logically only and is not included in the physical which splits billed and 
+			    unbilled into 2 separate tables so no value in the indicator! 
+			    
+			    NOTE: Triumph Notes: None - Globestar only 
+			    
+			    Extra Info: Not used or rarely used for search */
+			billedUnbilledIndicator : string
+			/**DEFINITION: Date transaction posted  in Triumph */
+			postedDate : date
+			/**DEFINITION: The transaction name that will be used by the communication 
+			    mechanism to initiate the appropriate transaction. */
+			transactionDescription : string
+			memoCount : int
+			memoText : string
+			captureTransactionIdentifier : string
+			authorizationCode : string
+			/**DEFINITION: Market Offering Identifier is the unique identifier for a Market 
+			    Offering. */
+			marketOfferingId : string		
+		/**DEFINITION: Line Item details is the list of specific items purchased at a 
+		    specific merchant.  Only select Merchants remit this information to the ARs. 
+		    
+		    Part of Globestar ETD Block (Enhanced Transaction Block) houses line item detail 
+		    as either general, merchandise, etc.  Triumph houses content from Airline, 
+		    Hotel, and Restaurant only -- no retail. 
+		    
+		    NOTE: Line Item details is the list of specific items purchased at a specific 
+		    merchant.  Only select Merchants remit this information to the ARs. */
+		structure TRANSACTION_LINE_ITEM_DETAIL	
+			transaction : container TRANSACTION! inverse transactionLineItemDetail
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string
+			/**DEFINITION: Item Number 
+			    
+			    also documented as Item Number 
+			    
+			    originally documented as Globestar only 
+			    
+			    NOTE: Triumph Notes: None - Globestar only */
+			itemNumber : integer
+			/**DEFINITION: This is the Puchage Order or ROC Receipt of Charge reference 
+			    assocated with the transaction. 
+			    
+			    Globestar Definition: Purchase Order Number (this is the entire purchase order 
+			    field on G*.  The PO field has “processDT” embedded within it.  And it is used 
+			    to hold other misc. info) previously documented by Globestar as Purchase Order 
+			    Number 
+			    
+			    Triumph Definition: Record Of Charge (ROC) number for electronic charges or 
+			    invoice number for paper charges. previously documented by Triumph as Record Of 
+			    Charge Invoice Nbr 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 Attribute=Record 
+			    Of Charge Invoice Nbr GTD / DB2 Field=not provided */
+			purchaseOrderInvoiceNumber : string
+			/**DEFINITION: This is a code used to reference the authorisation provided to 
+			    the transaction 
+			    
+			    Globestar Definition: Authorization Code (this is the same as the value at CAS) 
+			    previously documented by Globestar as Authorization Code 
+			    
+			    Triumph Definition: Specifies the code assigned to each authorization. Codes 
+			    which are four spaces followed by two digits are generated by BASE/INAS.  Codes 
+			    which start with 00" or "09" are generated by FCS. previously documented by 
+			    Triumph as Authorization Cd 
+			    
+			    NOTE: Triumph Notes: Entity=T_SEC TRANSACTION BILLED INQUIRE 1 
+			    Attribute=Authorization Cd GTD / DB2 Field=GTD2042 GTD-TXN-CODE-ATHZ */
+			authorizationCode : string
+			/**DEFINITION: This element stores the day of the month on which the account 
+			    cycles. The field will allow the entry of the type of day on which the account 
+			    cycles (i.e. business vs. calendar). */
+			accountCycleDayCode : string
+			/**DEFINITION: THE BATCH NUMBER IDENTIFIES A BATCH OF RECEIPTS OF CHARGE (ROCS) 
+			    CREATED BY A MERCHANT.  A STATEMENT OF CHARGE (SOC) WILL BE CREATED FOR EACH 
+			    BATCH.  THIS BATCH IS RECEIVED FROM FINCAP AND IS USED BY OLAF TO RETRIEVE ROC 
+			    IMAGES. */
+			batchReferenceNumber : string
+			/**DEFINITION: SERVICE ESTABLISHMENT NAME */
+			serviceEstablishmentName : string
+			/**DEFINITION: The Major Sub Industry Code used to classify Service 
+			    Establishments. */
+			subIndustryReferenceCode : string
+			/**DEFINITION: Standard Posting Date Element */
+			postDate : date
+			/**DEFINITION: The Major Industry Code used to classify Service Establishments. 
+			    */
+			majorIndustryReferenceCode : string
+			/**DEFINITION: SOURCE COUNTRY CODE */
+			sourceCountryCode : string		
+		/**DEFINITION: Transaction details for accounts receivables data, like debits 
+		    and credits (Merchant based), fees, payments and non-Merchant credits (e.g., for 
+		    pay-with-points credits), redemptions. */
+		structure TRANSACTION_LINE_ITEM_SUMMARY	
+			transaction : container TRANSACTION! inverse transactionLineItemSummary
+			paymentBreakdown : containing PAYMENT_BREAKDOWN* inverse transactionLineItemSummary
+			transactionRolldown : containing TRANSACTION_ROLLDOWN* inverse transactionLineItemSummary
+			billingInformation : containing BILLING_INFORMATION* inverse transactionLineItemSummary
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string		
+		/**DEFINITION: Other descriptive information (eg.  Payflex memos) */
+		structure TRANSACTION_ROLLDOWN	
+			transactionLineItemSummary : container TRANSACTION_LINE_ITEM_SUMMARY! inverse transactionRolldown
+			/**DEFINITION: Unique reference number assigned to all items processed.  Julian 
+			    date, SE #, and Tran #. */
+			transactionReferenceNumber : long
+			/**DEFINITION: The assigned cardholder unique identifier for a given product. */
+			accountNumber : string			
