@@ -1,0 +1,63 @@
+---
+name: C# Client
+genTemplateId: com.modelsolv.reprezen.gentemplates.swagger.codegen.CSharpClientCodegen
+relativeOutputDir: generated
+prerequisites: null
+primarySource: 
+  path: ../../../models/PetStoreV2.yaml
+namedSources: null 
+parameters: 
+  # C# package name (convention: Title.Case).
+  packageName: null
+  
+  # C# package version.
+  packageVersion: null
+  
+  # source folder for generated code
+  sourceFolder: null
+  
+  # The GUID that will be associated with the C# project
+  packageGuid: null
+  
+  # The target .NET framework version.
+  targetFramework: null
+  
+  # Sort method arguments to place required parameters before optional parameters.
+  sortParamsByRequiredFlag: null
+  
+  # Use DateTimeOffset to model date-time properties
+  useDateTimeOffset: null
+  
+  # Deserialize array types to Collection<T> instead of List<T>.
+  useCollection: null
+  
+  # Return ICollection<T> instead of the concrete type.
+  returnICollection: null
+  
+  # C# Optional method argument, e.g. void square(int x=10) (.net 4.0+ only).
+  optionalMethodArgument: null
+  
+  # Generate AssemblyInfo.cs.
+  optionalAssemblyInfo: null
+  
+  # Generate {PackageName}.csproj.
+  optionalProjectFile: null
+  
+  # Set DataMember's EmitDefaultValue.
+  optionalEmitDefaultValues: null
+  
+  # Contents of swagger codegen configuration file.
+  # This is the file that would be passed with --config option on swagger codegen command line.
+  # The JSON contents of that file should be the value of this parameter.
+  # This parameter need not be used. If it is absent, all string-valued parameters are collected into
+  # a map that is then passed to the swagger codegen module. If a map is provided here, then string-valued
+  # parameters are still copied in, overriding like-named values appearing in the map.
+  swaggerCodegenConfig: null
+  
+  # System properties to set, as in the -D option of swagger codegen command line.
+  # Each property should be a json object with a name/value pair for each property.
+  # Example: for '-Dmodels -Dapis=User,Pets' use the following:
+  # value:
+  #   models: ''
+  #   apis: Users,Pets
+  swaggerCodegenSystemProperties: null

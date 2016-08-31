@@ -1,0 +1,14 @@
+---
+name: RepreZen HTML Documentation
+genTemplateId: com.modelsolv.reprezen.gentemplates.swaggerdoc.XSwaggerDocGenTemplate
+relativeOutputDir: generated
+prerequisites: null
+primarySource: 
+  path: ../../../models/PetStoreV2.yaml
+namedSources: null 
+parameters: 
+  # Set to false to suppress component model names in allOf models
+  showAllOfComponentModels: 'true'
+  
+  # Set to false to suppress table of contents
+  includeTableOfContents: 'true'

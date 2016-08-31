@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+	repositories {
+		maven {
+			url "http://maven.reprezen.com/repository/releases/"
+		}
+		maven {
+			url "http://maven.reprezen.com/repository/eclipse/"
+		}
+		mavenCentral()
+	}
+	
+	dependencies {
+		compile ('com.modelsolv.reprezen:com.modelsolv.reprezen.generators.api:1.3.1.5241')
+		compile ('com.modelsolv.reprezen:com.modelsolv.reprezen.generators.xtend:1.3.1.5241') {
+	        exclude module: 'org.eclipse.equinox.bidi'
+	        exclude module: 'org.eclipse.emf.common.ui'
+	        exclude module: 'org.eclipse.e4.ui.workbench3'
+	        exclude module: 'org.apache.batik.css'
+	        exclude module: 'org.eclipse.e4.ui.css.swt'
+		}
+		compile ('com.modelsolv.reprezen:com.modelsolv.reprezen.generators.standard:1.3.1.5241')
+		compile fileTree(dir: '/home/miles/Dropbox/RepreZen/Customers/shared/GenTemplates', include: ['*.jar'])
+	}
+	
+	task(execGenTarget, dependsOn: 'classes', type: JavaExec) {
+		main = 'com.modelsolv.reprezen.generators.api.GeneratorLauncher'
+		classpath = sourceSets.main.runtimeClasspath
+		args '/AMDocs/gentargets/PetStoreV2/RepreZen HTML Documentation/RepreZen HTML Documentation.gen'
+	}
+	
+	defaultTasks 'execGenTarget' 

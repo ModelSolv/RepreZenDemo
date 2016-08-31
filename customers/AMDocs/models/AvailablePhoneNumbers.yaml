@@ -1,0 +1,142 @@
+swagger: '2.0'
+info:
+  title: Twilio Available Phone Numbers API
+  description: Twilio is a cloud communications Infrastructure as a Service(IaaS) company based in San Francisco, California. Twilio allows software developers to programmatically make and receive phone calls and send and receive text messages using its web service APIs. Twilio's services are accessed over HTTP and are billed based on usage.
+  termsOfService: https://www.twilio.com/legal/tos
+  version: '2010-04-01'
+host: api.twilio.com
+basePath: /
+schemes:
+- http
+produces:
+- application/json
+consumes:
+- application/json
+paths:
+  /Accounts/{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/Local{mediaTypeExtension}:
+    get:
+      summary: Get Available Local Phone Numbers
+      description: Returns a list of local AvailablePhoneNumber resource representationsnthat match the specified filters, each representing a phone number thanis currently available for provisioning within your account.n
+      operationId: returns-a-list-of-local-availablephonenumber-resource-representationsthat-match-the-specified-filter
+      parameters:
+      - in: path
+        name: AccountSid
+      - in: path
+        name: IsoCountryCode
+        description: ISO 3166-1 alpha-2.
+      - in: path
+        name: mediaTypeExtension
+        description: By default, Twilios REST API returns XML. You may obtain CSV, JSON or HTML by appending .csv, .json, or .html.n
+      responses:
+        '200':
+          description: OK
+      tags:
+      - phone numbers
+      security: [
+        ]
+  /Accounts/{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/Mobile{mediaTypeExtension}:
+    get:
+      summary: Get Available Mobile Phone Numbers
+      description: Returns a list of mobile AvailablePhoneNumber resource representations that match the specified filters, each representing a phone number that is currently available for provisioning within your account.
+      operationId: returns-a-list-of-mobile-availablephonenumber-resource-representations-that-match-the-specified-filt
+      parameters:
+      - in: path
+        name: AccountSid
+      - in: path
+        name: IsoCountryCode
+        description: ISO 3166-1 alpha-2.
+      - in: path
+        name: mediaTypeExtension
+        description: By default, Twilios REST API returns XML. You may obtain CSV, JSON or HTML by appending .csv, .json, or .html.n
+      responses:
+        '200':
+          description: OK
+      tags:
+      - phone numbers
+      security: [
+        ]
+  /Accounts/{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/TollFree{mediaTypeExtension}:
+    get:
+      summary: Get Available Toll Free Phone Numbers
+      description: Returns a list of toll-free AvailablePhoneNumber elements that match thenspecified filters, each representing a phone number that is currentlynavailable for provisioning within your account. To provision an availablenphone number, POST the number to the IncomingPhoneNumbers resource.n
+      operationId: returns-a-list-of-tollfree-availablephonenumber-elements-that-match-thespecified-filters-each-repres
+      parameters:
+      - in: path
+        name: AccountSid
+      - in: path
+        name: IsoCountryCode
+        description: ISO 3166-1 alpha-2.
+      - in: path
+        name: mediaTypeExtension
+        description: By default, Twilios REST API returns XML. You may obtain CSV, JSON or HTML by appending .csv, .json, or .html.n
+      responses:
+        '200':
+          description: OK
+      tags:
+      - phone numbers
+      security: [
+        ]
+  /Accounts/{AccountSid}/AvailablePhoneNumbers{mediaTypeExtension}:
+    get:
+      summary: Get Available Phone Numbers
+      description: Returns a list of all AvailablePhoneNumber subresources for your account by ISO Country. For full information about our phone number support, see our Phone Number CSV (http://www.twilio.com/resources/rates/international-phone-number-rates.csv).
+      operationId: returns-a-list-of-all-availablephonenumber-subresources-for-your-account-by-iso-country-for-full-inf
+      parameters:
+      - in: path
+        name: AccountSid
+      - in: path
+        name: mediaTypeExtension
+        description: By default, Twilios REST API returns XML. You may obtain CSV, JSON or HTML by appending .csv, .json, or .html.n
+      responses:
+        '200':
+          description: OK
+      tags:
+      - phone numbers
+      security: [
+        ]
+  /{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/Local.{format}:
+    get:
+      summary: Get Available Local Phone Numbers By Country
+      description: GetAvailableLocalPhoneNumberList
+      operationId: getavailablelocalphonenumberlist
+      parameters:
+      - in: path
+        name: AccountSid
+        type: string
+      - in: path
+        name: format
+        type: string
+      - in: path
+        name: IsoCountryCode
+        type: string
+      responses:
+        '200':
+          description: OK
+      tags:
+      - phone numbers
+      security: [
+        ]
+  /{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/TollFree.{format}:
+    get:
+      summary: Get Available Toll Free Phone Numbers By Country
+      description: GetAvailableTollFreePhoneNumberList
+      operationId: getavailabletollfreephonenumberlist
+      parameters:
+      - in: path
+        name: AccountSid
+        type: string
+      - in: path
+        name: format
+        type: string
+      - in: path
+        name: IsoCountryCode
+        type: string
+      responses:
+        '200':
+          description: OK
+      tags:
+      - phone numbers
+      security: [
+        ]
+definitions: [
+  ]
